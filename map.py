@@ -1,6 +1,6 @@
 #from items import *
 
-place_pryzm = {
+map_pryzym = {
 	"name": "Pryzym",
 
 	"description": """You stumble out of Pryzym as it closes, and find yourself on a dark street surrounded by people. 
@@ -9,6 +9,8 @@ You prepare yourself for the long walk home, wishing Pryzym had stayed open just
 	"exits": {"east" : "Student Union", "west" : "Park"},
 
 	"items": [item_bottle]
+
+	"enemies": 0
 }
 
 map_lidl{"name": "Lidl",
