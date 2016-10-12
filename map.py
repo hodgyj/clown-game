@@ -1,17 +1,14 @@
-import items
-# map.py
-map_pryzm{}
+#from items import *
 
-map_park{}
+place_pryzm = {
+	"name": "Pryzym",
 
-map_museum{}
+	"description": """You stumble out of Pryzym as it closes, and find yourself on a dark street surrounded by people. 
+You prepare yourself for the long walk home, wishing Pryzym had stayed open just a little bit longer""",
 
-map_su{"name": "Student Union",
-"description": """
+	"exits": {"east" : "Student Union", "west" : "Park"},
 
-""",
-"items": [cricket_bat],
-"enemies": 1
+	"items": [item_bottle]
 }
 
 map_lidl{"name": "Lidl",
@@ -38,14 +35,5 @@ map_talysouth{"name": "Taly South",
 "enemies": 1}
 
 places = {
-    "pryzm": map_pryzm,
-    "park": map_park,
-    "museum": map_museum,
-    "su": map_su,
-    "lidl": map_lidl,
-    "cross roads": map_crossroads,
-    "coffee": map_coffee,
-    "traffic lights": map_traffic,
-    "empty road": map_emptyrd,
-    "taly south": map_talysouth
+	"Pryzym": place_pryzm
 }
