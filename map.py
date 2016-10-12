@@ -35,7 +35,7 @@ map_talysouth{"name": "Taly South",
 
 """,
 "items": [],
-"enemies": 0}
+"enemies": 1}
 
 places = {
     "pryzm": map_pryzm,
