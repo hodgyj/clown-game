@@ -11,6 +11,29 @@ You prepare yourself for the long walk home, wishing Pryzym had stayed open just
 	"items": [item_bottle]
 }
 
+map_lidl{"name": "Lidl",
+"description":"""
+
+""",
+"items": [shotgun],
+"enemies": 20
+}
+
+map_crossroads{}
+
+map_coffee{}
+
+map_traffic{}
+
+map_emptyrd{}
+
+map_talysouth{"name": "Taly South",
+"description":"""
+
+""",
+"items": [],
+"enemies": 1}
+
 places = {
 	"Pryzym": place_pryzm
 }
