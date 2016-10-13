@@ -1,6 +1,6 @@
-#from items import *
+from items import *
 
-map_pryzym {
+map_pryzm = {
 	"name": "Pryzm",
 
 	"description": """You stumble out of Pryzym as it 
@@ -17,7 +17,7 @@ map_pryzym {
 
 	"enemies": 0
 }
-map_park{
+map_park = {
 	"name": "Park",
 
 	"description": """You walk through the park it is
@@ -33,7 +33,7 @@ map_park{
 
 	"enemies": 0
 }
-map_museum{
+map_museum = {
 	"name": "Museum",
 
 	"description": """You run into the Museum, you can hear
@@ -49,7 +49,7 @@ map_museum{
 
 }
 
-map_lidl{
+map_lidl = {
 	"name": "Lidl",
 
 	"description": """You walk down the dimly lit road towards Lidl,
@@ -64,7 +64,7 @@ map_lidl{
 	"enemies": 20
 }
 
-map_su{
+map_su = {
 	"name": "Student Union",
 
 	"description": """The lights flicker as you enter the SU, 
@@ -75,7 +75,7 @@ map_su{
 
 	"description2": """To EAST is Lidl and to the WEST is the 
 	Cross Roads. 
-	Where do you want to go?"""
+	Where do you want to go?""",
 
 	"exits": {"east": "LIDL", "west": "Cross Roads"},
 
@@ -84,7 +84,7 @@ map_su{
 	"enemies": 1,
 }
 
-map_crossroads{
+map_crossroads = {
 	"name": "Cross Roads",
 
 	"description": """You are at the cross roads, everything
@@ -95,12 +95,12 @@ map_crossroads{
 
 	"exits": {"east": "Lidl", "west": "Coffee Shop", "north": "Traffic Lights"},
 
-	"items": [item_bottle:3],
+	"items": [item_bottle, item_bottle, item_bottle],
 
 	"enemies": 0,
 }
 
-map_coffee{
+map_coffee = {
 	"name": "Coffee Shop",
 
 	"description": """You break the glass of the coffee shop
@@ -115,7 +115,7 @@ map_coffee{
 
 } 
 
-map_traffic{
+map_traffic = {
 	"name": "Traffic Lights",
 
 	"description": """You come to the Traffic Lights and wait
@@ -131,7 +131,7 @@ map_traffic{
 	"enemies":10
 }
 
-map_emptyrd{
+map_emptyrd = {
 	"name": "Empty Road",
 
 	"description": """There are bins littered all up the street,
@@ -146,7 +146,7 @@ map_emptyrd{
 	"enemies": 3
 }
 
-map_talysouth{
+map_talysouth = {
 	"name": "Taly South",
 
 	"description": """You arrive safetly back at your flat and 
@@ -154,7 +154,7 @@ map_talysouth{
 	when you open it as police officer puts cuffs on you.
 	"you're under arrest for the suspicion of the mass 
 	killings that took place on halloween night". Well done, 
-	you're a drug addict, you've been hallucinating :D"""
+	you're a drug addict, you've been hallucinating :D""",
 
 	"exits": {},
 
@@ -164,14 +164,14 @@ map_talysouth{
 }
 
 places = {
-	"Pryzm": map_pryzm
-	"Lidl": map_lidl
-	"Student Union": map_su
-	"Cross Roads": map_crossroads
-	"Taly South": map_talysouth
-	"Empty Road": map_emptyrd
-	"Coffee Shop": map_coffee
-	"Traffic Lights": map_traffic
-	"Park": map_park
-	"Museum": map_museum
+	"Pryzm": map_pryzm,
+	"Lidl" : map_lidl,
+	"Student Union": map_su,
+	"Cross Roads": map_crossroads,
+	"Taly South": map_talysouth,
+	"Empty Road": map_emptyrd,
+	"Coffee Shop": map_coffee,
+	"Traffic Lights": map_traffic,
+	"Park": map_park,
+	"Museum": map_museum,
 }

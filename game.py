@@ -1,4 +1,4 @@
-from map import rooms
+from map import *
 from player import *
 from items import *
 from gameparser import *
@@ -402,8 +402,12 @@ def move(exits, direction):
 
 # This is the entry point of our program
 def main():
-    from map import room_reception
+    from map import map_pryzm
+    from ascii import title
     # Main game loop
+
+    print(title)
+
     while True:
         # Display game status (room description, inventory etc.)
         print_room(current_room)
@@ -416,7 +420,7 @@ def main():
         execute_command(command)
 
         # check if all items are in reception
-        if len(room_reception["items"]) == 6:
+        if len(map_pryzm["items"]) == 6:
             # print you've won if they are
             print("\n\n\t\t\tYes, You've won!!!!\n")
             input()
