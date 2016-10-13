@@ -1,5 +1,5 @@
 from items import *
-from map import places
+from map import *
 
 inventory = [item_bottle]
 
@@ -10,4 +10,4 @@ energy = 100
 
 
 # Start game at Pryzm
-current_room = rooms["pryzm"]
+current_room = places["Pryzm"]
