@@ -3,6 +3,7 @@ from player import *
 from items import *
 from gameparser import *
 from ascii import *
+import random
 
 # def list_of_items(items):
 #    """This function takes a list of items (see items.py for the definition) and
@@ -150,7 +151,7 @@ def execute_take(item_id):
             item = i
 
     # If item is in current room and there is room in inventory for item..
-    if item and len(inventory) < 2:
+    if item and (len(inventory) < 2):
             # Remove item from current room and add to inventory
             current_room["items"].remove(item)
             inventory.append(item)
@@ -185,11 +186,36 @@ def execute_drop(item_id):
 def print_stats():
     """Take stats from player.py and print them neatly:
 
-    >>> print_stats():
+    >>> print_stats()
     Health : 100
     Energy : 100
     Inventory : bottle
     """
+def use_weapon(weapon):
+    """This function should take a parameter weapon and take 1 point off its health
+    as it's being used, it should then check its health and if it's health is 0,
+    remove the weapon from inventory and print you won the fight but your weapon broke.
+    Else it should just print you won the fight
+
+    >>> use_weapon(item_bottle)
+    You won the fight, but your weapon broke
+
+    >>> use_weapon(item_shotgun)
+    You won the fight!
+    """
+
+    # Taking one point from the weapon's health
+    weapon["health"] -= 1
+
+    # Checking if the health of the weapon is zero
+    if weapon["health"] == 0:
+        # If it is removing the weapon from the inventory and printing apppropriate
+        # message
+        inventory.remove(weapon)
+        print("\n\t\t\tYou won the fight, but your weapon broke")
+    else:
+        print("\n\t\t\t\You won the fight!")
+
 
 def execute_fight():
     """Start fight and output a random picture of clown and player stats.
@@ -201,6 +227,67 @@ def execute_fight():
     print "Weapon broken".
     print "Fight won"
     """
+    # call global varibale current_room and print FIGHT
+    global current_room
+    k = 0
+    print("\t\t\tFIGHT")
+    # print a random picture of a clown from ascii.py
+    number = random.randrange(1,8)
+    print(clowns[number])
+    # print_stats()
+
+    # print the number of enemies to be defeated
+    enemies = current_room["enemies"]
+    print("You must defeat " + str(enemies) + " clowns. Good Luck.")
+
+    # while there are still enemies to be defeated
+    while enemies > 0:
+        k += 1
+        print("\n\t\t\tFIGHT " + str(k) + "\n")
+        list_i = []
+        j = 0
+#        health -= random.randrange(1,51)
+#        print("Lost Health! Health now: " + health)
+
+        # for each item in inventory
+        for i in inventory:
+            # if it's a weapon add it to the list
+            if i["weapon"]:
+                list_i.append(i)
+                # keep track of how many weapons are in inventory
+                j = j + 1
+
+        # if there is only one weapon in inventory
+        if j == 1:
+            # call use_weapon
+            use_weapon(list_i[0])
+        # if there are 2 weapons in inventory
+        elif j == 2:
+            while True:
+                # take user input of which weapon they will use
+                print("1: " + str(list_i[0]["name"]))
+                print("2: " + str(list_i[1]["name"]))
+                user_input = input("Which weapon would you like to use? 1 or 2 >\t")
+                # then call use_weapon with the weapon they chose as the parameter
+                if user_input == "1":
+                    use_weapon(list_i[0])
+                    break
+                elif user_input == "2":
+                    use_weapon(list_i[1])
+                    break
+                else:
+                    print("Please enter either 1 or 2.")
+        # if they do not have a weapon in their inventory they die
+        else:
+            print("You do not have a weapon in your inventory. You have died...")
+            break
+#           end game
+
+#        if health <= 0:
+#            print("\t\t\tYou have lost too much health and died...")
+        # one enemy has been deafeated
+        enemies = enemies - 1
+
 
 def execute_run():
     """Take off energy by random number between 30 and 50.
@@ -273,10 +360,9 @@ def move(exits, direction):
     True
     >>> move(places["Cross Roads"]["exits"], "north") == places["Traffic Lights"]
     True
-    >>> move(places["Lidl"]["exits"], "west") == places["Office"]
+    >>> move(places["Coffee Shop"]["exits"], "south") == places["Pryzm"]
     False
     """
-
     # Next room to go to
     return places[exits[direction]]
 
