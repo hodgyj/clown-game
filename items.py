@@ -26,13 +26,6 @@ item_needle = {"name": "needle",
 "weapon": True
 }
 
-item_condom = {"name": "condom",
-"description": """
-""",
-"health": 60,
-"weapon": False
-}
-
 item_coffee = {"name": "coffee",
 "description": """
 """,
@@ -40,10 +33,10 @@ item_coffee = {"name": "coffee",
 "weapon": False
 }
 
-items = {"coffee" = item_coffee,
-"condom" = item_condom,
-"needle" = item_needle,
-"bottle" = item_bottle,
-"shotgun" = item_shotgun,
-"cricket bat" = item_cricket_bat
+items = {
+"coffee": item_coffee,
+"needle": item_needle,
+"bottle": item_bottle,
+"shotgun": item_shotgun,
+"cricket bat": item_cricket_bat
 }

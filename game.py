@@ -57,7 +57,7 @@ def print_room(room):
     is printed in all capitals and framed by blank lines. Then follows the
     description of the room and a blank line again. For example:
 
-    >>> print_room(rooms["Pryzm"])
+    >>> print_room(places["Pryzm"])
     <BLANKLINE>
     PRYZM
     <BLANKLINE>
@@ -70,7 +70,7 @@ def print_room(room):
 	go WEST through the Park?
     <BLANKLINE>
 
-    >>> print_room(rooms["Lidl"])
+    >>> print_room(places["Lidl"])
     <BLANKLINE>
     LIDL
     <BLANKLINE>
@@ -80,7 +80,7 @@ def print_room(room):
 	YOU DIED...
     <BLANKLINE>
 
-    >>> print_room(rooms["Cross Roads"])
+    >>> print_room(places["Cross Roads"])
     <BLANKLINE>
     CROSS ROADS
     <BLANKLINE>
@@ -104,14 +104,14 @@ def print_room(room):
 #    exit taken from this dictionary). It returns the name of the room into which
 #    this exit leads. For example:
 
-#    >>> exit_leads_to(rooms["Reception"]["exits"], "south")
+#    >>> exit_leads_to(places["Reception"]["exits"], "south")
 #    "MJ and Simon's room"
-#    >>> exit_leads_to(rooms["Reception"]["exits"], "east")
+#    >>> exit_leads_to(places["Reception"]["exits"], "east")
 #    "your personal tutor's office"
-#    >>> exit_leads_to(rooms["Tutor"]["exits"], "west")
+#    >>> exit_leads_to(places["Tutor"]["exits"], "west")
 #    'Reception'
 #    """
-#    return rooms[exits[direction]]["name"]``
+#    return places[exits[direction]]["name"]``
 
 
 def execute_go(direction):
@@ -128,7 +128,7 @@ def execute_go(direction):
         # Print name of new room and move to new room
         new_room = current_room["exits"][str(direction)]
         print(new_room)
-        current_room = rooms[new_room]
+        current_room = places[new_room]
     else:
         print("You cannot go there.")
 
@@ -174,7 +174,8 @@ def execute_drop(item_id):
         if i["name"] == item_id:
             item = i
 
-    # If item is in inventory, remove the item from inventory and add to items in current room
+    # If item is in inventory, remove the item from inventory and
+    # add to items in current room
     if item:
         inventory.remove(item)
         current_room["items"].append(item)
@@ -236,10 +237,10 @@ def execute_command(command):
         else:
             print("Drop what?")
 
-    elif command[0] == "fight"
+    elif command[0] == "fight":
         execute_fight()
 
-    elif command[0] == "run"
+    elif command[0] == "run":
         execute_run()
 
     elif command[0] == "dragon" and current_room["name"] == "Pryzm":
@@ -268,38 +269,39 @@ def move(exits, direction):
     dictionary "exits" of avaiable exits, they choose to move towards the exit
     with the name given by "direction". For example:
 
-    >>> move(rooms["Pryzm"]["exits"], "east") == rooms["Student Union"]
+    >>> move(places["Pryzm"]["exits"], "east") == places["Student Union"]
     True
-    >>> move(rooms["Cross Roads"]["exits"], "north") == rooms["Traffic Lights"]
+    >>> move(places["Cross Roads"]["exits"], "north") == places["Traffic Lights"]
     True
-    >>> move(rooms["Lidl"]["exits"], "west") == rooms["Office"]
+    >>> move(places["Lidl"]["exits"], "west") == places["Office"]
     False
     """
 
     # Next room to go to
-    return rooms[exits[direction]]
+    return places[exits[direction]]
 
 
 # This is the entry point of our program
 def main():
+    global current_room
     from map import map_pryzm
     from ascii import title
     # Main game loop
 
     print(title)
 
-    user_input = input("Do You Want To Play Easy, Normal, Or Difficult?")
-    if user_input == ("easy" or "Easy"):
-        player.health = 100
-        player.energy = 100
-    elif user_input == ("normal" or "Normal"):
-        player.health = 75
-        player.energy = 75
-    elif user_input == ("difficult" or "Difficult"):
-        player.health = 50
-        player.health = 50
-    else:
-        print("That was not a valid response, so we put you on easy.")
+    # user_input = input("Do You Want To Play Easy, Normal, Or Difficult?")
+    # if user_input == ("easy" or "Easy"):
+        # player.health = 100
+        # player.energy = 100
+    # elif user_input == ("normal" or "Normal"):
+        # player.health = 75
+        # player.energy = 75
+    # elif user_input == ("difficult" or "Difficult"):
+        # player.health = 50
+        # player.energy = 50
+    # else:
+        # print("That was not a valid response, so we put you on easy.")
 
     while True:
         # Display game status (room description, inventory etc.)
@@ -313,8 +315,8 @@ def main():
         execute_command(command)
 
         # Winning game
-        If current_room["name"] == "Taly South":
-            break
+        #If current_room == places["Taly South"]:
+        #    break
 
 
 # Are we being run as a script? If so, run main().
