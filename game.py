@@ -187,10 +187,28 @@ def print_stats():
     """Take stats from player.py and print them neatly:
 
     >>> print_stats()
+    Your Stats Are:
+    <BLANKLINE>
     Health : 100
     Energy : 100
     Inventory : bottle
+    <BLANKLINE>
     """
+    print("Your Stats Are:" + "\n")
+    print("Health : " + str(stats["stats"]["health"]))
+    print("Energy : " + str(stats["stats"]["energy"]))
+    playerinventory = str(stats["stats"]["inventory"])
+
+    no_punct = ""
+    for char in playerinventory:
+        #checks if each character is punctuation or not
+        if not (char in string.punctuation):
+            #if the character is not punctuation, it is added to the string no_punct
+            no_punct += char
+
+    print("Inventory : " + no_punct)
+    print("")
+
 def use_weapon(weapon):
     """This function should take a parameter weapon and take 1 point off its health
     as it's being used, it should then check its health and if it's health is 0,
