@@ -37,7 +37,7 @@ def print_inventory_items(items):
     print "You have ..." instead of "There is ... here.". For example:
 
     >>> print_inventory_items(inventory)
-    You have bottle.
+    You have: phone.
     <BLANKLINE>
 
     """
@@ -47,9 +47,9 @@ def print_inventory_items(items):
         list_i = []
         # For each item in items add the name of the item to the list
         for item in items:
-            list_i.append(item["name"])
+            list_i.append(item)
         # Then print the list
-        print('You have', ", ".join(list_i) + '.\n')
+        print('You have:', ", ".join(list_i) + '.\n')
 
 def print_room(room):
     """This function takes a room as an input and nicely displays its name
@@ -63,12 +63,12 @@ def print_room(room):
     PRYZM
     <BLANKLINE>
     You stumble out of Pryzym as it closes,
-	and find yourself on a dark street surrounded
-	by people near a taxi rank. You prepare
-	yourself for the long walk home, wishing
-	Pryzm had stayed open just a little bit longer.
-	Do you want to walk EAST to the Student Union or
-	go WEST through the Park?
+    and find yourself on a dark street surrounded
+    by people near a taxi rank. You prepare
+    yourself for the long walk home, wishing
+    the club had stayed open just a little bit longer.
+    Do you want to walk EAST to the Student Union or
+    go WEST through the Park?
     <BLANKLINE>
 
     >>> print_room(places["Lidl"])
@@ -76,20 +76,19 @@ def print_room(room):
     LIDL
     <BLANKLINE>
     You walk down the dimly lit road towards Lidl,
-	you see a shotgun lying in the car park, you run towards
-	it and just as you pick it up, a clown stabs you in the back.
-	YOU DIED...
+    you see a shotgun lying in the car park, beside the gun there is
+    smashed glass and a completely empty backpack. You hear laughing
+    and the sound of rubber balloons squeeling in the dark alley nearby.
     <BLANKLINE>
 
     >>> print_room(places["Cross Roads"])
     <BLANKLINE>
     CROSS ROADS
     <BLANKLINE>
-    You are at the cross roads, everything looks safe,
-    there is a Letting Office, a coffee shop and the
-    Law and Politics Building. You can go EAST for Lidl
-	or NORTH towards the Traffic Lights.
-	Which way do you want to walk home?
+    You are at the cross roads, everything looks safe and 
+    not a large pair of shoes in sight. Around you there are a variety of buildings.
+    There is a letting office, a coffee shop, and the Law & Politics Building. 
+    From here there are multiple ways to get home.
     <BLANKLINE>
 
     Note: <BLANKLINE> here means that doctest should expect a blank line.
@@ -153,7 +152,7 @@ def execute_take(item_id):
     # If item is in current room and there is room in inventory for item..
     if item and (len(inventory) < 2):
             # Remove item from current room and add to inventory
-            current_room["items"].remove(item)
+            current_room["items"].remove(item["name"])
             inventory.append(item)
     else:
         print("You cannot take that.")
@@ -191,13 +190,13 @@ def print_stats():
     <BLANKLINE>
     Health : 100
     Energy : 100
-    Inventory : bottle
+    Inventory : phone
     <BLANKLINE>
     """
     print("Your Stats Are:" + "\n")
     print("Health : " + str(stats["stats"]["health"]))
     print("Energy : " + str(stats["stats"]["energy"]))
-    playerinventory = str(stats["stats"]["inventory"])
+    playerinventory = str(inventory)
 
     no_punct = ""
     for char in playerinventory:
@@ -216,23 +215,27 @@ def use_weapon(weapon):
     Else it should just print you won the fight
 
     >>> use_weapon(item_bottle)
+    <BLANKLINE>
     You won the fight, but your weapon broke
 
     >>> use_weapon(item_shotgun)
+    <BLANKLINE>
     You won the fight!
     """
+    if weapon["weapon"]:       
+        # Taking one point from the weapon's health
+        weapon["health"] -= 1
 
-    # Taking one point from the weapon's health
-    weapon["health"] -= 1
-
-    # Checking if the health of the weapon is zero
-    if weapon["health"] == 0:
-        # If it is removing the weapon from the inventory and printing apppropriate
-        # message
-        inventory.remove(weapon)
-        print("\n\t\t\tYou won the fight, but your weapon broke")
+        # Checking if the health of the weapon is zero
+        if weapon["health"] <= 0:
+            # If it is removing the weapon from the inventory and printing apppropriate
+            del weapon
+            print("\nYou won the fight, but your weapon broke")
+        else:
+            print("\nYou won the fight!")
     else:
-        print("\n\t\t\t\You won the fight!")
+        # Not a weapon so print warning.
+        print("\nThis is not the time or place to use this!")
 
 
 def execute_fight():

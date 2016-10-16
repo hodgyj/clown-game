@@ -1,15 +1,13 @@
 from items import *
 from map import *
 
-inventory = [item_phone]
+inventory = [item_phone["name"]]
 
 #Needs to be able to change throughout the game, not sure if this will work yet
 player_stats = {
 	"health": 100,
 
 	"energy": 100,
-
-	"inventory": [item_bottle["name"]]
 }
 
 stats = {
