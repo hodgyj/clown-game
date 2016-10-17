@@ -69,7 +69,7 @@ def print_room_items(room):
     room_list = list_of_items(room["items"])
 
     if room_list:
-        print('\nThere is some items here, its:', room_list + '\n')
+        print('\nThere is something here:', room_list + '\n')
 
 def print_room(room):
     """This function takes a room as an input and nicely displays its name
