@@ -16,3 +16,9 @@ stats = {
 
 # Start game at Pryzm
 current_room = places["Pryzm"]
+
+score = 0
+
+game_running = True
+
+max_items = 5

@@ -15,7 +15,9 @@ go WEST through the Park?""",
 
 	"items": [item_bottle],
 
-	"enemies": 0
+	"enemies": 0,
+
+	"dead": False,
 }
 
 map_park = {
@@ -33,7 +35,9 @@ is a large red-wigged clown, breathing heavily.""",
 
 	"items": [item_needle],
 
-	"enemies": 1
+	"enemies": 1,
+
+	"dead": False,
 }
 
 map_museum = {
@@ -49,7 +53,9 @@ as you beg for your life. You have died...""",
 
 	"items": [],
 
-	"enemies": 0
+	"enemies": 0,
+
+	"dead": True,
 }
 
 map_lidl = {
@@ -64,7 +70,9 @@ and the sound of rubber balloons squeeling in the dark alley nearby.""",
 
 	"items": [item_shotgun],
 
-	"enemies": 0
+	"enemies": 0,
+
+	"dead": False,
 }
 
 map_alley = {
@@ -80,7 +88,9 @@ that murdered you. You have died...""",
 
 	"items": [],
 
-	"enemies": 3	
+	"enemies": 0,
+
+	"dead": True,
 }
 
 map_su = {
@@ -91,11 +101,13 @@ you see a cricket bat lying amongst other rubbish scattered
 around the alcohol soaked floor. It is almost silent,
 only the droning sound of the wind whistling is apparent.""",
 
-	"exits": {"east": "LIDL", "west": "Cross Roads"},
+	"exits": {"east": "Lidl", "west": "Cross Roads"},
 
 	"items": [item_cricket_bat],
 
 	"enemies": 0,
+
+	"dead": False,
 }
 
 map_crossroads = {
@@ -111,6 +123,8 @@ From here there are multiple ways to get home.""",
 	"items": [item_bottle, item_bottle],
 
 	"enemies": 0,
+
+	"dead": False,
 }
 
 map_coffee = {
@@ -126,6 +140,8 @@ there, switched on with a cup sitting below on the stand.""",
 	"items": [item_coffee, item_cricket_bat],
 
 	"enemies":0,
+
+	"dead": False,
 }
 
 map_traffic = {
@@ -142,7 +158,9 @@ may prove difficult...""",
 
 	"items": [],
 
-	"enemies":10
+	"enemies":10,
+
+	"dead": False,
 }
 
 map_emptyrd = {
@@ -158,7 +176,9 @@ certain houses, with goliath size 20 blood stained shoes.""",
 
 	"items":[],
 
-	"enemies": 3
+	"enemies": 3,
+
+	"dead": False,
 }
 
 map_talysouth = {
@@ -181,7 +201,9 @@ the monster... END OF GAME""",
 
 	"items": [],
 
-	"enemies": 0
+	"enemies": 0,
+
+	"dead": False,
 }
 
 places = {
