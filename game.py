@@ -12,10 +12,10 @@ def list_of_items(items):
     returns a comma-separated list of item names (as a string). For example:
 
     >>> list_of_items([item_cricket_bat, item_shotgun])
-    'a cricket bat, shotgun'
+    'bat, shotgun'
 
     >>> list_of_items([item_needle])
-    'a needle'
+    'needle'
 
     >>> list_of_items([])
     ''
@@ -46,8 +46,8 @@ def print_inventory_items(items):
         # Create new dict and loop items and add to new list.
         items_list = []
         for item in items:
-            items_list.append(item["name"])
-        print('You have', ", ".join(items_list) + ".\n")
+            items_list.append(item)
+        print('You have:', ", ".join(items_list) + ".\n")
 
 
 
@@ -58,18 +58,20 @@ def print_room_items(room):
     items.py for the definition of an item. This function uses list_of_items()
     to produce a comma-separated list of item names. For example:
 
-    >>> print_room_items(rooms["Park"])
-    There is a needle here.
+    >>> print_room_items(places["Park"])
+    <BLANKLINE>
+    There is something here: needle.
     <BLANKLINE>
 
-    >>> print_room_items(rooms["Coffee Shop"])
-    There is a cricket bat, coffee here.
+    >>> print_room_items(places["Coffee Shop"])
+    <BLANKLINE>
+    There is something here: coffee, bat.
     <BLANKLINE>
     """
     room_list = list_of_items(room["items"])
 
     if room_list:
-        print('\nThere is something here:', room_list + '\n')
+        print('\nThere is something here:', room_list + '.\n')
 
 def print_room(room):
     """This function takes a room as an input and nicely displays its name
@@ -158,24 +160,22 @@ def execute_drop(item_id):
     player's inventory to list of items in the current room. However, if there is
     no such item in the inventory, this function prints "You cannot drop that."
     """
-    # call global variable current_room
+
     global current_room
 
-    # Create new variable item
-    item = ""
+    # Create blank string to be populated later
+    room_item = ""
 
-    # Check if user defined item is in inventory
-    for i in inventory:
-        if i["name"] == item_id:
-            item = i
-
-    # If item is in inventory, remove the item from inventory and
-    # add to items in current room
-    if item:
-        inventory.remove(item)
-        current_room["items"].append(item)
+    # Loop inventory
+    for item in inventory:
+        if(item["name"] == item_id):
+            room_item = item
+    if room_item:
+        # Remove from inventory, add to room.
+        inventory.remove(room_item)
+        current_room["items"].append(room_item)
     else:
-        print("You cannot drop that.")
+        print("You cannot drop that!")
 
 def print_stats():
     """Take stats from player.py and print them neatly:
@@ -188,7 +188,7 @@ def print_stats():
     Inventory : phone
     <BLANKLINE>
     """
-    print("Your Stats Are:" + "\n")
+    print("Your Stats Are:\n" )
     print("Health : " + str(stats["stats"]["health"]))
     print("Energy : " + str(stats["stats"]["energy"]))
     playerinventory = str(inventory)
@@ -200,7 +200,7 @@ def print_stats():
             #if the character is not punctuation, it is added to the string no_punct
             no_punct += char
 
-    print("Inventory : " + no_punct)
+    print("Inventory : " + no_punct + "\n")
 
 def use_weapon(weapon):
     """This function should take a parameter weapon and take 1 point off its health
