@@ -69,7 +69,7 @@ def print_room_items(room):
     room_list = list_of_items(room["items"])
 
     if room_list:
-        print('\nThere is', room_list, 'here.\n')
+        print('\nThere is some items here, its:', room_list + '\n')
 
 def print_room(room):
     """This function takes a room as an input and nicely displays its name
@@ -201,7 +201,6 @@ def print_stats():
             no_punct += char
 
     print("Inventory : " + no_punct)
-    print("")
 
 def use_weapon(weapon):
     """This function should take a parameter weapon and take 1 point off its health

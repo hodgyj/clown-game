@@ -7,7 +7,7 @@ not quite sure which one it is though.""",
 }
 
 item_cricket_bat = {
-"name": "cricket bat",
+"name": "bat",
 "description": """A blood stained old cricked bat, 
 looks good enough for killing clowns!""",
 "health": 4,
