@@ -46,7 +46,7 @@ def print_inventory_items(items):
         # Create new dict and loop items and add to new list.
         items_list = []
         for item in items:
-            items_list.append(item)
+            items_list.append(item["name"])
         print('You have:', ", ".join(items_list) + ".\n")
 
 
@@ -185,22 +185,16 @@ def print_stats():
     <BLANKLINE>
     Health : 100
     Energy : 100
-    Inventory : phone
+    You have: phone.
     <BLANKLINE>
     """
+
+    # Print user
     print("Your Stats Are:\n" )
     print("Health : " + str(stats["stats"]["health"]))
     print("Energy : " + str(stats["stats"]["energy"]))
-    playerinventory = str(inventory)
+    print_inventory_items(inventory)
 
-    no_punct = ""
-    for char in playerinventory:
-        #checks if each character is punctuation or not
-        if not (char in string.punctuation):
-            #if the character is not punctuation, it is added to the string no_punct
-            no_punct += char
-
-    print("Inventory : " + no_punct + "\n")
 
 def use_weapon(weapon):
     """This function should take a parameter weapon and take 1 point off its health
@@ -242,9 +236,17 @@ def execute_fight():
     print "Weapon broken".
     print "Fight won"
     """
+
+    if clowns:
+        fight_sequence()
+    else:
+        print("\nYou can't fight anything here!\n")
+
+def fight_sequence():
     # call global varibale current_room and print FIGHT
     global current_room
     global max_items
+    
     k = 0
     print("\t\t\tFIGHT")
     # print a random picture of a clown from ascii.py
@@ -262,8 +264,8 @@ def execute_fight():
         print("\n\t\t\tFIGHT " + str(k) + "\n")
         list_i = []
         j = 0
-#        health -= random.randrange(1,51)
-#        print("Lost Health! Health now: " + health)
+        # health -= random.randrange(1,51)
+        # print("Lost Health! Health now: " + health)
 
         # for each item in inventory
         for i in inventory:
@@ -342,8 +344,6 @@ def execute_command(command):
         execute_run()
     elif command[0] == "inventory" or command[0] == "inv":
         print_inventory_items(inventory)
-    elif command[0] == "room" or command[0] == "items":
-        print_room_items(current_room)
     elif command[0] == "stats" or command[0] == "statistics":
         print_stats()
     elif command[0] == "help":
@@ -425,18 +425,18 @@ def main():
 
     print(title)
 
-    # user_input = input("Do You Want To Play Easy, Normal, Or Difficult?")
-    # if user_input == ("easy" or "Easy"):
-        # player.health = 100
-        # player.energy = 100
-    # elif user_input == ("normal" or "Normal"):
-        # player.health = 75
-        # player.energy = 75
-    # elif user_input == ("difficult" or "Difficult"):
-        # player.health = 50
-        # player.energy = 50
-    # else:
-        # print("That was not a valid response, so we put you on easy.")
+    user_input = input("Do You Want To Play Easy, Normal, Or Hard?")
+    if user_input == ("EASY"):
+        player.health = 100
+        player.energy = 100
+    elif user_input == ("NORMAL"):
+        player.health = 75
+        player.energy = 75
+    elif user_input == ("HARD"):
+        player.health = 50
+        player.energy = 50
+    else:
+        print("That was not a valid response, so we put you on easy.")
 
     while game_running == True:
         # Display game status (room description, inventory etc.)
