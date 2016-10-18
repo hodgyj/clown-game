@@ -262,7 +262,7 @@ def execute_fight():
     print "Fight won"
     """
 
-    if clowns:
+    if current_room["enemies"] > 0:
         fight_sequence()
     else:
         print("\nYou can't fight anything here!\n")
@@ -289,7 +289,8 @@ def fight_sequence():
         print("\n\t\tFIGHT " + str(k) + "\n")
         list_i = []
         weapons = 0
-        player_stats["health"] -= random.randrange(1,51)
+        player_stats["energy"] -= 20
+        player_stats["health"] -= random.randrange(1,31)
         print("Lost Health! Health now: " + player_stats["health"])
 
         # for each item in inventory
@@ -308,14 +309,14 @@ def fight_sequence():
         elif weapons >= 1:
             while True:
                 # take user input of which weapon they will use
-                for i in max_items:
+                for i in len(inventory):
                     # list index i - 1 as count starts 0 not 1
                     list_index = i - 1
                     print(i + ":", str(list_i[list_index]["name"]))
 
                 user_input = input("Which weapon would you like to use?>\t")
                 # then call use_weapon with the weapon they chose as the parameter
-                if user_input <= max_items and user_input >= 0:
+                if user_input <= len(inventory) and user_input >= 0:
                    use_weapon(list_i[user_input])
                 else:
                     print("Please enter a valid number...")
@@ -326,19 +327,12 @@ def fight_sequence():
 
         player_stats["kills"] += 1
 
-        if player_stats["health"] <= 0:
+        if player_stats["health"] <= 0 or player_stats["energy"] <= 0:
             print("\n\t\tBlood pours out of you as you fall to the ground, you have died...")
+            lose_game()
         else:
             enemies = enemies - 1    
 
-
-def execute_run():
-    """Take off energy by random number between 30 and 50.
-    Define new room as only exit possible or user input.
-    current_room = new_room.
-    """
-
-    # TAKE AWAY SCORE POINTS OF USER OR STRIP COMPLETELY?
 
 def execute_command(command):
     """This function takes a command (a list of words as returned by
