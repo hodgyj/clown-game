@@ -108,9 +108,11 @@ map_su = {
 	"description": """The lights flicker as you enter the SU,
 you see a cricket bat lying amongst other dead people scattered 
 around the alcohol soaked floor. It is almost silent,
-only the droning sound of the wind whistling is apparent.
+only the droning sound of the wind whistling is apparent. Suddenly,
+you hear the stomping of enourmous shoes as a clown comes towards you.
 \n
 You can:
+FIGHT the Clown
 GO EAST to Lidl
 GO WEST to Cross Roads""",
 
@@ -129,9 +131,11 @@ map_crossroads = {
 	"description": """You are at the cross roads, everything looks safe and 
 not a large pair of shoes in sight. Around you there are a variety of buildings.
 There is a letting office, a coffee shop, and the Law & Politics Building. 
-From here there are multiple ways to get home.
+From here there are multiple ways to get home, but standing in the middle of the road, 
+two clowns have spotted you.
 \n
 You can:
+FIGHT the Clown
 GO NORTH to Traffic Lights
 GO EAST to Lidl
 GO WEST to Coffee Shop""",
