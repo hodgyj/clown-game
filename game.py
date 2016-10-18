@@ -49,8 +49,6 @@ def print_inventory_items(items):
             items_list.append(item["name"])
         print('You have:', ", ".join(items_list) + ".\n")
 
-
-
 def print_room_items(room):
     """This function takes a room as an input and nicely displays a list of items
     found in this room (followed by a blank line). If there are no items in
@@ -131,7 +129,6 @@ def execute_go(direction):
     else:
         print("You cannot go there.")
 
-
 def execute_take(item_id):
     """This function takes an item_id as an argument and moves this item from the
     list of items in the current room to the player's inventory. However, if
@@ -199,7 +196,6 @@ def print_stats():
     print("Energy : " + str(stats["stats"]["energy"]))
     print_inventory_items(inventory)
 
-
 def score():
     """ To determine the end score. take into account health, energy, clowns killed
 
@@ -221,7 +217,6 @@ def score():
     # score is health add energy, times 2, add kills times 10, times the effect of the level
     score = ((h + e) * 2  + (k * 10)) * multi
     return int(score)
-
 
 def use_weapon(weapon):
     """This function should take a parameter weapon and take 1 point off its health
@@ -251,7 +246,6 @@ def use_weapon(weapon):
     else:
         # Not a weapon so print warning.
         print("\nThis is not the time or place to use this!")
-
 
 def execute_fight():
     """Start fight and output a random picture of clown and player stats.
@@ -333,7 +327,6 @@ def fight_sequence():
         else:
             enemies = enemies - 1    
 
-
 def execute_run():
     """Take off energy by random number between 30 and 50.
     Define new room as only exit possible or user input.
@@ -391,7 +384,6 @@ def execute_command(command):
         win_game("dragon")
     else:
         print("You murmur words that are incomprehensible...")
-
 
 def win_game(condition):
     # This is the final print and end game, stops all input but shows high score.
