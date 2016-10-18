@@ -35,7 +35,7 @@ def remove_punct(text):
     	#checks if each character is punctuation or not
         if not (char in string.punctuation):
         	#if the character is not punctuation, it is added to the string no_punct
-            no_punct = no_punct + char
+            no_punct += char
 
     return no_punct
 
