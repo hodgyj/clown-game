@@ -66,7 +66,7 @@ def normalise_input(user_input):
   #runs filter_words
   final_words = filter_words(list_word, skip_words)
 
-  if final_words == "east" or "west" or "south" or "north":
-      final_words.insert(0, 'go')
+  #if final_words == "east" or "west" or "south" or "north":
+  #    final_words.insert(0, 'go')
 
   return final_words
