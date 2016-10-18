@@ -29,6 +29,7 @@ def list_of_items(items):
 
     return correct_list
 
+
 def print_inventory_items(items):
     """This function takes a list of inventory items and displays it nicely, in a
     manner similar to print_room_items(). The only difference is in formatting:
@@ -47,7 +48,6 @@ def print_inventory_items(items):
         for item in items:
             items_list.append(item["name"])
         print('You have:', ", ".join(items_list) + ".\n")
-
 
 
 def print_room_items(room):
@@ -71,6 +71,7 @@ def print_room_items(room):
 
     if room_list:
         print('\nThere is something here:', room_list + '.\n')
+
 
 def print_room(room):
     """This function takes a room as an input and nicely displays its name
@@ -99,19 +100,54 @@ def print_room(room):
     # Display room description
     print(room["description"] + '\n')
 
-# def exit_leads_to(exits, direction):
-#    """This function takes a dictionary of exits and a direction (a particular
-#    exit taken from this dictionary). It returns the name of the room into which
-#    this exit leads. For example:
+    if room["enemies"] > 0:
+        print(room["descclown"] + '\n')
 
-#    >>> exit_leads_to(places["Reception"]["exits"], "south")
-#    "MJ and Simon's room"
-#    >>> exit_leads_to(places["Reception"]["exits"], "east")
-#    "your personal tutor's office"
-#    >>> exit_leads_to(places["Tutor"]["exits"], "west")
-#    'Reception'
-#    """
-#    return places[exits[direction]]["name"]``
+
+def print_menu(exits, enemies):
+    """This function displays the menu of available actions to the player. The
+    argument exits is a dictionary of exits as exemplified in map.py. The
+    arguments room_items and inv_items are the items lying around in the room
+    and carried by the player respectively. The menu should, for each exit,
+    call the function print_exit() to print the information about each exit in
+    the appropriate format. The room into which an exit leads is obtained
+    using the function exit_leads_to(). Then, it should print a list of commands
+    related to items: for each item in the room print
+    """
+    print("You can:")
+    # Iterate over available exits
+    for direction in exits:
+        # Print the exit name and where it leads to
+        print_exit(direction, exit_leads_to(exits, direction))
+
+    for enemy in enemies:
+        print("FIGHT " + enemies + " clowns")
+    print("What do you want to do?")
+
+
+def exit_leads_to(exits, direction):
+   """This function takes a dictionary of exits and a direction (a particular
+   exit taken from this dictionary). It returns the name of the room into which
+   this exit leads. 
+   """
+   return places[exits[direction]]["name"]
+
+
+def print_exit(direction, leads_to):
+    """This function prints a line of a menu of exits. It takes a direction (the
+    name of an exit) and the name of the room into which it leads (leads_to),
+    and should print a menu line in the following format:
+
+    GO <EXIT NAME UPPERCASE> to <where it leads>.
+
+    For example:
+    >>> print_exit("east", "you personal tutor's office")
+    GO EAST to you personal tutor's office.
+    >>> print_exit("south", "MJ and Simon's room")
+    GO SOUTH to MJ and Simon's room.
+    """
+    print("GO " + direction.upper() + " to " + leads_to + ".")
+
 
 def execute_go(direction):
     """This function, given the direction (e.g. "south") updates the current room
@@ -158,6 +194,7 @@ def execute_take(item_id):
     else:
         print("You cannot take that.")
 
+
 def execute_drop(item_id):
     """This function takes an item_id as an argument and moves this item from the
     player's inventory to list of items in the current room. However, if there is
@@ -179,6 +216,7 @@ def execute_drop(item_id):
         current_room["items"].append(room_item)
     else:
         print("You cannot drop that!")
+
 
 def print_stats():
     """Take stats from player.py and print them neatly:
@@ -269,6 +307,7 @@ def execute_fight():
     else:
         print("\nYou can't fight anything here!\n")
 
+
 def fight_sequence():
     # call global varibale current_room and print FIGHT
     global current_room
@@ -324,13 +363,13 @@ def fight_sequence():
                     print("Please enter a valid number...")
         else:
             # if they do not have a weapon in their inventory they die
-            print("You pat your pockets vigorously but cannot find a weapon, You have died...")
+            print("You pat your pockets vigorously but cannot find a weapon. You have died...")
             lose_game()
 
         player_stats["kills"] += 1
 
-        if player_stats["health"] <= 0 or player_stats["energy"] <= 0:
-            print("\n\t\tBlood pours out of you as you fall to the ground, you have died...")
+        if (player_stats["health"] <= 0) or (player_stats["energy"] <= 0):
+            print("\n\t\tBlood pours out of you as you fall to the ground. You have died...")
             lose_game()
         else:
             current_room["enemies"] -= 1    
@@ -398,14 +437,16 @@ def win_game(condition):
         print("\nCongratulations, you won, your final score was", score())
         sys.exit()
 
+
 def lose_game():
     # If the user dies use this function to trigger options available.
 
+    global score
     global game_running
 
     endgame()
     # give user choice to try again.
-    print("\n\nWould you like to try again? (Y/N)", score())
+    print("\n\nWould you like to try again? (Y/N)", score)
     user_choice = input()
 
     if normalise_input(user_choice) == "N" or normalise_input(user_choice) == "NO":
@@ -416,11 +457,14 @@ def lose_game():
     else: 
         print("Your ghost whispers words that are incomprehensible...")
 
-def menu():
+
+def menu(exits, room_items, inv_items, enemies):
     """This function prompts the player to type an action.
     The players's input is normalised using the normalise_input()
     function before being returned.
     """
+    # Display menu
+    print_menu(exits, room_items, inv_items, enemies)
     # Read player's input
     user_input = input(">\t")
 
@@ -428,6 +472,7 @@ def menu():
     normalised_user_input = normalise_input(user_input)
 
     return normalised_user_input
+
 
 def move(exits, direction):
     """This function returns the room into which the player will move if, from a
@@ -459,15 +504,18 @@ def main():
     if normalised_user_input == "easy":
         stats["stats"]["health"] = 100
         stats["stats"]["energy"] = 100
-        player_stats["level"] = "easy"
+        stats["stats"]["level"] = "easy"
+
     elif normalised_user_input == "normal":
         stats["stats"]["health"] = 75
         stats["stats"]["energy"] = 75
-        player_stats["level"] = "normal"
+        stats["stats"]["level"] = "normal"
+
     elif normalised_user_input == "hard":
         stats["stats"]["health"] = 50
         stats["stats"]["energy"] = 50
-        player_stats["level"] = "hard"
+        stats["stats"]["level"] = "hard"
+
     else:
         print("That was not a valid response, so we put you on easy.")
 
@@ -478,12 +526,13 @@ def main():
         print_room_items(current_room)
 
         if current_room["dead"] == True:
+            print("You have died.")
             lose_game()
         elif current_room == places["Taly South"]:
             win_game("nothing")
         else:
             # Show the menu with possible actions and ask the player
-            command = menu()
+            command = menu(current_room["exits"], current_room["enemies"])
 
             # Execute the player's command
             execute_command(command)
