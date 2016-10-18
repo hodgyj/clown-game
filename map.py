@@ -3,7 +3,7 @@ from items import *
 map_pryzm = {
 	"name": "Pryzm",
 
-	"description": """You stumble out of Pryzym as it closes,
+	"description": """You stumble out of Pryzm as it closes,
 and find yourself on a dark street surrounded
 by people near a taxi rank. You prepare
 yourself for the long walk home, wishing
