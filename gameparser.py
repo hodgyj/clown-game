@@ -52,10 +52,6 @@ def remove_numbers(text):
     return no_numb
 
 def normalise_input(user_input):
-  """
-  >>> normalise_input('east')
-  'go east'
-  """
 
 	#runs the function remove_punct as initialises the variable no_punct with the result
   no_number = remove_numbers(user_input)
@@ -71,6 +67,6 @@ def normalise_input(user_input):
   final_words = filter_words(list_word, skip_words)
 
   if final_words == "east" or "west" or "south" or "north":
-    final_words = "go " % final_words
+      final_words.insert(0, 'go')
 
   return final_words

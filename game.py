@@ -336,14 +336,6 @@ def fight_sequence():
             enemies = enemies - 1    
 
 
-def execute_run():
-    """Take off energy by random number between 30 and 50.
-    Define new room as only exit possible or user input.
-    current_room = new_room.
-    """
-
-    # TAKE AWAY SCORE POINTS OF USER OR STRIP COMPLETELY?
-
 def execute_command(command):
     """This function takes a command (a list of words as returned by
     normalise_input) and, depending on the type of action (the first word of
