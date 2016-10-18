@@ -11,7 +11,7 @@ the club had stayed open just a little bit longer.
 \n
 You can:
 GO EAST to the Student Union
-Go WEST to the Park""",
+GO WEST to the Park""",
 
 	"exits": {"east" : "Student Union", "west" : "Park"},
 
