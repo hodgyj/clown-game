@@ -429,18 +429,19 @@ def main():
     print("Do You Want To Play Easy, Normal, Or Hard?")
     user_input = input()
     normalised_user_input = normalise_input(user_input)
-    
-    if normalised_user_input == ("easy"):
-        player.health = 100
-        player.energy = 100
-    elif normalised_user_input == ("normal"):
-        player.health = 75
-        player.energy = 75
-    elif normalised_user_input == ("hard"):
-        player.health = 50
-        player.energy = 50
+    normalised_user_input = (", ".join(normalised_user_input))
+
+    if normalised_user_input == "easy":
+        stats["stats"]["health"] = 100
+        stats["stats"]["energy"] = 100
+    elif normalised_user_input == "normal":
+        stats["stats"]["health"] = 75
+        stats["stats"]["energy"] = 75
+    elif normalised_user_input == "hard":
+        stats["stats"]["health"] = 50
+        stats["stats"]["energy"] = 50
     else:
-        print(normalised_user_input)
+        #print(", ".join(normalised_user_input))
         print("That was not a valid response, so we put you on easy.")
 
     while game_running == True:
