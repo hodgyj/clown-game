@@ -8,8 +8,9 @@ and find yourself on a dark street surrounded
 by people near a taxi rank. You prepare
 yourself for the long walk home, wishing
 the club had stayed open just a little bit longer.
-Do you want to walk EAST to the Student Union or
-go WEST through the Park?""",
+You can:
+GO EAST to the Student Union
+Go WEST to the Park""",
 
 	"exits": {"east" : "Student Union", "west" : "Park"},
 
@@ -29,7 +30,9 @@ in the distance, there is litter scattered on the
 ground, a needle is amongst the debris.
 There are lights on in the Museum, you can just about
 make out a shadowy shape on the floor ahead of you, it 
-is a large red-wigged clown, breathing heavily.""",
+is a large red-wigged clown, breathing heavily.
+You can:
+GO EAST or WEST to the Museum""",
 
 	"exits": {"west": "Museum", "east": "Museum"},
 
@@ -64,7 +67,10 @@ map_lidl = {
 	"description": """You walk down the dimly lit road towards Lidl,
 you see a shotgun lying in the car park, beside the gun there is
 smashed glass and a completely empty backpack. You hear laughing
-and the sound of rubber balloons squeeling in the dark alley nearby.""",
+and the sound of rubber balloons squeeling in the dark alley nearby.
+You can:
+GO SOUTH to a Dark Alley
+GO WEST to the Student Union""",
 
 	"exits": {"south": "Dark Alley", "west": "Student Union"},
 
@@ -99,7 +105,10 @@ map_su = {
 	"description": """The lights flicker as you enter the SU,
 you see a cricket bat lying amongst other dead people scattered 
 around the alcohol soaked floor. It is almost silent,
-only the droning sound of the wind whistling is apparent.""",
+only the droning sound of the wind whistling is apparent.
+You can:
+GO EAST to Lidl
+GO WEST to Cross Roads""",
 
 	"exits": {"east": "Lidl", "west": "Cross Roads"},
 
@@ -116,7 +125,11 @@ map_crossroads = {
 	"description": """You are at the cross roads, everything looks safe and 
 not a large pair of shoes in sight. Around you there are a variety of buildings.
 There is a letting office, a coffee shop, and the Law & Politics Building. 
-From here there are multiple ways to get home.""",
+From here there are multiple ways to get home.
+You can:
+GO NORTH to Traffic Lights
+GO EAST to Lidl
+GO WEST to Coffee Shop""",
 
 	"exits": {"east": "Lidl", "west": "Coffee Shop", "north": "Traffic Lights"},
 
@@ -133,7 +146,9 @@ map_coffee = {
 	"description": """You shatter the thick glass of hoffi-coffi
 and walk in, carefully trying not to step on the vast amount of
 glass laying viciously on the floor. The coffee machine is sat
-there, switched on with a cup sitting below on the stand.""",
+there, switched on with a cup sitting below on the stand.
+You can:
+GO SOUTH to Cross Roads""",
 
 	"exits": {"south": "Cross Roads"},
 
@@ -152,7 +167,11 @@ for them turn red and the green man to show, a ironically small
 spotty car with a red nose on the bonnet stops. You start to 
 cross as a seemingly perpetual amount of clowns pour out of the 
 car. Finally the 10th and last clown emerges, fighting these
-may prove difficult...""",
+may prove difficult...
+You can:
+FIGHT the Clowns
+GO NORTH to Taly South
+Go SOUTH to Cross Roads""",
 
 	"exits": {"south": "Cross Roads", "North": "Taly South"},
 
@@ -170,7 +189,11 @@ map_emptyrd = {
 street, you can hear the music coming from the student houses. 
 You try to get in one but its locked and no one is replying to
 your pleading. There is a trio of clowns slowly emerging from
-certain houses, with goliath size 20 blood stained shoes.""",
+certain houses, with goliath size 20 blood stained shoes.
+You can:
+FIGHT the Clowns
+GO NORTH to Traffic Lights
+GO SOUTH to Cross Roads""",
 
 	"exits": {"north": "Traffic Lights", "south": "Cross Roads"},
 
@@ -192,8 +215,8 @@ of fully-armoured police labelled "SWAT", they make their way
 to you, standing on the once attatched front door.
 The red dots of the guns stain your body, as they handcuff
 you hastily, an officer shouts "YOU ARE UNDER ARREST 
-FOR THE MASS-MURDER OF MANY INNOCENT PEOPLE ON HALLOWEEN 
-NIGHT AND FOR DISTRIBUTION AND USE OF CLASS A DRUGS.", 
+FOR THE MASS-MURDER OF MANY INNOCENT PEOPLE ON THE NIGHT OF OCTOBER 31ST
+AND FOR DISTRIBUTION AND USE OF CLASS A DRUGS.", 
 you fall to the ground in shock as you realise, you are
 the monster... END OF GAME""",
 
