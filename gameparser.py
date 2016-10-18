@@ -38,18 +38,39 @@ def remove_punct(text):
 
     return no_punct
 
+def remove_numbers(text):
+    """
+    >>> remove_numbers('12go 3west')
+    'go west'
+    """
+    no_numb = ""
+
+    for char in text:
+      if not (char in "1234567890"):
+        no_numb += char
+
+    return no_numb
+
 def normalise_input(user_input):
+  """
+  >>> normalise_input('east')
+  'go east'
+  """
 
 	#runs the function remove_punct as initialises the variable no_punct with the result
-    no_punct = remove_punct(user_input).lower()
+  no_number = remove_numbers(user_input)
+  no_punct = remove_punct(no_number).lower()
 
-    #initialises the list list_word as blank
-    list_word = []
-    #breaks up list_word into seperate parts
-    for word in no_punct.split():
-        list_word.append(word)
+  #initialises the list list_word as blank
+  list_word = []
+  #breaks up list_word into seperate parts
+  for word in no_punct.split():
+      list_word.append(word)
 
-    #runs filter_words
-    final_words = filter_words(list_word, skip_words)
+  #runs filter_words
+  final_words = filter_words(list_word, skip_words)
 
-    return final_words
+  if final_words == "east" or "west" or "south" or "north":
+    final_words = "go " % final_words
+
+  return final_words

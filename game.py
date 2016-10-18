@@ -291,7 +291,8 @@ def fight_sequence():
         print("\n\t\tFIGHT " + str(k) + "\n")
         list_i = []
         weapons = 0
-        player_stats["health"] -= random.randrange(1,51)
+        player_stats["energy"] -= 20
+        player_stats["health"] -= random.randrange(1,31)
         print("Lost Health! Health now: " + player_stats["health"])
 
         # for each item in inventory
@@ -328,8 +329,9 @@ def fight_sequence():
 
         player_stats["kills"] += 1
 
-        if player_stats["health"] <= 0:
+        if player_stats["health"] <= 0 or player_stats["energy"] <= 0:
             print("\n\t\tBlood pours out of you as you fall to the ground, you have died...")
+            lose_game()
         else:
             enemies = enemies - 1    
 
