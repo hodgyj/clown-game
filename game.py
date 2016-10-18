@@ -152,6 +152,10 @@ def execute_take(item_id):
         current_room["items"].remove(room_item)
         inventory.append(room_item)
         print("You take the " + str(room_item["name"]))
+        if room_item["name"] == "coffee":
+            inventory.remove(room_item)
+            stats["stats"]["energy"] += 50
+            print("You drink the coffee, and gain 50 energy")
     else:
         print("You cannot take that.")
 
@@ -384,16 +388,22 @@ def execute_command(command):
         stats/statistics - Get player statistics like health/exp etc.
             """)
     elif command[0] == "dragon" and current_room["name"] == "Pryzm":
-        win_game()
+        win_game("dragon")
     else:
         print("You murmur words that are incomprehensible...")
 
 
-def win_game():
+def win_game(condition):
     # This is the final print and end game, stops all input but shows high score.
 
     global score
-    print("\nCongratulations, you won, your final score was", score)
+    if condition == "dragon":
+        print("An angelic figure drifts down from the heavens, and praises you for finding the easter egg. Sadly, you have technically cheated and will not be awarded any points")
+        print("Your score is: 0")
+        sys.exit()
+    else:
+        print("\nCongratulations, you won, your final score was", score)
+        sys.ext()
 
 def lose_game():
     # If the user dies use this function to trigger options available.
