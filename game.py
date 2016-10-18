@@ -195,7 +195,6 @@ def print_stats():
     print("Energy : " + str(stats["stats"]["energy"]))
     print_inventory_items(inventory)
 
-
 def use_weapon(weapon):
     """This function should take a parameter weapon and take 1 point off its health
     as it's being used, it should then check its health and if it's health is 0,
@@ -224,7 +223,6 @@ def use_weapon(weapon):
     else:
         # Not a weapon so print warning.
         print("\nThis is not the time or place to use this!")
-
 
 def execute_fight():
     """Start fight and output a random picture of clown and player stats.
@@ -312,7 +310,7 @@ def execute_run():
     current_room = new_room.
     """
 
-    # TAKE AWAY SCORE POINTS?
+    # TAKE AWAY SCORE POINTS OF USER OR STRIP COMPLETELY?
 
 def execute_command(command):
     """This function takes a command (a list of words as returned by
