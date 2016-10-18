@@ -4,6 +4,7 @@ from items import *
 from gameparser import *
 from ascii import *
 import random
+import sys
 
 def list_of_items(items):
     """This function takes a list of items (see items.py for the definition) and
@@ -242,8 +243,9 @@ def use_weapon(weapon):
         # Checking if the health of the weapon is zero
         if weapon["health"] <= 0:
             # If it is removing the weapon from the inventory and printing apppropriate
-            del weapon
+            #del weapon
             print("\nYou won the fight, but your weapon broke")
+            inventory.remove(weapon)
         else:
             print("\nYou won the fight!")
     else:
@@ -280,18 +282,17 @@ def fight_sequence():
     print_stats()
 
     # print the number of enemies to be defeated
-    enemies = current_room["enemies"]
-    print("You must defeat " + str(enemies) + " clowns. Good Luck.")
+    print("You must defeat " + str(current_room["enemies"]) + " clowns. Good Luck.")
 
     # while there are still enemies to be defeated
-    while enemies > 0:
+    while current_room["enemies"] > 0:
         k += 1
         print("\n\t\tFIGHT " + str(k) + "\n")
         list_i = []
         weapons = 0
         player_stats["energy"] -= 20
         player_stats["health"] -= random.randrange(1,31)
-        print("Lost Health! Health now: " + player_stats["health"])
+        print("Lost Health! Health now: " + str(player_stats["health"]))
 
         # for each item in inventory
         for i in inventory:
@@ -304,20 +305,21 @@ def fight_sequence():
         # if there is only one weapon in inventory
         if weapons == 1:
             # call use weapon with only weapon
-            use_weapon(weapon)
+            use_weapon(list_i[0])
 
         elif weapons >= 1:
             while True:
                 # take user input of which weapon they will use
-                for i in len(inventory):
+                for i in range(1, len(inventory)):
                     # list index i - 1 as count starts 0 not 1
                     list_index = i - 1
-                    print(i + ":", str(list_i[list_index]["name"]))
+                    print(str(i) + ":", str(list_i[list_index]["name"]))
 
                 user_input = input("Which weapon would you like to use?>\t")
                 # then call use_weapon with the weapon they chose as the parameter
-                if user_input <= len(inventory) and user_input >= 0:
-                   use_weapon(list_i[user_input])
+                if int(user_input) <= len(inventory) and int(user_input) >= 0:
+                   use_weapon(list_i[(int(user_input)-1)])
+                   break
                 else:
                     print("Please enter a valid number...")
         else:
@@ -331,7 +333,7 @@ def fight_sequence():
             print("\n\t\tBlood pours out of you as you fall to the ground, you have died...")
             lose_game()
         else:
-            enemies = enemies - 1    
+            current_room["enemies"] -= 1    
 
 
 def execute_command(command):
@@ -388,14 +390,13 @@ def execute_command(command):
 def win_game(condition):
     # This is the final print and end game, stops all input but shows high score.
 
-    global score
     if condition == "dragon":
         print("An angelic figure drifts down from the heavens, and praises you for finding the easter egg. Sadly, you have technically cheated and will not be awarded any points")
         print("Your score is: 0")
         sys.exit()
     else:
-        print("\nCongratulations, you won, your final score was", score)
-        sys.ext()
+        print("\nCongratulations, you won, your final score was", score())
+        sys.exit()
 
 def lose_game():
     # If the user dies use this function to trigger options available.
@@ -481,7 +482,7 @@ def main():
         if current_room["dead"] == True:
             lose_game()
         elif current_room == places["Taly South"]:
-            win_game()
+            win_game("nothing")
         else:
             # Show the menu with possible actions and ask the player
             command = menu()
