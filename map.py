@@ -184,7 +184,7 @@ FIGHT the Clowns
 GO NORTH to Taly South
 Go SOUTH to Cross Roads""",
 
-	"exits": {"south": "Cross Roads", "North": "Taly South"},
+	"exits": {"south": "Cross Roads", "north": "Taly South"},
 
 	"items": [],
 

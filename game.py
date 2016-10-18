@@ -4,8 +4,6 @@ from items import *
 from gameparser import *
 from ascii import *
 import random
-import sys
-import os
 
 def list_of_items(items):
     """This function takes a list of items (see items.py for the definition) and
@@ -421,8 +419,6 @@ def lose_game():
     elif normalise_input(user_choice) == "Y" or normalise_input(user_choice) == "YES":
         # TODO JM - reset game.py
         print("")
-        python = sys.executable
-        os.execl(python, python, * sys.argv)
     else: 
         print("Your ghost whispers words that are incomprehensible...")
 
@@ -459,6 +455,7 @@ def main():
     global current_room
     from map import map_pryzm
     from ascii import clown2 
+
     title()
     print(clown2)
 
@@ -502,4 +499,6 @@ def main():
 # '__main__' is the name of the scope in which top-level code executes.
 # See https://docs.python.org/3.4/library/__main__.html for explanation
 if __name__ == "__main__":
+    import ctypes
+    ctypes.windll.kernel32.SetConsoleTitleA(b"Nightmare On Clown St.")
     main()
