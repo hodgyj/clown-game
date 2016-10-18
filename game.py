@@ -74,27 +74,25 @@ def print_room_items(room):
 
 
 def print_room(room):
-    """This function takes a room as an input and nicely displays its name
-    and description. The room argument is a dictionary with entries "name",
-    "description" etc. (see map.py for the definition). The name of the room
-    is printed in all capitals and framed by blank lines. Then follows the
-    description of the room and a blank line again. For example:
-
+    # Prints room the user is in.
+    """
     >>> print_room(places["Pryzm"])
     <BLANKLINE>
-    PRYZM
+    -----------------PRYZM------------------
     <BLANKLINE>
-    You stumble out of Pryzym as it closes,
+    You stumble out of Pryzm as it closes,
     and find yourself on a dark street surrounded
     by people near a taxi rank. You prepare
     yourself for the long walk home, wishing
     the club had stayed open just a little bit longer.
-    Do you want to walk EAST to the Student Union or
-    go WEST through the Park?
     <BLANKLINE>
-
-    Note: <BLANKLINE> here means that doctest should expect a blank line.
+    <BLANKLINE>
+    You can:
+    GO EAST to the Student Union
+    GO WEST to the Park
+    <BLANKLINE>
     """
+
     # Display room name
     print('\n' + room["name"].upper().center(40, '-') + '\n')
     # Display room description
@@ -430,30 +428,36 @@ def win_game(condition):
     # This is the final print and end game, stops all input but shows high score.
 
     if condition == "dragon":
-        print("An angelic figure drifts down from the heavens, and praises you for finding the easter egg. Sadly, you have technically cheated and will not be awarded any points")
-        print("Your score is: 0")
+        print("""An angelic figure drifts down from the heavens, 
+            and praises you for finding the easter egg. Sadly, 
+            you have technically cheated and will not be awarded any points""")
+        print("Your score is:", score)
         sys.exit()
     else:
-        print("\nCongratulations, you won, your final score was", score())
-        sys.exit()
-
-
+        print("\nCongratulations, you won, your final score was", score + "\n")
+        try_again()
+        
 def lose_game():
     # If the user dies use this function to trigger options available.
-
     global score
     global game_running
 
+    # Print ascii for end of game.
     endgame()
+
+    try_again()
+
+def try_again():
     # give user choice to try again.
     print("\n\nWould you like to try again? (Y/N)", score)
     user_choice = input()
 
     if normalise_input(user_choice) == "N" or normalise_input(user_choice) == "NO":
         game_running == False
+        sys.ext()
     elif normalise_input(user_choice) == "Y" or normalise_input(user_choice) == "YES":
-        # TODO JM - reset game.py
-        print("")
+        game_running == True
+        execfile('game.py')
     else: 
         print("Your ghost whispers words that are incomprehensible...")
 
