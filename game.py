@@ -441,7 +441,6 @@ def main():
         stats["stats"]["health"] = 50
         stats["stats"]["energy"] = 50
     else:
-        #print(", ".join(normalised_user_input))
         print("That was not a valid response, so we put you on easy.")
 
     while game_running == True:
