@@ -8,6 +8,7 @@ and find yourself on a dark street surrounded
 by people near a taxi rank. You prepare
 yourself for the long walk home, wishing
 the club had stayed open just a little bit longer.
+\n
 You can:
 GO EAST to the Student Union
 Go WEST to the Park""",
@@ -31,6 +32,7 @@ ground, a needle is amongst the debris.
 There are lights on in the Museum, you can just about
 make out a shadowy shape on the floor ahead of you, it 
 is a large red-wigged clown, breathing heavily.
+\n
 You can:
 GO EAST or WEST to the Museum""",
 
@@ -68,6 +70,7 @@ map_lidl = {
 you see a shotgun lying in the car park, beside the gun there is
 smashed glass and a completely empty backpack. You hear laughing
 and the sound of rubber balloons squeeling in the dark alley nearby.
+\n
 You can:
 GO SOUTH to a Dark Alley
 GO WEST to the Student Union""",
@@ -106,6 +109,7 @@ map_su = {
 you see a cricket bat lying amongst other dead people scattered 
 around the alcohol soaked floor. It is almost silent,
 only the droning sound of the wind whistling is apparent.
+\n
 You can:
 GO EAST to Lidl
 GO WEST to Cross Roads""",
@@ -126,6 +130,7 @@ map_crossroads = {
 not a large pair of shoes in sight. Around you there are a variety of buildings.
 There is a letting office, a coffee shop, and the Law & Politics Building. 
 From here there are multiple ways to get home.
+\n
 You can:
 GO NORTH to Traffic Lights
 GO EAST to Lidl
@@ -147,6 +152,7 @@ map_coffee = {
 and walk in, carefully trying not to step on the vast amount of
 glass laying viciously on the floor. The coffee machine is sat
 there, switched on with a cup sitting below on the stand.
+\n
 You can:
 GO SOUTH to Cross Roads""",
 
@@ -168,6 +174,7 @@ spotty car with a red nose on the bonnet stops. You start to
 cross as a seemingly perpetual amount of clowns pour out of the 
 car. Finally the 10th and last clown emerges, fighting these
 may prove difficult...
+\n
 You can:
 FIGHT the Clowns
 GO NORTH to Taly South
@@ -190,6 +197,7 @@ street, you can hear the music coming from the student houses.
 You try to get in one but its locked and no one is replying to
 your pleading. There is a trio of clowns slowly emerging from
 certain houses, with goliath size 20 blood stained shoes.
+\n
 You can:
 FIGHT the Clowns
 GO NORTH to Traffic Lights
