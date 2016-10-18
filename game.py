@@ -277,8 +277,8 @@ def fight_sequence():
     k = 0
 
     # print a random picture of a clown from ascii.py
-    number = random.randrange(1,8)
-    print(clowns[number])
+    number = random.randint(1,6)
+    clowns(number)
     print_stats()
 
     # print the number of enemies to be defeated
@@ -352,6 +352,8 @@ def execute_command(command):
             execute_go(command[1])
         else:
             print("Go where?")
+    #elif command[0] == "east" or "west" or "north" or "south":
+        #execute_go(command[0])
     elif command[0] == "take":
         if len(command) > 1:
             execute_take(command[1])

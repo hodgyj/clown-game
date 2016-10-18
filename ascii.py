@@ -243,3 +243,10 @@ def clown6():
   print("            |* _,-' `-.*  |                |* ,-'   `-.* |")
   print("            `-'         `-'                `./         \,'")
   print("")
+
+clowns = {
+1: clown1,
+2: clown2,
+3: clown3,
+4: clown4,
+5: clown5}
