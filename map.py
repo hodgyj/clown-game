@@ -34,6 +34,7 @@ make out a shadowy shape on the floor ahead of you, it
 is a large, red-wigged clown breathing heavily.
 \n
 You can:
+FIGHT the Clown
 GO EAST or WEST to the Museum""",
 
 	"exits": {"west": "Museum", "east": "Museum"},
@@ -120,7 +121,7 @@ GO WEST to Cross Roads""",
 
 	"items": [item_cricket_bat],
 
-	"enemies": 0,
+	"enemies": 1,
 
 	"dead": False,
 }
@@ -144,7 +145,7 @@ GO WEST to Coffee Shop""",
 
 	"items": [item_bottle, item_bottle],
 
-	"enemies": 0,
+	"enemies": 2,
 
 	"dead": False,
 }
@@ -181,10 +182,10 @@ may prove difficult...
 \n
 You can:
 FIGHT the Clowns
-GO NORTH to Taly South
+GO NORTH to Empty Road
 Go SOUTH to Cross Roads""",
 
-	"exits": {"south": "Cross Roads", "north": "Taly South"},
+	"exits": {"south": "Cross Roads", "north": "Empty Road"},
 
 	"items": [],
 
@@ -204,10 +205,10 @@ certain houses with goliath, size 20 blood-stained shoes.
 \n
 You can:
 FIGHT the Clowns
-GO NORTH to Traffic Lights
-GO SOUTH to Cross Roads""",
+GO North to Taly South
+GO SOUTH to Traffic Lights""",
 
-	"exits": {"north": "Traffic Lights", "south": "Cross Roads"},
+	"exits": {"north": "Taly South", "south": "Traffic Lights"},
 
 	"items":[],
 
