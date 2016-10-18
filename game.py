@@ -127,7 +127,6 @@ def execute_go(direction):
     if str(direction) in current_room["exits"]:
         # Print name of new room and move to new room
         new_room = current_room["exits"][str(direction)]
-        print(new_room)
         current_room = places[new_room]
     else:
         print("You cannot go there.")
