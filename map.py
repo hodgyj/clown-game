@@ -24,9 +24,14 @@ map_park = {
 
 	"description": """You walk through the park, it is
 surprisingly quiet with just the sound of owls echoing 
-in the distance, there is litter scattered on the
-ground, a needle is amongst the debris. There are lights
- on in the Museum""",
+in the distance. There is litter scattered on the
+ground and a needle is amongst the debris.
+There are lights on in the Museum, you can just about
+make out a shadowy shape on the floor ahead of you, it 
+is a large, red-wigged clown breathing heavily.
+\n
+You can:
+GO EAST or WEST to the Museum""",
 
 	"descclown": """You can just about make out a shadowy 
 shape on the floor ahead of you, it is a large, 
