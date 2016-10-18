@@ -306,14 +306,14 @@ def fight_sequence():
         elif weapons >= 1:
             while True:
                 # take user input of which weapon they will use
-                for i in max_items:
+                for i in len(inventory):
                     # list index i - 1 as count starts 0 not 1
                     list_index = i - 1
                     print(i + ":", str(list_i[list_index]["name"]))
 
                 user_input = input("Which weapon would you like to use?>\t")
                 # then call use_weapon with the weapon they chose as the parameter
-                if user_input <= max_items and user_input >= 0:
+                if user_input <= len(inventory) and user_input >= 0:
                    use_weapon(list_i[user_input])
                 else:
                     print("Please enter a valid number...")
