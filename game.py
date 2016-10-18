@@ -153,6 +153,10 @@ def execute_take(item_id):
         current_room["items"].remove(room_item)
         inventory.append(room_item)
         print("You take the " + str(room_item["name"]))
+        if room_item["name"] == "coffee":
+            inventory.remove(room_item)
+            stats["stats"]["energy"] += 50
+            print("You drink the coffee, and gain 50 energy")
     else:
         print("You cannot take that.")
 
