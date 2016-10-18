@@ -152,6 +152,7 @@ def execute_take(item_id):
         # Remove item from current room and add to inventory
         current_room["items"].remove(room_item)
         inventory.append(room_item)
+        print("You take the " + str(room_item["name"]))
     else:
         print("You cannot take that.")
 
@@ -425,17 +426,22 @@ def main():
 
     print(title)
 
-    user_input = input("Do You Want To Play Easy, Normal, Or Hard?")
-    if user_input == ("EASY"):
-        player.health = 100
-        player.energy = 100
-    elif user_input == ("NORMAL"):
-        player.health = 75
-        player.energy = 75
-    elif user_input == ("HARD"):
-        player.health = 50
-        player.energy = 50
+    print("Do You Want To Play Easy, Normal, Or Hard?")
+    user_input = input()
+    normalised_user_input = normalise_input(user_input)
+    normalised_user_input = (", ".join(normalised_user_input))
+
+    if normalised_user_input == "easy":
+        stats["stats"]["health"] = 100
+        stats["stats"]["energy"] = 100
+    elif normalised_user_input == "normal":
+        stats["stats"]["health"] = 75
+        stats["stats"]["energy"] = 75
+    elif normalised_user_input == "hard":
+        stats["stats"]["health"] = 50
+        stats["stats"]["energy"] = 50
     else:
+        #print(", ".join(normalised_user_input))
         print("That was not a valid response, so we put you on easy.")
 
     while game_running == True:
