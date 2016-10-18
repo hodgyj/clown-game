@@ -401,12 +401,11 @@ def win_game(condition):
 def lose_game():
     # If the user dies use this function to trigger options available.
 
-    global score
     global game_running
 
     endgame()
     # give user choice to try again.
-    print("\n\nWould you like to try again? (Y/N)", score)
+    print("\n\nWould you like to try again? (Y/N)", score())
     user_choice = input()
 
     if normalise_input(user_choice) == "N" or normalise_input(user_choice) == "NO":
