@@ -375,8 +375,9 @@ def lose_game():
     global score
     global game_running
 
+    endgame()
     # give user choice to try again.
-    print("\n\nYou died, try again? (Y/N)", score)
+    print("\n\nWould you like to try again? (Y/N)", score)
     user_choice = input()
 
     if normalise_input(user_choice) == "N" or normalise_input(user_choice) == "NO":
@@ -422,7 +423,6 @@ def main():
     global current_room
     from map import map_pryzm
     from ascii import clown2 
-
     title()
     print(clown2)
 
