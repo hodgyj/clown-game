@@ -195,6 +195,30 @@ def print_stats():
     print("Energy : " + str(stats["stats"]["energy"]))
     print_inventory_items(inventory)
 
+
+def score():
+    """ To determine the end score. take into account health, energy, clowns killed
+
+    >>> score()
+    200
+    """
+    h = player_stats["health"]
+    e = player_stats["energy"]
+    k = player_stats["kills"]
+
+    # determine level game player at
+    if player_stats["level"] == "hard":
+        multi = 1.5
+    elif player_stats["level"] == "normal":
+        multi = 1
+    else:
+        multi = 0.5
+
+    # score is health add energy, times 2, add kills times 10, times the effect of the level
+    score = ((h + e) * 2  + (k * 10)) * multi
+    return int(score)
+
+
 def use_weapon(weapon):
     """This function should take a parameter weapon and take 1 point off its health
     as it's being used, it should then check its health and if it's health is 0,
@@ -224,6 +248,7 @@ def use_weapon(weapon):
         # Not a weapon so print warning.
         print("\nThis is not the time or place to use this!")
 
+
 def execute_fight():
     """Start fight and output a random picture of clown and player stats.
     For each enemy in room:
@@ -250,7 +275,7 @@ def fight_sequence():
     # print a random picture of a clown from ascii.py
     number = random.randrange(1,8)
     print(clowns[number])
-    # print_stats()
+    print_stats()
 
     # print the number of enemies to be defeated
     enemies = current_room["enemies"]
@@ -262,8 +287,8 @@ def fight_sequence():
         print("\n\t\tFIGHT " + str(k) + "\n")
         list_i = []
         weapons = 0
-        # health -= random.randrange(1,51)
-        # print("Lost Health! Health now: " + health)
+        player_stats["health"] -= random.randrange(1,51)
+        print("Lost Health! Health now: " + player_stats["health"])
 
         # for each item in inventory
         for i in inventory:
@@ -274,35 +299,36 @@ def fight_sequence():
                 weapons = weapons + 1
 
         # if there is only one weapon in inventory
-        if weapons >= 1:
+        if weapons == 1:
+            # call use weapon with only weapon
+            use_weapon(weapon)
 
-        #     # call use_weapon
-        #     use_weapon(list_i[0])
-        # # if there are 2 weapons in inventory
-        # elif weapons == 2:
-        #     while True:
-        #         # take user input of which weapon they will use
-        #         for i in max_items:
-        #             # list index i - 1 as count starts 0 not 1
-        #             list_index = i - 1
-        #             print(i + ":", str(list_i[list_index]["name"]))
+        elif weapons >= 1:
+            while True:
+                # take user input of which weapon they will use
+                for i in max_items:
+                    # list index i - 1 as count starts 0 not 1
+                    list_index = i - 1
+                    print(i + ":", str(list_i[list_index]["name"]))
 
-        #         user_input = input("Which weapon would you like to use?>\t")
-        #         # then call use_weapon with the weapon they chose as the parameter
-        #         if user_input <= max_items and user_input >= 0:
-        #             use_weapon(list_i[user_input])
-        #         else:
-        #             print("Please enter a valid number...")
-            print("REMOVE ME")
+                user_input = input("Which weapon would you like to use?>\t")
+                # then call use_weapon with the weapon they chose as the parameter
+                if user_input <= max_items and user_input >= 0:
+                   use_weapon(list_i[user_input])
+                else:
+                    print("Please enter a valid number...")
         else:
             # if they do not have a weapon in their inventory they die
             print("You pat your pockets vigorously but cannot find a weapon, You have died...")
             lose_game()
 
-    if player_stats["health"] <= 0:
-        print("\n\t\tBlood pours out of you as you fall to the ground, you have died...")
-    else:
-        enemies = enemies - 1    
+        player_stats["kills"] += 1
+
+        if player_stats["health"] <= 0:
+            print("\n\t\tBlood pours out of you as you fall to the ground, you have died...")
+        else:
+            enemies = enemies - 1    
+
 
 def execute_run():
     """Take off energy by random number between 30 and 50.
@@ -470,12 +496,15 @@ def main():
     if normalised_user_input == "easy":
         stats["stats"]["health"] = 100
         stats["stats"]["energy"] = 100
+        player_stats["level"] = "easy"
     elif normalised_user_input == "normal":
         stats["stats"]["health"] = 75
         stats["stats"]["energy"] = 75
+        player_stats["level"] = "normal"
     elif normalised_user_input == "hard":
         stats["stats"]["health"] = 50
         stats["stats"]["energy"] = 50
+        player_stats["level"] = "hard"
     else:
         print("That was not a valid response, so we put you on easy.")
 
