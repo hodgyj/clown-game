@@ -449,7 +449,6 @@ def move(exits, direction):
 def main():
     global current_room
     from map import map_pryzm
-    from ascii import clown1
     title()
     clown6()
 
