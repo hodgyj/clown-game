@@ -422,7 +422,6 @@ def main():
     global current_room
     from map import map_pryzm
     from ascii import clown2 
-    print('\x1b[6;30;42m' + 'Success!' + '\x1b[0m')
 
     print("")                                                                  
     print(" ███▄    █ ██▓ ▄████ ██░ ██▄▄▄█████▓███▄ ▄███▓▄▄▄      ██▀███ ▓█████ ")
