@@ -52,7 +52,7 @@ map_museum = {
 music in the distance, you are safe from the clown. You stand in
 the lobby area and look around... As you turn, a clown appears
 from around the corner holding a rusty shiv, and stabs you multiple times
-as you beg for your life. You have died...""",
+as you beg for your life.""",
 
 	"exits": {},
 
@@ -91,7 +91,7 @@ map_alley = {
 appear from around the corner, dripping in blood. You attempt
 to fight back, but their knives are thrusted into your body.
 The last thing you see is the bright red noses of the clowns
-that murdered you. You have died...""",
+that murdered you.""",
 
 	"exits": {},
 
