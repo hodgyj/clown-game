@@ -488,7 +488,7 @@ def main():
     print(clown2)
 
 
-    print("Do You Want To Play Easy, Normal, Or Hard?")
+    print("Do you want to play on Easy, Normal, or Hard?")
     user_input = input()
     normalised_user_input = normalise_input(user_input)
     normalised_user_input = (", ".join(normalised_user_input))
