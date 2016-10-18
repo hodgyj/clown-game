@@ -94,7 +94,7 @@ def print_room(room):
     Note: <BLANKLINE> here means that doctest should expect a blank line.
     """
     # Display room name
-    print('\n' + room["name"].upper() + '\n')
+    print('\n' + room["name"].upper().center(40, '-') + '\n')
     # Display room description
     print(room["description"] + '\n')
 
@@ -475,6 +475,7 @@ def main():
 
     while game_running == True:
         # Display game status (room description, inventory etc.)
+        print("")
         print_room(current_room)
         print_room_items(current_room)
 
