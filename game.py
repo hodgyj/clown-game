@@ -264,7 +264,7 @@ def execute_fight():
     print "Fight won"
     """
 
-    if clowns:
+    if current_room["enemies"] > 0:
         fight_sequence()
     else:
         print("\nYou can't fight anything here!\n")
