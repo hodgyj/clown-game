@@ -460,7 +460,7 @@ def main():
     from map import map_pryzm
     from ascii import clown1
     title()
-    print(clown1)
+    clown6()
 
     print("Do You Want To Play Easy, Normal, Or Hard?")
     user_input = input()
