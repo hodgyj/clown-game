@@ -97,7 +97,7 @@ map_su = {
 	"name": "Student Union",
 
 	"description": """The lights flicker as you enter the SU,
-you see a cricket bat lying amongst other rubbish scattered 
+you see a cricket bat lying amongst other dead people scattered 
 around the alcohol soaked floor. It is almost silent,
 only the droning sound of the wind whistling is apparent.""",
 

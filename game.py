@@ -295,7 +295,7 @@ def fight_sequence():
         #             use_weapon(list_i[user_input])
         #         else:
         #             print("Please enter a valid number...")
-
+            print("REMOVE ME")
         else:
             # if they do not have a weapon in their inventory they die
             print("You pat your pockets vigorously but cannot find a weapon, You have died...")
