@@ -481,6 +481,7 @@ def main():
 
     while game_running == True:
         # Display game status (room description, inventory etc.)
+        print("")
         print_room(current_room)
         print_room_items(current_room)
 
