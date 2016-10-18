@@ -103,14 +103,7 @@ def print_room(room):
 
 
 def print_menu(exits, enemies):
-    """This function displays the menu of available actions to the player. The
-    argument exits is a dictionary of exits as exemplified in map.py. The
-    arguments room_items and inv_items are the items lying around in the room
-    and carried by the player respectively. The menu should, for each exit,
-    call the function print_exit() to print the information about each exit in
-    the appropriate format. The room into which an exit leads is obtained
-    using the function exit_leads_to(). Then, it should print a list of commands
-    related to items: for each item in the room print
+    """This function displays the menu of available actions to the player.
     """
     print("You can:")
     # Iterate over available exits
@@ -124,17 +117,14 @@ def print_menu(exits, enemies):
 
 
 def exit_leads_to(exits, direction):
-   """This function takes a dictionary of exits and a direction (a particular
-   exit taken from this dictionary). It returns the name of the room into which
-   this exit leads. 
+   """This function takes a dictionary of exits and a direction. It returns the
+   name of the room into which this exit leads.
    """
    return places[exits[direction]]["name"]
 
 
 def print_exit(direction, leads_to):
-    """This function prints a line of a menu of exits. It takes a direction (the
-    name of an exit) and the name of the room into which it leads (leads_to),
-    and should print a menu line in the following format:
+    """This function prints a line of a menu of exits.
 
     GO <EXIT NAME UPPERCASE> to <where it leads>.
 
@@ -168,9 +158,7 @@ def execute_go(direction):
 
 def execute_take(item_id):
     """This function takes an item_id as an argument and moves this item from the
-    list of items in the current room to the player's inventory. However, if
-    there is no such item in the room or the number of items in inventory is
-    larger than or equal to 2, this function prints "You cannot take that."
+    list of items in the current room to the player's inventory.
     """
 
     global current_room
@@ -286,9 +274,8 @@ def fight_sequence():
     k = 0
     print("\t\t\tFIGHT")
     # print a random picture of a clown from ascii.py
-    number = random.randrange(1,8)
-    print(clowns[number])
-    # print_stats()
+    random.choice(clowns)()
+    print_stats()
 
     # print the number of enemies to be defeated
     enemies = current_room["enemies"]
@@ -353,11 +340,8 @@ def execute_run():
     # TAKE AWAY SCORE POINTS?
 
 def execute_command(command):
-    """This function takes a command (a list of words as returned by
-    normalise_input) and, depending on the type of action (the first word of
-    the command: "go", "take", "drop", "fight", "run", or "dragon"), executes
-    either execute_go, execute_take, execute_drop, execute_fight, or execute_run,
-    supplying the second word as the argument if the function requires one.
+    """This function takes a command and calls a particular function, depending on
+    that command
     """
 
     if 0 == len(command):
@@ -407,15 +391,16 @@ def win_game():
     # This is the final print and end game, stops all input but shows high score.
 
     if condition == "dragon":
-        print("""An angelic figure drifts down from the heavens, 
-            and praises you for finding the easter egg. Sadly, 
+        print("""An angelic figure drifts down from the heavens,
+            and praises you for finding the easter egg. Sadly,
             you have technically cheated and will not be awarded any points""")
         print("Your score is:", score)
         sys.exit()
     else:
         print("\nCongratulations, you won, your final score was", score + "\n")
         try_again()
-        
+
+
 def lose_game():
     # If the user dies use this function to trigger options available.
     global score
@@ -425,6 +410,7 @@ def lose_game():
     endgame()
 
     try_again()
+
 
 def try_again():
     # give user choice to try again.
@@ -437,7 +423,7 @@ def try_again():
     elif normalise_input(user_choice) == "Y" or normalise_input(user_choice) == "YES":
         game_running == True
         execfile('game.py')
-    else: 
+    else:
         print("Your ghost whispers words that are incomprehensible...")
 
 
@@ -471,6 +457,7 @@ def move(exits, direction):
     """
     # Next room to go to
     return places[exits[direction]]
+
 
 # This is the entry point of our program
 def main():
