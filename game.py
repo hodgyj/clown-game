@@ -449,10 +449,9 @@ def move(exits, direction):
 def main():
     global current_room
     from map import map_pryzm
-    from ascii import clown2 
-
+    from ascii import clown1
     title()
-    print(clown2)
+    clown6()
 
     print("Do you want to play on Easy, Normal, or Hard?")
     user_input = input()
