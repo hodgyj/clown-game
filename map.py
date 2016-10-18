@@ -8,10 +8,7 @@ and find yourself on a dark street surrounded
 by people near a taxi rank. You prepare
 yourself for the long walk home, wishing
 the club had stayed open just a little bit longer.
-\n
-You can:
-GO EAST to the Student Union
-GO WEST to the Park""",
+""",
 
 	"exits": {"east" : "Student Union", "west" : "Park"},
 
@@ -28,14 +25,12 @@ map_park = {
 	"description": """You walk through the park, it is
 surprisingly quiet with just the sound of owls echoing 
 in the distance, there is litter scattered on the
-ground, a needle is amongst the debris.
-There are lights on in the Museum, you can just about
-make out a shadowy shape on the floor ahead of you, it 
-is a large, red-wigged clown breathing heavily.
-\n
-You can:
-FIGHT the Clown
-GO EAST or WEST to the Museum""",
+ground, a needle is amongst the debris. There are lights
+ on in the Museum""",
+
+	"descclown": """You can just about make out a shadowy 
+shape on the floor ahead of you, it is a large, 
+red-wigged clown breathing heavily.""",
 
 	"exits": {"west": "Museum", "east": "Museum"},
 
@@ -53,7 +48,7 @@ map_museum = {
 music in the distance, you are safe from the clown. You stand in
 the lobby area and look around... As you turn, a clown appears
 from around the corner holding a rusty shiv, and stabs you multiple times
-as you beg for your life. You have died...""",
+as you beg for your life.""",
 
 	"exits": {},
 
@@ -71,10 +66,7 @@ map_lidl = {
 You see a shotgun lying in the car park, beside the gun there is
 smashed glass and a completely empty backpack. You hear laughing
 and the sound of rubber balloons squeeling in the dark alley nearby.
-\n
-You can:
-GO SOUTH to a Dark Alley
-GO WEST to the Student Union""",
+""",
 
 	"exits": {"south": "Dark Alley", "west": "Student Union"},
 
@@ -92,7 +84,7 @@ map_alley = {
 appear from around the corner, dripping in blood. You attempt
 to fight back, but their knives are thrusted into your body.
 The last thing you see is the bright red noses of the clowns
-that murdered you. You have died...""",
+that murdered you.""",
 
 	"exits": {},
 
@@ -110,12 +102,10 @@ map_su = {
 You see a cricket bat lying amongst other dead people scattered 
 around the alcohol soaked floor. It is almost silent,
 only the droning sound of the wind whistling is apparent. Suddenly,
-you hear the stomping of enourmous shoes as a clown comes towards you.
-\n
-You can:
-FIGHT the Clown
-GO EAST to Lidl
-GO WEST to Cross Roads""",
+you hear the stomping of enourmous shoes as a clown comes towards you.""",
+	
+	"descclown": """Suddenly, you hear the stomping of enourmous
+shoes as a clown comes towards you.""",
 
 	"exits": {"east": "Lidl", "west": "Cross Roads"},
 
@@ -131,15 +121,10 @@ map_crossroads = {
 
 	"description": """You are at the cross roads, everything looks safe and 
 not a large pair of shoes in sight. Around you there are a variety of buildings.
-There is a letting office, a coffee shop, and the Law & Politics Building. 
-From here there are multiple ways to get home, but standing in the middle of the road, 
-two clowns have spotted you.
-\n
-You can:
-FIGHT the Clown
-GO NORTH to Traffic Lights
-GO EAST to Lidl
-GO WEST to Coffee Shop""",
+There is a letting office, a coffee shop, and the Law & Politics Building.""",
+
+	"descclown": """From here there are multiple ways to get home, 
+	but standing in the middle of the road, two clowns have spotted you.""",
 
 	"exits": {"east": "Lidl", "west": "Coffee Shop", "north": "Traffic Lights"},
 
@@ -157,9 +142,7 @@ map_coffee = {
 and walk in, carefully trying not to step on the vast amount of
 glass laying viciously on the floor. The coffee machine is sat
 there switched on with a cup sitting below on the stand.
-\n
-You can:
-GO SOUTH to Cross Roads""",
+""",
 
 	"exits": {"south": "Cross Roads"},
 
@@ -177,19 +160,15 @@ map_traffic = {
 for them turn red and the green man to show, a ironically small
 spotty car with a red nose on the bonnet stops. You start to 
 cross as a seemingly perpetual amount of clowns pour out of the 
-car. Finally, the 10th and last clown emerges, fighting these
+car. Finally, the 15th and last clown emerges, fighting these
 may prove difficult...
-\n
-You can:
-FIGHT the Clowns
-GO NORTH to Empty Road
-Go SOUTH to Cross Roads""",
+""",
 
 	"exits": {"south": "Cross Roads", "north": "Empty Road"},
 
 	"items": [],
 
-	"enemies":10,
+	"enemies": 15,
 
 	"dead": False,
 }
@@ -200,15 +179,13 @@ map_emptyrd = {
 	"description": """There are bins scattering litter all up the 
 street, you can hear the music coming from the student houses. 
 You try to get in one but its locked and no one is replying to
-your pleading. There is a trio of clowns slowly emerging from
+your pleading.""",
+	
+	"descclown" : """There is a trio of clowns slowly emerging from
 certain houses with goliath, size 20 blood-stained shoes.
-\n
-You can:
-FIGHT the Clowns
-GO North to Taly South
-GO SOUTH to Traffic Lights""",
+""",
 
-	"exits": {"north": "Taly South", "south": "Traffic Lights"},
+	"exits": {"north": "Taly South"},
 
 	"items":[],
 
