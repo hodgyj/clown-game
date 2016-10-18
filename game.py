@@ -248,7 +248,7 @@ def fight_sequence():
     global max_items
     
     k = 0
-    print("\t\t\tFIGHT")
+
     # print a random picture of a clown from ascii.py
     number = random.randrange(1,8)
     print(clowns[number])
@@ -261,9 +261,9 @@ def fight_sequence():
     # while there are still enemies to be defeated
     while enemies > 0:
         k += 1
-        print("\n\t\t\tFIGHT " + str(k) + "\n")
+        print("\n\t\tFIGHT " + str(k) + "\n")
         list_i = []
-        j = 0
+        weapons = 0
         # health -= random.randrange(1,51)
         # print("Lost Health! Health now: " + health)
 
@@ -273,36 +273,38 @@ def fight_sequence():
             if i["weapon"]:
                 list_i.append(i)
                 # keep track of how many weapons are in inventory
-                j = j + 1
+                weapons = weapons + 1
 
         # if there is only one weapon in inventory
-        if j == 1:
-            # call use_weapon
-            use_weapon(list_i[0])
-        # if there are 2 weapons in inventory
-        elif j == 2:
-            while True:
-                # take user input of which weapon they will use
-                for i in max_items:
-                    # list index i - 1 as count starts 0 not 1
-                    list_index = i - 1
-                    print(i + ":", str(list_i[list_index]["name"]))
+        if weapons >= 1:
 
-                user_input = input("Which weapon would you like to use?>\t")
-                # then call use_weapon with the weapon they chose as the parameter
-                if user_input <= max_items and user_input >= 0:
-                    use_weapon(list_i[user_input])
-                else:
-                    print("Please enter a valid number...")
-        # if they do not have a weapon in their inventory they die
+        #     # call use_weapon
+        #     use_weapon(list_i[0])
+        # # if there are 2 weapons in inventory
+        # elif weapons == 2:
+        #     while True:
+        #         # take user input of which weapon they will use
+        #         for i in max_items:
+        #             # list index i - 1 as count starts 0 not 1
+        #             list_index = i - 1
+        #             print(i + ":", str(list_i[list_index]["name"]))
+
+        #         user_input = input("Which weapon would you like to use?>\t")
+        #         # then call use_weapon with the weapon they chose as the parameter
+        #         if user_input <= max_items and user_input >= 0:
+        #             use_weapon(list_i[user_input])
+        #         else:
+        #             print("Please enter a valid number...")
+
         else:
+            # if they do not have a weapon in their inventory they die
             print("You pat your pockets vigorously but cannot find a weapon, You have died...")
             lose_game()
 
-        if player_stats["health"] <= 0:
-            print("\t\t\tBlood pours out of you as you fall to the ground, you have died...")
-        else:
-            enemies = enemies - 1    
+    if player_stats["health"] <= 0:
+        print("\n\t\tBlood pours out of you as you fall to the ground, you have died...")
+    else:
+        enemies = enemies - 1    
 
 def execute_run():
     """Take off energy by random number between 30 and 50.
