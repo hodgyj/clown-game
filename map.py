@@ -31,7 +31,7 @@ in the distance, there is litter scattered on the
 ground, a needle is amongst the debris.
 There are lights on in the Museum, you can just about
 make out a shadowy shape on the floor ahead of you, it 
-is a large red-wigged clown, breathing heavily.
+is a large, red-wigged clown breathing heavily.
 \n
 You can:
 GO EAST or WEST to the Museum""",
@@ -51,7 +51,7 @@ map_museum = {
 	"description": """You run into the desolate Museum, you can hear
 music in the distance, you are safe from the clown. You stand in
 the lobby area and look around... As you turn, a clown appears
-from around the corner holding a rusty shiv, and stabs multiple
+from around the corner holding a rusty shiv, and stabs you multiple times
 as you beg for your life. You have died...""",
 
 	"exits": {},
@@ -66,8 +66,8 @@ as you beg for your life. You have died...""",
 map_lidl = {
 	"name": "Lidl",
 
-	"description": """You walk down the dimly lit road towards Lidl,
-you see a shotgun lying in the car park, beside the gun there is
+	"description": """You walk down the dimly lit road towards Lidl.
+You see a shotgun lying in the car park, beside the gun there is
 smashed glass and a completely empty backpack. You hear laughing
 and the sound of rubber balloons squeeling in the dark alley nearby.
 \n
@@ -89,7 +89,7 @@ map_alley = {
 
 	"description": """Before you step any further, 3 masked figures
 appear from around the corner, dripping in blood. You attempt
-to fight back, but the knife slowly is pulled out of your body.
+to fight back, but their knives are thrusted into your body.
 The last thing you see is the bright red noses of the clowns
 that murdered you. You have died...""",
 
@@ -105,8 +105,8 @@ that murdered you. You have died...""",
 map_su = {
 	"name": "Student Union",
 
-	"description": """The lights flicker as you enter the SU,
-you see a cricket bat lying amongst other dead people scattered 
+	"description": """The lights flicker as you enter the SU.
+You see a cricket bat lying amongst other dead people scattered 
 around the alcohol soaked floor. It is almost silent,
 only the droning sound of the wind whistling is apparent.
 \n
@@ -151,7 +151,7 @@ map_coffee = {
 	"description": """You shatter the thick glass of hoffi-coffi
 and walk in, carefully trying not to step on the vast amount of
 glass laying viciously on the floor. The coffee machine is sat
-there, switched on with a cup sitting below on the stand.
+there switched on with a cup sitting below on the stand.
 \n
 You can:
 GO SOUTH to Cross Roads""",
@@ -172,7 +172,7 @@ map_traffic = {
 for them turn red and the green man to show, a ironically small
 spotty car with a red nose on the bonnet stops. You start to 
 cross as a seemingly perpetual amount of clowns pour out of the 
-car. Finally the 10th and last clown emerges, fighting these
+car. Finally, the 10th and last clown emerges, fighting these
 may prove difficult...
 \n
 You can:
@@ -196,7 +196,7 @@ map_emptyrd = {
 street, you can hear the music coming from the student houses. 
 You try to get in one but its locked and no one is replying to
 your pleading. There is a trio of clowns slowly emerging from
-certain houses, with goliath size 20 blood stained shoes.
+certain houses with goliath, size 20 blood-stained shoes.
 \n
 You can:
 FIGHT the Clowns
@@ -220,7 +220,7 @@ collapse on the once white bed. As you are about to doze off
 the sound of the doorbell and knocking pierces your ears, 
 as you walk out of your door, the hallway is full to the brim
 of fully-armoured police labelled "SWAT", they make their way
-to you, standing on the once attatched front door.
+to you, standing on the once attached front door.
 The red dots of the guns stain your body, as they handcuff
 you hastily, an officer shouts "YOU ARE UNDER ARREST 
 FOR THE MASS-MURDER OF MANY INNOCENT PEOPLE ON THE NIGHT OF OCTOBER 31ST
