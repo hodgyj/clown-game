@@ -7,8 +7,7 @@ import random
 import sys
 
 def list_of_items(items):
-    """This function takes a list of items (see items.py for the definition) and
-    returns a comma-separated list of item names (as a string). For example:
+    """This function takes a list of items and returns a comma sep, list.
 
     >>> list_of_items([item_cricket_bat, item_shotgun])
     'bat, shotgun'
@@ -18,10 +17,12 @@ def list_of_items(items):
 
     >>> list_of_items([])
     ''
-
     """
+
+    # Create blank item list to later populate.
     item_list = []
 
+    # For every item in items append with comma.
     for i in items:
         item_list.append(i["name"])
 
@@ -30,30 +31,26 @@ def list_of_items(items):
     return correct_list
 
 def print_inventory_items(items):
-    """This function takes a list of inventory items and displays it nicely, in a
-    manner similar to print_room_items(). The only difference is in formatting:
-    print "You have ..." instead of "There is ... here.". For example:
+    """This function takes a list of inventory items and displays nicely.
 
     >>> print_inventory_items(inventory)
     You have: phone.
     <BLANKLINE>
-
     """
     
     # Check if any items.
     if items:
         # Create new dict and loop items and add to new list.
         items_list = []
+
+        # For every item in inventory print in list.
         for item in items:
             items_list.append(item["name"])
+
         print('You have:', ", ".join(items_list) + ".\n")
 
 def print_room_items(room):
-    """This function takes a room as an input and nicely displays a list of items
-    found in this room (followed by a blank line). If there are no items in
-    the room, nothing is printed. See map.py for the definition of a room, and
-    items.py for the definition of an item. This function uses list_of_items()
-    to produce a comma-separated list of item names. For example:
+    """This function takes a room as an input and prints items in that room.
 
     >>> print_room_items(places["Park"])
     There is something here: needle.
@@ -84,59 +81,48 @@ def print_room(room):
     <BLANKLINE>
     """
 
-    # Display room name
+    # Display room name with fancy '-' pattern.
     print('\n' + room["name"].upper().center(50, '-'))
-    # Display room description
+
+    # Display room description.
     print('\n' + room["description"])
 
+    # If enemies populate room then print clown description for that room.
     if room["enemies"] > 0:
         print('\n' + room["descclown"] + '\n')
 
 def print_menu(exits):
-    """This function displays the menu of available actions to the player. The
-    argument exits is a dictionary of exits as exemplified in map.py. The
-    arguments room_items and inv_items are the items lying around in the room
-    and carried by the player respectively. The menu should, for each exit,
-    call the function print_exit() to print the information about each exit in
-    the appropriate format. The room into which an exit leads is obtained
-    using the function exit_leads_to(). Then, it should print a list of commands
-    related to items: for each item in the room print
-    """
+    # Prints available actions to user, apart from fighting (this is optional).
+
     print("You turn your head hastily, you can")
+
     # Iterate over available exits
     for direction in exits:
         # Print the exit name and where it leads to
         print_exit(direction, exit_leads_to(exits, direction))
+
+    # Ask user for input on what they want to do?
     print("\t\nWhat do you want to do?")
 
 def exit_leads_to(exits, direction):
-   """This function takes a dictionary of exits and a direction (a particular
-   exit taken from this dictionary). It returns the name of the room into which
-   this exit leads. For example:
-   """
-   return places[exits[direction]]["name"]
+    # Takes dict of exits and a direction they want to go, shows options.
+
+    # Return user options.
+    return places[exits[direction]]["name"]
 
 def print_exit(direction, leads_to):
-    """This function prints a line of a menu of exits. It takes a direction (the
-    name of an exit) and the name of the room into which it leads (leads_to),
-    and should print a menu line in the following format:
-
-    GO <EXIT NAME UPPERCASE> to <where it leads>.
+    """ Print user exits.
 
     For example:
-    >>> print_exit("east", "you personal tutor's office")
-    GO EAST to you personal tutor's office.
-    >>> print_exit("south", "MJ and Simon's room")
-    GO SOUTH to MJ and Simon's room.
+    >>> print_exit("south", "Cross Roads")
+    GO SOUTH to Cross Roads.
     """
+
     print("GO " + direction.upper() + " to " + leads_to + ".")
 
 def execute_go(direction):
-    """This function, given the direction (e.g. "south") updates the current room
-    to reflect the movement of the player if the direction is a valid exit
-    (and prints the name of the room into which the player is
-    moving). Otherwise, it prints "You cannot go there."
-    """
+    # Move user if valid direction.
+
     # Call global variable current_room
     global current_room
 
@@ -146,12 +132,15 @@ def execute_go(direction):
         new_room = current_room["exits"][str(direction)]
         current_room = places[new_room]
     else:
+        # Show user that the direction they tried is not valid.
         print("You cannot go there.")
 
 def execute_take(item_id):
     # Take an item if inventory isn't full and item on floor.
 
+    # Get current room
     global current_room
+
     room_item = ""
 
     if len(inventory) < 5:
@@ -161,11 +150,13 @@ def execute_take(item_id):
                 room_item = item
         # If item is in current room and there is room in inventory for item.
         if room_item: 
-            # Remove item from current room and add to inventory
+            # Remove item from current room and add to inventory.
             current_room["items"].remove(room_item)
             inventory.append(room_item)
             print("You take the " + str(room_item["name"]) + "\n")
             print(room_item["description"])
+
+            # If item is special, do special energy/health gains!
             if room_item["name"] == "coffee":
                 inventory.remove(room_item)
                 stats["stats"]["energy"] += 50
@@ -175,22 +166,22 @@ def execute_take(item_id):
                 stats["stats"]["health"] += 30
                 print("You unwillingly eat the bounty and gain 30 health!")
         else:
+            # Tried to pick up item that doesn't exist potentially.
             print("You cannot take that.")
     else:
+        # User inv is full, show this.
         print("Your inventory is full!")
 
 def execute_drop(item_id):
-    """This function takes an item_id as an argument and moves this item from the
-    player's inventory to list of items in the current room. However, if there is
-    no such item in the inventory, this function prints "You cannot drop that."
-    """
+    # Drops item in room user in if input is valid.
 
+    # Get current room.
     global current_room
 
-    # Create blank string to be populated later
+    # Create blank string to be populated later.
     room_item = ""
 
-    # Loop inventory
+    # Loop inventory.
     for item in inventory:
         if(item["name"] == item_id):
             room_item = item
@@ -199,10 +190,11 @@ def execute_drop(item_id):
         inventory.remove(room_item)
         current_room["items"].append(room_item)
     else:
+        # Non existent item.
         print("You cannot drop that!")
 
 def print_stats():
-    """Take stats from player.py and print them neatly:
+    """Take stats from player.py and print them neatly.
 
     >>> print_stats()
     Your Stats Are:
@@ -213,7 +205,7 @@ def print_stats():
     <BLANKLINE>
     """
 
-    # Print user
+    # Print user stats.
     print("Your Stats Are:\n" )
     print("Health : " + str(stats["stats"]["health"]))
     print("Energy : " + str(stats["stats"]["energy"]))
@@ -225,10 +217,12 @@ def score():
     >>> score()
     200
     """
+
+    # Get user energy and kills.
     e = player_stats["energy"]
     k = player_stats["kills"]
 
-    # determine level game player at
+    # determine level game player at and create mutators for score.
     if player_stats["level"] == "hard":
         multi = 3
     elif player_stats["level"] == "normal":
@@ -236,32 +230,32 @@ def score():
     else:
         multi = 1
 
-    # score is energy times 2, add kills times 10, times the effect of the level
+    # Score is energy times 2, add kills times 10, times the effect of the mutator.
     score = ((e * 2)  + (k * 10) * multi)
 
+    # If user used easter egg then no points for them!
     if dragon == True:
         score = 0
 
     return int(score)
 
 def use_weapon(weapon):
-    """This function should take a parameter weapon and take 1 point off its health
-    as it's being used, it should then check its health and if it's health is 0,
-    remove the weapon from inventory and print you won the fight but your weapon broke.
-    Else it should just print you won the fight
-    
+    """ Takes user input based on weapons available, takes damage on weapon.
+
     >>> use_weapon(item_shotgun)
     <BLANKLINE>
     You won the fight!
     """
+
+    # If weapon exists.
     if weapon["weapon"]:       
-        # Taking one point from the weapon's health
+        # Taking one point from the weapon's health.
         weapon["health"] -= 1
 
-        # Checking if the health of the weapon is zero
+        # Checking if the health of the weapon is zero or less.
         if weapon["health"] <= 0:
-            # If it is removing the weapon from the inventory and printing apppropriate
-            print("\nYou won the fight, but your weapon broke")
+            # If it is removing the weapon from the inventory and printing apppropriate message.
+            print("\nYou won the fight, but your weapon is now broken!")
             inventory.remove(weapon)
         else:
             print("\nYou won the fight!")
@@ -270,8 +264,9 @@ def use_weapon(weapon):
         print("\nThis is not the time or place to use this!")
 
 def execute_fight():
-    # Start fight but check room has clown first.
+    # Start fight sequence but check room has clown first.
 
+    # Check room has enemies then run fight sequence, else warning.
     if current_room["enemies"] > 0:
         fight_sequence()
     else:
@@ -286,7 +281,7 @@ def fight_sequence():
     # Clowns
     k = 0
 
-    # print a random picture of a clown from ascii.py
+    # print a random picture of a clown from ascii.py.
     clown_func = random.randint(1,6)
     if clown_func == 1:
         clown1()
@@ -299,43 +294,45 @@ def fight_sequence():
     if clown_func == 5:
         clown5()
 
+    # Print player stats.
     print_stats()
 
-    # print the number of enemies to be defeated
+    # print the number of enemies to be defeated.
     print("You must defeat " + str(current_room["enemies"]) + " clowns. Good Luck.")
 
-    # while there are still enemies to be defeated
+    # while there are still enemies to be defeated.
     while current_room["enemies"] > 0:
         k += 1
         print("\n\t\tFIGHT " + str(k) + "\n")
         list_i = []
         weapons = 0
+        # Take off a small amount of energy and health.
         player_stats["energy"] -= 5
         player_stats["health"] -= random.randrange(1,31)
 
-        # for each item in inventory
+        # for each item in inventory.
         for i in inventory:
-            # if it's a weapon add it to the list
+            # if it's a weapon add it to the list.
             if i["weapon"]:
                 list_i.append(i)
-                # keep track of how many weapons are in inventory
+                # keep track of how many weapons are in inventory.
                 weapons = weapons + 1
 
-        # if there is only one weapon in inventory
+        # if there is only one weapon in inventory.
         if weapons == 1:
-            # call use weapon with only weapon
+            # call use weapon with only weapon.
             use_weapon(list_i[0])
 
         elif weapons >= 1:
             while True:
-                # take user input of which weapon they will use
+                # take user input of which weapon they will use.
                 for i in range(1, len(inventory)):
-                    # list index i - 1 as count starts 0 not 1
+                    # list index i - 1 as count starts 0 not 1.
                     list_index = i - 1
                     print(str(i) + ":", str(list_i[list_index]["name"]))
 
                 user_input = input("Which weapon would you like to use?>\t")
-                # Use try/catch to try convert to int, if not then they need int
+                # Use try/catch to try convert to int, if not then they need int.
                 try: 
                     user_input = int(user_input)
                     if user_input <= (len(inventory) - 1) and user_input > 0:
@@ -346,28 +343,26 @@ def fight_sequence():
                 except ValueError:
                     print("Please enter a valid number...")
         else:
-            # if they do not have a weapon in their inventory they die
+            # if they do not have a weapon in their inventory they die.
             print("""You pat your pockets vigorously but cannot find a weapon, 
 The clown smiles slowly as he draws out a blunt knife and thrusts
 his hand forward into your chest. You have died...""")
             lose_game()
 
+        # Player lost health!
         print("Lost Health! Health now: " + str(player_stats["health"]))
+
         player_stats["kills"] += 1
 
         if player_stats["health"] <= 0 or player_stats["energy"] <= 0:
             print("\n\t\tBlood pours out of you as you fall to the ground, you have died...")
             lose_game()
         else:
+            # Player has removed enemy.
             current_room["enemies"] -= 1    
 
 def execute_command(command):
-    """This function takes a command (a list of words as returned by
-    normalise_input) and, depending on the type of action (the first word of
-    the command: "go", "take", "drop", "fight", "run", or "dragon"), executes
-    either execute_go, execute_take, execute_drop, execute_fight, or execute_run,
-    supplying the second word as the argument if the function requires one.
-    """
+    # Gets user commands, then targets the specific functions required to run commands.
 
     if 0 == len(command):
         return
@@ -398,25 +393,24 @@ def execute_command(command):
             execute_drop(command[1])
         else:
             print("Drop what?")
-    elif command[0] == "fight":
-        execute_fight()
-    elif command[0] == "fight clown":
+    elif command[0] == "fight" or command[0] == "fight clown" or command[0] == "clown":
         execute_fight()
     elif command[0] == "inventory" or command[0] == "inv":
         print_inventory_items(inventory)
     elif command[0] == "stats" or command[0] == "statistics":
         print_stats()
     elif command[0] == "help":
+        # User requires help, print commands available.
         print("""
         go - Move in a certain direction (eg: "go west")
         take - Take an item from the ground (eg: "take needle")
         drop - Drop an item to make space for another (eg: "drop needle")
-        fight - Fight an enemy to pass area
+        fight/clown/fight clown - Fight an enemy to gain more points/clear area
         inventory/inv - Check the player inventory
-        room/items - Check the ground items for a hint
-        stats/statistics - Get player statistics like health/exp etc.
+        stats/statistics - Get player statistics like health, exp, and inventory
             """)
     elif command[0] == "dragon" and current_room["name"] == "Pryzm":
+        # User has cheated/easter egged it.
         global dragon
         dragon = True
         win_game()
@@ -424,12 +418,16 @@ def execute_command(command):
         print("You murmur words that are incomprehensible... Try using 'help' for commands!")
 
 def win_game():
+    # Account for different win conditions for multiple endings.
+
+    # Dragon easter egg ending.
     if dragon == True:
         print("""\nAn angelic figure drifts down from the heavens and praises you, 
 "My name is Kirill, you found the easter egg, good job! Although, you have technically 
 cheated, so you will get no points at all."
 He then soars back into the heavens, leaving a trail of 0's and 1's behind.\n""")
         print("Your score is:", score())
+    # No kill easter egg ending.
     elif stats["stats"]["kills"] == 0:
         enddialogue1 = "needles and pills cover the floor, a belt is wrapped around your arm tightly, "
         enddialogue2 = "you fall to the ground in shock, crying, as you realise you are a drug addict.\n"
@@ -449,6 +447,7 @@ He then soars back into the heavens, leaving a trail of 0's and 1's behind.\n"""
         print("""\nYou decided not to kill anyone, this makes you a drug addict but not
 a serial killer, well done - but you have a small score.\n""")
         print("Your score is:", score())
+    # Main ending when killed clown and got to final stage.
     else:
                 # no arg - standard win of game.
         print("""the sound of the doorbell and knocking pierces your ears, 
@@ -475,11 +474,12 @@ a serial killer, well done - but you have a small score.\n""")
             time.sleep(0.1)
         print("\nCongratulations, you won, your final score was", score())
 
+    # Game has ended user can quit.
     input("\nPress any key to exit and return to reality!")
     sys.exit()
 
 def lose_game():
-    # If the user dies use this function to trigger options available.
+    # If the user dies use this function to trigger options available and print score.
     endgame()
     print("\nYou lost, your final score was", score())
     input()
@@ -501,32 +501,33 @@ def menu(exits):
     return normalised_user_input
 
 def move(exits, direction):
-    """This function returns the room into which the player will move if, from a
-    dictionary "exits" of avaiable exits, they choose to move towards the exit
-    with the name given by "direction". For example:
+    """This function returns the room into which the player will move.
 
     >>> move(places["Pryzm"]["exits"], "east") == places["Student Union"]
-    True
-    >>> move(places["Cross Roads"]["exits"], "north") == places["Traffic Lights"]
     True
     >>> move(places["Coffee Shop"]["exits"], "south") == places["Pryzm"]
     False
     """
-    # Next room to go to
+
+    # Return next room.
     return places[exits[direction]]
 
-# This is the entry point of our program
 def main():
-    global current_room
+    # Main code starts at runtime.
+
     from map import map_pryzm
+    global current_room
+
     title()
     clown6()
 
+    # Give user option to play at different levels.
     print("Do you want to play on Easy, Normal, or Hard?")
     user_input = input()
     normalised_user_input = normalise_input(user_input)
     normalised_user_input = (", ".join(normalised_user_input))
 
+    # User health and energy different for difficulty rating.
     if normalised_user_input == "easy":
         stats["stats"]["health"] = 100
         stats["stats"]["energy"] = 100
@@ -540,17 +541,20 @@ def main():
         stats["stats"]["energy"] = 50
         player_stats["level"] = "hard"
     else:
+        # If user isn't good at typing, give easy!
         print("That was not a valid response, so we put you on easy.")
 
     while game_running == True:
-        # Display game status (room description, inventory etc.)
+        # Display game status (room description, inventory etc.), main game loop.
         print("")
         print_room(current_room)
         print_room_items(current_room)
 
+        # If went into death room, lose game.
         if current_room["dead"] == True:
             lose_game()
         elif current_room == places["Taly South"]:
+            # If reached end of map, win game.
             win_game()
         else:
             # Show the menu with possible actions and ask the player
@@ -561,5 +565,6 @@ def main():
 
 if __name__ == "__main__":
     import ctypes
+    # Change window title.
     ctypes.windll.kernel32.SetConsoleTitleA(b"Nightmare On Clown St.")
     main()
