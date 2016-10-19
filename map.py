@@ -34,7 +34,7 @@ There are lights on in the Museum.""" ,
 shape on the floor ahead of you, it is a large, 
 red-wigged clown sinisterly breathing heavily.""",
 
-	"exits": {"west": "Museum", "east": "Museum"},
+	"exits": {"west": "Museum", "east": "Museum", "south": "Pryzm"},
 
 	"items": [item_needle],
 

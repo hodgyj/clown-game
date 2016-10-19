@@ -93,7 +93,7 @@ def print_room(room):
     Note: <BLANKLINE> here means that doctest should expect a blank line.
     """
     # Display room name
-    print('\n' + room["name"].upper().center(40, '-') + '\n')
+    print('\n' + room["name"].upper().center(50, '-') + '\n')
     # Display room description
     print(room["description"] + '\n')
 
@@ -110,7 +110,7 @@ def print_menu(exits):
     using the function exit_leads_to(). Then, it should print a list of commands
     related to items: for each item in the room print
     """
-    print("You hastily look around and see you can:")
+    print("You turn your head hastily, you can")
     # Iterate over available exits
     for direction in exits:
         # Print the exit name and where it leads to
@@ -157,31 +157,30 @@ def execute_go(direction):
         print("You cannot go there.")
 
 def execute_take(item_id):
-    """This function takes an item_id as an argument and moves this item from the
-    list of items in the current room to the player's inventory. However, if
-    there is no such item in the room or the number of items in inventory is
-    larger than or equal to 2, this function prints "You cannot take that."
-    """
+    # Take an item if inventory isn't full and item on floor.
 
     global current_room
     room_item = ""
 
-    # For every item check if user input matches item.
-    for item in current_room["items"]:
-        if(item["name"] == item_id):
-            room_item = item
-    # If item is in current room and there is room in inventory for item.
-    if room_item and (len(inventory) < 5):
-        # Remove item from current room and add to inventory
-        current_room["items"].remove(room_item)
-        inventory.append(room_item)
-        print("You take the " + str(room_item["name"]))
-        if room_item["name"] == "coffee":
-            inventory.remove(room_item)
-            stats["stats"]["energy"] += 50
-            print("You drink the coffee, and gain 50 energy")
+    if len(inventory) < 5:
+        # For every item check if user input matches item.
+        for item in current_room["items"]:
+            if(item["name"] == item_id):
+                room_item = item
+        # If item is in current room and there is room in inventory for item.
+        if room_item: 
+            # Remove item from current room and add to inventory
+            current_room["items"].remove(room_item)
+            inventory.append(room_item)
+            print("You take the " + str(room_item["name"]))
+            if room_item["name"] == "coffee":
+                inventory.remove(room_item)
+                stats["stats"]["energy"] += 50
+                print("You drink the coffee, and gain 50 energy!")
+        else:
+            print("You cannot take that.")
     else:
-        print("You cannot take that.")
+        print("Your inventory is full!")
 
 def execute_drop(item_id):
     """This function takes an item_id as an argument and moves this item from the
@@ -224,25 +223,24 @@ def print_stats():
     print_inventory_items(inventory)
 
 def score():
-    """ To determine the end score. take into account health, energy, clowns killed
+    """ To determine the end score. take into account energy and clowns killed
 
     >>> score()
     200
     """
-    h = player_stats["health"]
     e = player_stats["energy"]
     k = player_stats["kills"]
 
     # determine level game player at
     if player_stats["level"] == "hard":
-        multi = 1.5
+        multi = 3
     elif player_stats["level"] == "normal":
-        multi = 1
+        multi = 2
     else:
-        multi = 0.5
+        multi = 1
 
-    # score is health add energy, times 2, add kills times 10, times the effect of the level
-    score = ((h + e) * 2  + (k * 10)) * multi
+    # score is energy times 2, add kills times 10, times the effect of the level
+    score = ((e * 2)  + (k * 10) * multi)
     return int(score)
 
 def use_weapon(weapon):
@@ -276,15 +274,7 @@ def use_weapon(weapon):
         print("\nThis is not the time or place to use this!")
 
 def execute_fight():
-    """Start fight and output a random picture of clown and player stats.
-    For each enemy in room:
-    Take off health by random number between 1 and 50.
-    Check if weapon in inventory if not, instant lose.
-    Choose which weapon to use if there are multiple weapons.
-    Weapon health - 1, check if health below 0, if it is remove from inventory and
-    print "Weapon broken".
-    print "Fight won"
-    """
+    # Start fight but check room has clown first.
 
     if current_room["enemies"] > 0:
         fight_sequence()
@@ -292,7 +282,8 @@ def execute_fight():
         print("\nYou can't fight anything here!\n")
 
 def fight_sequence():
-    # call global varibale current_room and print FIGHT
+    # Start fight code that triggers fighting mechanics.
+
     global current_room
     global max_items
     
@@ -323,7 +314,7 @@ def fight_sequence():
         print("\n\t\tFIGHT " + str(k) + "\n")
         list_i = []
         weapons = 0
-        player_stats["energy"] -= 20
+        player_stats["energy"] -= 5
         player_stats["health"] -= random.randrange(1,31)
         print("Lost Health! Health now: " + str(player_stats["health"]))
 
@@ -373,7 +364,6 @@ his hand forward into your chest. You have died...""")
             lose_game()
         else:
             current_room["enemies"] -= 1    
-
 
 def execute_command(command):
     """This function takes a command (a list of words as returned by
@@ -447,7 +437,7 @@ for finding the easter egg. Sadly, you have technically cheated and will have no
         print("Your score is:", score())
         sys.exit()
     elif stats["stats"]["kills"] == 0:
-        enddialogue1 = "needles and pills cover the floor, a belt is wrapped around you arm tightly, "
+        enddialogue1 = "needles and pills cover the floor, a belt is wrapped around your arm tightly, "
         enddialogue2 = "you fall to the ground in shock, crying, as you realise you are a drug addict.\n"
         enddialogue3 = "END OF GAME"
         for i in enddialogue1:
@@ -463,7 +453,7 @@ for finding the easter egg. Sadly, you have technically cheated and will have no
             sys.stdout.flush()
             time.sleep(0.1)
         print("""\nYou decided not to kill anyone, this makes you a drug addict but not
-    a serial killer, well done - but you have a small score.\n""")
+a serial killer, well done - but you have a small score.\n""")
         print("Your score is:", score())
         sys.exit()
     else:
@@ -492,29 +482,14 @@ for finding the easter egg. Sadly, you have technically cheated and will have no
             time.sleep(0.1)
         print("\nCongratulations, you won, your final score was", score())
 
-        retry()
+        sys.exit()
 
 def lose_game():
     # If the user dies use this function to trigger options available.
     endgame()
     print("\nYou lost, your final score was", score())
-    retry()
-
-def retry():
-    global game_running
-    # give user choice to try again.
-    print("\n\nWould you like to try again? (Y/N)")
-    user_choice = input()
-
-    if normalise_input(user_choice) == "n" or normalise_input(user_choice) == "no":
-        game_running == False
-        sys.exit()
-    elif normalise_input(user_choice) == "y" or normalise_input(user_choice) == "yes":
-        python = sys.executable
-        os.execl(python, python, * sys.argv)
-    else: 
-        print("Your ghost whispers words that are incomprehensible...")
-
+    sys.exit()
+    
 def menu(exits):
     """This function prompts the player to type an action.
     The players's input is normalised using the normalise_input()
@@ -581,10 +556,7 @@ def main():
         if current_room["dead"] == True:
             lose_game()
         elif current_room == places["Taly South"]:
-            if stats["stats"]["kills"] == 0:
-                win_game_arg("nokills")
-            else:
-                win_game()
+            win_game()
         else:
             # Show the menu with possible actions and ask the player
             command = menu(current_room["exits"])
@@ -592,9 +564,6 @@ def main():
             # Execute the player's command
             execute_command(command)
 
-# Are we being run as a script? If so, run main().
-# '__main__' is the name of the scope in which top-level code executes.
-# See https://docs.python.org/3.4/library/__main__.html for explanation
 if __name__ == "__main__":
     import ctypes
     ctypes.windll.kernel32.SetConsoleTitleA(b"Nightmare On Clown St.")
