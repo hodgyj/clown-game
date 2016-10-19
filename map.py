@@ -1,4 +1,6 @@
 from items import *
+import time
+import sys
 
 map_pryzm = {
 	"name": "Pryzm",
@@ -209,11 +211,8 @@ as you walk out of your door, the hallway is full to the brim
 of fully-armoured police labelled "SWAT", they make their way
 to you, standing on the once attached front door.
 The red dots of the guns stain your body, as they handcuff
-you hastily, an officer shouts "YOU ARE UNDER ARREST 
-FOR THE MASS-MURDER OF MANY INNOCENT PEOPLE ON THE NIGHT OF OCTOBER 31ST
-AND FOR DISTRIBUTION AND USE OF CLASS A DRUGS.", 
-you fall to the ground in shock as you realise, you are
-the monster... END OF GAME""",
+you hastily, an officer shouts:  
+""",
 
 	"exits": {},
 
