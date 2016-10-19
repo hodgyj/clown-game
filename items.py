@@ -15,7 +15,8 @@ item_cricket_bat = {
 
 item_shotgun = {
 "name": "shotgun",
-"description": """A slick, matt, black weapon, convieniently placed beside a crammed dustbin that stank of death. This must have been used for something illegal, 
+"description": """A slick, matt, black weapon, convieniently placed beside a crammed dustbin that stank of death. 
+This must have been used for something illegal, 
 the gun has been filed down and thoroughly cleaned.""",
 "health": 60,
 "weapon": True
@@ -23,8 +24,8 @@ the gun has been filed down and thoroughly cleaned.""",
 
 item_bottle = {
 "name": "bottle",
-"description": """An empty bottle of beer with a an ominous skull and crossbones labelled on the front. These bottles are everywhere, I should keep
-an eye out, although they do break very easily.""",
+"description": """An empty bottle of beer with a an ominous skull and crossbones labelled on the front. 
+These bottles are everywhere, I should keep an eye out, although they do break very easily.""",
 "health": 1,
 "weapon": True
 }

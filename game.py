@@ -98,7 +98,7 @@ def print_room(room):
     print(room["description"] + '\n')
 
     if room["enemies"] > 0:
-        print(room["descclown"] + '\n')
+        print(room["descclown"])
 
 def print_menu(exits):
     """This function displays the menu of available actions to the player. The
@@ -172,7 +172,8 @@ def execute_take(item_id):
             # Remove item from current room and add to inventory
             current_room["items"].remove(room_item)
             inventory.append(room_item)
-            print("You take the " + str(room_item["name"]))
+            print("You take the " + str(room_item["name"]) + "\n")
+            print(room_item["description"])
             if room_item["name"] == "coffee":
                 inventory.remove(room_item)
                 stats["stats"]["energy"] += 50
@@ -428,7 +429,7 @@ def execute_command(command):
         dragon = True
         win_game()
     else:
-        print("You murmur words that are incomprehensible...")
+        print("You murmur words that are incomprehensible... Try using 'help' for commands!")
 
 def win_game():
     if dragon == True:
@@ -489,7 +490,7 @@ def lose_game():
     endgame()
     print("\nYou lost, your final score was", score())
     sys.exit()
-    
+
 def menu(exits):
     """This function prompts the player to type an action.
     The players's input is normalised using the normalise_input()
