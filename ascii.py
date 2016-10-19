@@ -227,4 +227,9 @@ def clown6():
   print("            `-'         `-'                `./         \,'")
   print("")
 
-clowns = [clown1, clown2, clown3, clown4, clown5]
+clowns = {
+1: clown1,
+2: clown2,
+3: clown3,
+4: clown4,
+5: clown5}
