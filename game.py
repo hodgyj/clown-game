@@ -274,8 +274,21 @@ def fight_sequence():
     k = 0
     print("\t\t\tFIGHT")
     # print a random picture of a clown from ascii.py
-    number = random.randrange(1,8)
-    print(clowns[number])
+    clown_rand = random.randrange(1,6)
+ 
+    if clown_rand == 1:
+        clown1()
+    elif clown_rand == 2:
+        clown2()
+    elif clown_rand == 3:
+        clown3()
+    elif clown_rand == 4:
+        clown4()
+    elif clown_rand == 5:
+        clown5()
+    elif clown_rand == 6:
+        clown6()
+ 
     print_stats()
 
     # print the number of enemies to be defeated
@@ -1023,4 +1036,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-    clowns(number)
+    clowns(number)
