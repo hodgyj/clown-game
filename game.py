@@ -545,6 +545,11 @@ def main():
         # If user isn't good at typing, give easy!
         print("That was not a valid response, so we put you on easy.")
 
+    # Print intial help guide.
+    print('\n' + "GUIDE".center(50, '-'))
+    print("""\nRemember, you can use the 'help' command at any time!!!!\n
+To start combat use 'fight', then to pick up an object\nuse 'take', and 'drop' to remove that object!""")
+
     while game_running == True:
         # Display game status (room description, inventory etc.), main game loop.
         print("")
