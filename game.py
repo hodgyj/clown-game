@@ -514,9 +514,12 @@ def main():
     # Main code starts at runtime.
 
     from map import map_pryzm
+    import time
     global current_room
 
     title()
+    # Sleep to show title briefly.
+    time.sleep(2)
     clown6()
 
     # Give user option to play at different levels.
