@@ -26,3 +26,5 @@ score = 0
 game_running = True
 
 max_items = 5
+
+dragon = False
