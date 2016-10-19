@@ -451,12 +451,11 @@ a serial killer, well done - but you have a small score.\n""")
     else:
         # Standard game win, user killed clowns and didn't get taxi.
         print("""the sound of the doorbell and knocking pierces your ears, 
-    as you walk out of your door, the hallway is full to the brim
-    of fully-armoured police labelled "SWAT", they make their way
-    to you, standing on the once attached front door.
-    The red dots of the guns stain your body, as they handcuff
-    you hastily, an officer shouts:  
-            """)
+as you walk out of your door, the hallway is full to the brim
+of fully-armoured police labelled "SWAT", they make their way
+to you, standing on the once attached front door.
+The red dots of the guns stain your body, as they handcuff
+you hastily, an officer shouts:""")
         enddialogue1 = "YOU ARE UNDER ARREST FOR THE MASS-MURDER OF MANY INNOCENT PEOPLE ON THE NIGHT OF OCTOBER 31ST AND FOR DISTRIBUTION AND USE OF CLASS A DRUGS. "
         enddialogue2 = "You fall to the ground in shock as you realise that you are the real monster...\n"
         enddialogue3 = "END OF GAME"
@@ -548,7 +547,9 @@ def main():
     # Print intial help guide.
     print('\n' + "GUIDE".center(50, '-'))
     print("""\nRemember, you can use the 'help' command at any time!!!!\n
-To start combat use 'fight', then to pick up an object\nuse 'take', and 'drop' to remove that object!""")
+To start combat use 'fight', then to pick up an object\nuse 'take', and 'drop' to remove that object!
+Also, check your items use 'inventory'/'inv', 
+be smart when taking any old item!""")
 
     while game_running == True:
         # Display game status (room description, inventory etc.), main game loop.
