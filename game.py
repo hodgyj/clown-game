@@ -449,7 +449,7 @@ a serial killer, well done - but you have a small score.\n""")
         print("Your score is:", score())
     # Main ending when killed clown and got to final stage.
     else:
-                # no arg - standard win of game.
+        # Standard game win, user killed clowns and didn't get taxi.
         print("""the sound of the doorbell and knocking pierces your ears, 
     as you walk out of your door, the hallway is full to the brim
     of fully-armoured police labelled "SWAT", they make their way
@@ -486,10 +486,8 @@ def lose_game():
     sys.exit()
 
 def menu(exits):
-    """This function prompts the player to type an action.
-    The players's input is normalised using the normalise_input()
-    function before being returned.
-    """
+    # Get user input, normalise that input to ensure user typos still run.
+
     print_menu(exits)
 
     # Read player's input
@@ -557,10 +555,10 @@ def main():
             # If reached end of map, win game.
             win_game()
         else:
-            # Show the menu with possible actions and ask the player
+            # Show the menu with possible actions and ask the player.
             command = menu(current_room["exits"])
 
-            # Execute the player's command
+            # Execute the player's command.
             execute_command(command)
 
 if __name__ == "__main__":
