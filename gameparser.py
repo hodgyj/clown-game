@@ -15,7 +15,8 @@ directions = ['north','east','south','west']
 
 def filter_words(words, skip_words):
 
-    result = []
+  # Result empty dict to populate later.
+  result = []
 
 	#loops through the user input string
     for x in words:
@@ -45,6 +46,7 @@ def remove_numbers(text):
     >>> remove_numbers('12go 3west')
     'go west'
     """
+    
     no_numb = ""
 
     for char in text:
