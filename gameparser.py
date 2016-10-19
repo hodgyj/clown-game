@@ -19,25 +19,25 @@ def filter_words(words, skip_words):
 	result = []
 
 	# Loops through the user input string.
-  for x in words:
-  	# Loops the user input through the list of skippable words.
-    if not (x in skip_words):
-    	# Adds to the final string if not a skippable word.
-        result.append(x)
+	for x in words:
+		# Loops the user input through the list of skippable words.
+		if not (x in skip_words):
+			# Adds to the final string if not a skippable word.
+			result.append(x)
 
-    # Returns the formatted list of words.
-    return result
+	# Returns the formatted list of words.
+	return result
 
 def remove_punct(text):
 
 	# Initialises the variable no_punct as blank.
-    no_punct = ""
-    # Loops through all the characters in the user input string.
-    for char in text:
-    	# Checks if each character is punctuation or not.
-        if not (char in string.punctuation):
-        	# If the character is not punctuation, it is added to the string no_punct.
-            no_punct += char
+	no_punct = ""
+	# Loops through all the characters in the user input string.
+	for char in text:
+		# Checks if each character is punctuation or not.
+		if not (char in string.punctuation):
+			# If the character is not punctuation, it is added to the string no_punct.
+			no_punct += char
 
 	return no_punct
 
