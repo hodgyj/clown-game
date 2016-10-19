@@ -278,7 +278,24 @@ def fight_sequence():
 
     # print a random picture of a clown from ascii.py
     number = random.randint(1,6)
-    clowns(number)
+    x = 1
+    while x == 1:
+        if number == 1:
+            x = x + 1
+            clown1()
+        if number == 2:
+            x = x + 1
+            clown2()
+        if number == 3:
+            x = x + 1
+            clown3()
+        if number == 4:
+            x = x + 1
+            clown4()
+        if number == 5:
+            x = x + 1
+            clown5()
+
     print_stats()
 
     # print the number of enemies to be defeated
@@ -352,8 +369,18 @@ def execute_command(command):
             execute_go(command[1])
         else:
             print("Go where?")
-    #elif command[0] == "east" or "west" or "north" or "south":
-        #execute_go(command[0])
+    elif command[0] == "east":
+        if len(command) == 1:
+            execute_go(command[0])
+    elif command[0] == "west":
+        if len(command) == 1:
+            execute_go(command[0])
+    elif command[0] == "north":
+        if len(command) == 1:
+            execute_go(command[0])
+    elif command[0] == "south":
+        if len(command) == 1:
+            execute_go(command[0])
     elif command[0] == "take":
         if len(command) > 1:
             execute_take(command[1])
@@ -365,6 +392,8 @@ def execute_command(command):
         else:
             print("Drop what?")
     elif command[0] == "fight":
+        execute_fight()
+    elif command[0] == "fight clown":
         execute_fight()
     elif command[0] == "run":
         execute_run()
@@ -397,6 +426,23 @@ def win_game(condition):
         print("Your score is: 0")
         sys.exit()
     else:
+        
+        enddialogue1 = "YOU ARE UNDER ARREST FOR THE MASS-MURDER OF MANY INNOCENT PEOPLE ON THE NIGHT OF OCTOBER 31ST AND FOR DISTRIBUTION AND USE OF CLASS A DRUGS. "
+        enddialogue2 = "You fall to the ground in shock as you realise that you are the real monster... "
+        enddialogue3 = "END OF GAME"
+        for i in enddialogue1:
+            sys.stdout.write(i)
+            sys.stdout.flush()
+            time.sleep(0.1)
+        for i in enddialogue2:
+            sys.stdout.write(i)
+            sys.stdout.flush()
+            time.sleep(0.1)
+        for i in enddialogue3:
+            sys.stdout.write(i)
+            sys.stdout.flush()
+            time.sleep(0.1)
+
         print("\nCongratulations, you won, your final score was", score())
         sys.exit()
 
@@ -407,14 +453,18 @@ def lose_game():
 
     endgame()
     # give user choice to try again.
-    print("\n\nWould you like to try again? (Y/N)", score())
+    print("\n\nWould you like to try again? (Y/N/respawn)", "You scored: " , score())
     user_choice = input()
 
     if normalise_input(user_choice) == "N" or normalise_input(user_choice) == "NO":
         game_running == False
+
     elif normalise_input(user_choice) == "Y" or normalise_input(user_choice) == "YES":
-        # TODO JM - reset game.py
-        print("")
+        # TO DO JM - reset game.py
+        python = sys.executable
+        os.execl(python, python, * sys.argv)
+    elif normalise_input(user_choice) == "respawn" or normalise_input(user_choice) == "R" or normalise_input(user_choice) == "Rspn":
+        main()
     else: 
         print("Your ghost whispers words that are incomprehensible...")
 

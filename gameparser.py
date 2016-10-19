@@ -11,6 +11,8 @@ skip_words = ['a', 'about', 'all', 'an', 'another', 'any', 'around', 'at',
               'towards', 'until', 'us', 'want', 'we', 'what', 'when', 'why',
               'wish', 'with', 'would']
 
+directions = ['north','east','south','west']
+
 def filter_words(words, skip_words):
 
     result = []
@@ -68,4 +70,5 @@ def normalise_input(user_input):
 
   #if final_words == "east" or "west" or "south" or "north":
    #   final_words.insert(0, 'go')
+
   return final_words
