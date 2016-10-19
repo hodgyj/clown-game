@@ -27,7 +27,7 @@ map_park = {
 	"description": """You walk through the park, it is
 surprisingly quiet with just the sound of owls echoing 
 in the distance. There is litter scattered on the
-ground and a needle is amongst the debris.
+ground and medical equipment is amongst the debris.
 There are lights on in the Museum.""" ,
 
 	"descclown": """You can just about make out a shadowy 
@@ -47,7 +47,7 @@ map_museum = {
 	"name": "Museum",
 
 	"description": """You run into the desolate Museum, you can hear
-music in the distance, you are safe from the clown. You stand in
+music in the distance, you are safe from the outside world. You stand in
 the lobby area and look around... As you turn, a clown appears
 from around the corner holding a rusty shiv, and stabs you multiple times
 as you beg for your life.""",
@@ -160,7 +160,7 @@ map_traffic = {
 	"name": "Traffic Lights",
 
 	"description": """You come to the Traffic Lights and wait
-for them turn red and the green man to show, a ironically small
+for them turn red and the green man to show, an ironically small
 spotty car with a red nose on the bonnet stops.""",
 	
 	"descclown" : """You start to cross as a seemingly 
@@ -170,7 +170,7 @@ may prove difficult...""",
 
 	"exits": {"south": "Cross Roads", "north": "Empty Road"},
 
-	"items": [],
+	"items": [item_chocolate],
 
 	"enemies": 15,
 

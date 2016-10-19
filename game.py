@@ -56,49 +56,41 @@ def print_room_items(room):
     to produce a comma-separated list of item names. For example:
 
     >>> print_room_items(places["Park"])
-    <BLANKLINE>
     There is something here: needle.
     <BLANKLINE>
 
     >>> print_room_items(places["Coffee Shop"])
-    <BLANKLINE>
     There is something here: coffee, bat.
     <BLANKLINE>
     """
+
     room_list = list_of_items(room["items"])
 
     if room_list:
-        print('\nThere is something here:', room_list + '.\n')
+        print('There is something here:', room_list + '.\n')
 
 def print_room(room):
-    """This function takes a room as an input and nicely displays its name
-    and description. The room argument is a dictionary with entries "name",
-    "description" etc. (see map.py for the definition). The name of the room
-    is printed in all capitals and framed by blank lines. Then follows the
-    description of the room and a blank line again. For example:
+    """This function takes a room as an input displays name and description.
 
     >>> print_room(places["Pryzm"])
     <BLANKLINE>
-    PRYZM
+    ----------------------PRYZM-----------------------
     <BLANKLINE>
-    You stumble out of Pryzym as it closes,
+    You stumble out of Pryzm as it closes,
     and find yourself on a dark street surrounded
     by people near a taxi rank. You prepare
     yourself for the long walk home, wishing
     the club had stayed open just a little bit longer.
-    Do you want to walk EAST to the Student Union or
-    go WEST through the Park?
     <BLANKLINE>
-
-    Note: <BLANKLINE> here means that doctest should expect a blank line.
     """
+
     # Display room name
-    print('\n' + room["name"].upper().center(50, '-') + '\n')
+    print('\n' + room["name"].upper().center(50, '-'))
     # Display room description
-    print(room["description"] + '\n')
+    print('\n' + room["description"])
 
     if room["enemies"] > 0:
-        print(room["descclown"])
+        print('\n' + room["descclown"] + '\n')
 
 def print_menu(exits):
     """This function displays the menu of available actions to the player. The
@@ -178,6 +170,10 @@ def execute_take(item_id):
                 inventory.remove(room_item)
                 stats["stats"]["energy"] += 50
                 print("You drink the coffee, and gain 50 energy!")
+            if room_item["name"] == "chocolate":
+                inventory.remove(room_item)
+                stats["stats"]["health"] += 30
+                print("You unwillingly eat the bounty and gain 30 health!")
         else:
             print("You cannot take that.")
     else:
@@ -242,6 +238,10 @@ def score():
 
     # score is energy times 2, add kills times 10, times the effect of the level
     score = ((e * 2)  + (k * 10) * multi)
+
+    if dragon == True:
+        score = 0
+
     return int(score)
 
 def use_weapon(weapon):
@@ -249,11 +249,7 @@ def use_weapon(weapon):
     as it's being used, it should then check its health and if it's health is 0,
     remove the weapon from inventory and print you won the fight but your weapon broke.
     Else it should just print you won the fight
-
-    >>> use_weapon(item_bottle)
-    <BLANKLINE>
-    You won the fight, but your weapon broke
-
+    
     >>> use_weapon(item_shotgun)
     <BLANKLINE>
     You won the fight!
@@ -265,7 +261,6 @@ def use_weapon(weapon):
         # Checking if the health of the weapon is zero
         if weapon["health"] <= 0:
             # If it is removing the weapon from the inventory and printing apppropriate
-            #del weapon
             print("\nYou won the fight, but your weapon broke")
             inventory.remove(weapon)
         else:
@@ -317,7 +312,6 @@ def fight_sequence():
         weapons = 0
         player_stats["energy"] -= 5
         player_stats["health"] -= random.randrange(1,31)
-        print("Lost Health! Health now: " + str(player_stats["health"]))
 
         # for each item in inventory
         for i in inventory:
@@ -344,7 +338,7 @@ def fight_sequence():
                 # Use try/catch to try convert to int, if not then they need int
                 try: 
                     user_input = int(user_input)
-                    if user_input <= (len(inventory) - 1) and user_input >= 0:
+                    if user_input <= (len(inventory) - 1) and user_input > 0:
                         use_weapon(list_i[(int(user_input)-1)])
                         break
                     else:
@@ -358,6 +352,7 @@ The clown smiles slowly as he draws out a blunt knife and thrusts
 his hand forward into your chest. You have died...""")
             lose_game()
 
+        print("Lost Health! Health now: " + str(player_stats["health"]))
         player_stats["kills"] += 1
 
         if player_stats["health"] <= 0 or player_stats["energy"] <= 0:
@@ -407,8 +402,6 @@ def execute_command(command):
         execute_fight()
     elif command[0] == "fight clown":
         execute_fight()
-    elif command[0] == "run":
-        execute_run()
     elif command[0] == "inventory" or command[0] == "inv":
         print_inventory_items(inventory)
     elif command[0] == "stats" or command[0] == "statistics":
@@ -419,7 +412,6 @@ def execute_command(command):
         take - Take an item from the ground (eg: "take needle")
         drop - Drop an item to make space for another (eg: "drop needle")
         fight - Fight an enemy to pass area
-        run - Run away instead of fighting
         inventory/inv - Check the player inventory
         room/items - Check the ground items for a hint
         stats/statistics - Get player statistics like health/exp etc.
@@ -433,10 +425,11 @@ def execute_command(command):
 
 def win_game():
     if dragon == True:
-        print("""\nAn angelic figure drifts down from the heavens, and praises you 
-for finding the easter egg. Sadly, you have technically cheated and will have no points\n""")
+        print("""\nAn angelic figure drifts down from the heavens and praises you, 
+"My name is Kirill, you found the easter egg, good job! Although, you have technically 
+cheated, so you will get no points at all."
+He then soars back into the heavens, leaving a trail of 0's and 1's behind.\n""")
         print("Your score is:", score())
-        sys.exit()
     elif stats["stats"]["kills"] == 0:
         enddialogue1 = "needles and pills cover the floor, a belt is wrapped around your arm tightly, "
         enddialogue2 = "you fall to the ground in shock, crying, as you realise you are a drug addict.\n"
@@ -456,7 +449,6 @@ for finding the easter egg. Sadly, you have technically cheated and will have no
         print("""\nYou decided not to kill anyone, this makes you a drug addict but not
 a serial killer, well done - but you have a small score.\n""")
         print("Your score is:", score())
-        sys.exit()
     else:
                 # no arg - standard win of game.
         print("""the sound of the doorbell and knocking pierces your ears, 
@@ -483,12 +475,14 @@ a serial killer, well done - but you have a small score.\n""")
             time.sleep(0.1)
         print("\nCongratulations, you won, your final score was", score())
 
-        sys.exit()
+    input("\nPress any key to exit and return to reality!")
+    sys.exit()
 
 def lose_game():
     # If the user dies use this function to trigger options available.
     endgame()
     print("\nYou lost, your final score was", score())
+    input()
     sys.exit()
 
 def menu(exits):

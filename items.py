@@ -45,10 +45,18 @@ the clown-pocolypse!""",
 "weapon": False
 }
 
+item_chocolate = {
+"name": "chocolate",
+"description": """A bar of bounty, no one likes bounty...""",
+"health": 0,
+"weapon": False
+}
+
 items = {
 "coffee": item_coffee,
 "needle": item_needle,
 "bottle": item_bottle,
 "shotgun": item_shotgun,
-"cricket bat": item_cricket_bat
+"cricket bat": item_cricket_bat,
+"chocolate": item_chocolate
 }
