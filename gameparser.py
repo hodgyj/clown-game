@@ -18,25 +18,25 @@ def filter_words(words, skip_words):
   # Result empty dict to populate later.
   result = []
 
-	#loops through the user input string
-    for x in words:
-    	#loops the user input through the list of skippable words
-        if not (x in skip_words):
-        	#adds to the final string if not a skippable word
-            result.append(x)
+	# Loops through the user input string.
+  for x in words:
+  	# Loops the user input through the list of skippable words.
+    if not (x in skip_words):
+    	# Adds to the final string if not a skippable word.
+        result.append(x)
 
-    #returns the formatted list of words
+    # Returns the formatted list of words.
     return result
 
 def remove_punct(text):
 
-	#initialises the variable no_punct as blank
+	# Initialises the variable no_punct as blank.
     no_punct = ""
-    #loops through all the characters in the user input string
+    # Loops through all the characters in the user input string.
     for char in text:
-    	#checks if each character is punctuation or not
+    	# Checks if each character is punctuation or not.
         if not (char in string.punctuation):
-        	#if the character is not punctuation, it is added to the string no_punct
+        	# If the character is not punctuation, it is added to the string no_punct.
             no_punct += char
 
     return no_punct
@@ -46,9 +46,10 @@ def remove_numbers(text):
     >>> remove_numbers('12go 3west')
     'go west'
     """
-    
+
     no_numb = ""
 
+    # Remove numbers user may have accidently input.
     for char in text:
       if not (char in "1234567890"):
         no_numb += char
@@ -57,20 +58,17 @@ def remove_numbers(text):
 
 def normalise_input(user_input):
 
-	#runs the function remove_punct as initialises the variable no_punct with the result
+	# Runs the function remove_punct as initialises the variable no_punct with the result.
   no_number = remove_numbers(user_input)
   no_punct = remove_punct(no_number).lower()
 
-  #initialises the list list_word as blank
+  # Initialises the list list_word as blank.
   list_word = []
-  #breaks up list_word into seperate parts
+  # Breaks up list_word into seperate parts.
   for word in no_punct.split():
       list_word.append(word)
 
-  #runs filter_words
+  # Runs filter_words.
   final_words = filter_words(list_word, skip_words)
-
-  #if final_words == "east" or "west" or "south" or "north":
-   #   final_words.insert(0, 'go')
 
   return final_words
