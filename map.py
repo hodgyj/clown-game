@@ -28,18 +28,13 @@ map_park = {
 surprisingly quiet with just the sound of owls echoing 
 in the distance. There is litter scattered on the
 ground and a needle is amongst the debris.
-There are lights on in the Museum, you can just about
-make out a shadowy shape on the floor ahead of you, it 
-is a large, red-wigged clown breathing heavily.
-\n
-You can:
-GO EAST or WEST to the Museum""",
+There are lights on in the Museum.""" ,
 
 	"descclown": """You can just about make out a shadowy 
 shape on the floor ahead of you, it is a large, 
-red-wigged clown breathing heavily.""",
+red-wigged clown sinisterly breathing heavily.""",
 
-	"exits": {"west": "Museum", "east": "Museum"},
+	"exits": {"west": "Museum", "east": "Museum", "south": "Pryzm"},
 
 	"items": [item_needle],
 
@@ -108,11 +103,11 @@ map_su = {
 	"description": """The lights flicker as you enter the SU.
 You see a cricket bat lying amongst other dead people scattered 
 around the alcohol soaked floor. It is almost silent,
-only the droning sound of the wind whistling is apparent. Suddenly,
-you hear the stomping of enourmous shoes as a clown comes towards you.""",
+only the droning sound of the wind whistling is apparent.""",
 	
 	"descclown": """Suddenly, you hear the stomping of enourmous
-shoes as a clown comes towards you.""",
+shoes as a clown comes towards you, as each foot slams down, the clown
+laughs and laughs spitting blood everywhere.""",
 
 	"exits": {"east": "Lidl", "west": "Cross Roads"},
 
@@ -130,8 +125,9 @@ map_crossroads = {
 not a large pair of shoes in sight. Around you there are a variety of buildings.
 There is a letting office, a coffee shop, and the Law & Politics Building.""",
 
-	"descclown": """From here there are multiple ways to get home, 
-	but standing in the middle of the road, two clowns have spotted you.""",
+	"descclown": """Standing in the middle of the road, two blood-dripping clowns
+have spotted you, as both stare intently at you, they tilt their heads while
+perpetually staring at your face and run towards you smiling.""",
 
 	"exits": {"east": "Lidl", "west": "Coffee Shop", "north": "Traffic Lights"},
 
@@ -165,11 +161,12 @@ map_traffic = {
 
 	"description": """You come to the Traffic Lights and wait
 for them turn red and the green man to show, a ironically small
-spotty car with a red nose on the bonnet stops. You start to 
-cross as a seemingly perpetual amount of clowns pour out of the 
-car. Finally, the 15th and last clown emerges, fighting these
-may prove difficult...
-""",
+spotty car with a red nose on the bonnet stops.""",
+	
+	"descclown" : """You start to cross as a seemingly 
+endless amount of clowns pour out of the car shouting. 
+Finally, the final 15th clown emerges, fighting these
+may prove difficult...""",
 
 	"exits": {"south": "Cross Roads", "north": "Empty Road"},
 
@@ -189,12 +186,14 @@ You try to get in one but its locked and no one is replying to
 your pleading.""",
 	
 	"descclown" : """There is a trio of clowns slowly emerging from
-certain houses with goliath, size 20 blood-stained shoes.
+certain houses with goliath, size 20 blood-stained shoes. The clowns
+scream "I WANT TO DEVOUR YOU" as they walk towards you from different
+directions.
 """,
 
 	"exits": {"north": "Taly South"},
 
-	"items":[],
+	"items":[item_bottle],
 
 	"enemies": 3,
 
@@ -205,14 +204,7 @@ map_talysouth = {
 	"name": "Taly South",
 
 	"description": """You arrive safetly back at your flat and
-collapse on the once white bed. As you are about to doze off
-the sound of the doorbell and knocking pierces your ears, 
-as you walk out of your door, the hallway is full to the brim
-of fully-armoured police labelled "SWAT", they make their way
-to you, standing on the once attached front door.
-The red dots of the guns stain your body, as they handcuff
-you hastily, an officer shouts:  
-""",
+collapse on the once white bed. As you are about to doze off you notice""",
 
 	"exits": {},
 
