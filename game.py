@@ -5,6 +5,19 @@ from gameparser import *
 from ascii import *
 import random
 import sys
+import sse_python
+
+def sse_send_stats():
+#Tell SSE that stats have changed
+    if player_stats["health"] < 0:
+        sse_python.send_event("HEALTH", 0)
+    else:
+        sse_python.send_event("HEALTH", player_stats["health"])
+
+    if player_stats["energy"] < 0:
+        sse_python.send_event("ENERGY", 0)
+    else:
+        sse_python.send_event("ENERGY", player_stats["energy"])
 
 def list_of_items(items):
     """This function takes a list of items and returns a comma sep, list.
@@ -310,6 +323,7 @@ def fight_sequence():
         player_stats["energy"] -= 5
         player_stats["health"] -= random.randrange(1,31)
 
+
         # for each item in inventory.
         for i in inventory:
             # if it's a weapon add it to the list.
@@ -325,6 +339,7 @@ def fight_sequence():
 
         elif weapons >= 1:
             while True:
+                sse_python.heartbeat()
                 # take user input of which weapon they will use.
                 for i in range(1, len(inventory)):
                     # list index i - 1 as count starts 0 not 1.
@@ -347,11 +362,12 @@ def fight_sequence():
             print("""You pat your pockets vigorously but cannot find a weapon, 
 The clown smiles slowly as he draws out a blunt knife and thrusts
 his hand forward into your chest. You have died...""")
+            sse_python.send_event("HEALTH", 0)
             lose_game()
 
         # Player lost health!
         print("Lost Health! Health now: " + str(player_stats["health"]))
-
+        sse_send_stats()
         player_stats["kills"] += 1
 
         if player_stats["health"] <= 0 or player_stats["energy"] <= 0:
@@ -516,6 +532,8 @@ def main():
     import time
     global current_room
 
+
+
     title()
     # Sleep to show title briefly.
     time.sleep(2)
@@ -544,6 +562,16 @@ def main():
         # If user isn't good at typing, give easy!
         print("That was not a valid response, so we put you on easy.")
 
+    # Register game in SSE3
+    if sse_python.sse_status():
+        print("SSE3 Running")
+        sse_python.game_name = "CLOWN-GAME"
+        sse_python.game_friendly_name = "Nightmare On Clown St."
+        sse_python.register_game(8)
+        sse_python.register_event("HEALTH", 0, player_stats["health"],1)
+        sse_python.register_event("ENERGY", 0, player_stats["energy"],16)
+    sse_send_stats()
+
     # Print intial help guide.
     print('\n' + "GUIDE".center(50, '-'))
     print("""\nRemember, you can use the 'help' command at any time!!!!\n
@@ -552,6 +580,8 @@ Also, check your items use 'inventory'/'inv',
 be smart when taking any old item!""")
 
     while game_running == True:
+        sse_python.heartbeat() # Keep SSE running, although it'll die if player takes longer than 15 seconds
+        sse_send_stats()
         # Display game status (room description, inventory etc.), main game loop.
         print("")
         print_room(current_room)
