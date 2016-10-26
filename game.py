@@ -14,11 +14,6 @@ def sse_send_stats():
     else:
         sse_python.send_event("HEALTH", player_stats["health"])
 
-    if player_stats["energy"] < 0:
-        sse_python.send_event("ENERGY", 0)
-    else:
-        sse_python.send_event("ENERGY", player_stats["energy"])
-
 def list_of_items(items):
     """This function takes a list of items and returns a comma sep, list.
 
@@ -569,7 +564,6 @@ def main():
         sse_python.game_friendly_name = "Nightmare On Clown St."
         sse_python.register_game(8)
         sse_python.register_event("HEALTH", 0, player_stats["health"],1)
-        sse_python.register_event("ENERGY", 0, player_stats["energy"],16)
     sse_send_stats()
 
     # Print intial help guide.
