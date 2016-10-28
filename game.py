@@ -411,6 +411,7 @@ def execute_command(command):
         print("You murmur words that are incomprehensible... Try using 'help' for commands!")
 
 def print_end_dialog(end_dialog_1,end_dialog_2,end_dialog_3):
+    # Prints the end dialogs (not sure why they were separated into 3 variables but ah well)
     for i in end_dialog_1:
         sys.stdout.write(i)
         sys.stdout.flush()
