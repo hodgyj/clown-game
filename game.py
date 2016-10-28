@@ -496,84 +496,88 @@ def move(exits, direction):
     return places[exits[direction]]
 
 def main():
-    # Main code starts at runtime.
+    try:
+        # Main code starts at runtime.
 
-    from map import map_pryzm
-    import time
-    global current_room
+        from map import map_pryzm
+        import time
+        global current_room
 
 
 
-    print_ascii(title)
-    # Sleep to show title briefly.
-    time.sleep(2)
-    print_ascii(clown6)
+        print_ascii(title)
+        # Sleep to show title briefly.
+        time.sleep(2)
+        print_ascii(clown6)
 
-    # Give user option to play at different levels.
-    print("Do you want to play on Easy, Normal, or Hard?")
-    user_input = input()
-    normalised_user_input = normalise_input(user_input)
-    normalised_user_input = (", ".join(normalised_user_input))
+        # Give user option to play at different levels.
+        print("Do you want to play on Easy, Normal, or Hard?")
+        user_input = input()
+        normalised_user_input = normalise_input(user_input)
+        normalised_user_input = (", ".join(normalised_user_input))
 
-    # User health and energy different for difficulty rating.
-    if normalised_user_input == "easy":
-        player_stats["health"] = 100
-        player_stats["max_health"] = 100
-        player_stats["energy"] = 100
-        player_stats["level"] = "easy"
-    elif normalised_user_input == "normal":
-        player_stats["health"] = 75
-        player_stats["max_health"] = 75
-        player_stats["energy"] = 75
-        player_stats["level"] = "normal"
-    elif normalised_user_input == "hard":
-        player_stats["health"] = 50
-        player_stats["max_health"] = 50
-        player_stats["energy"] = 50
-        player_stats["level"] = "hard"
-    else:
-        # If user isn't good at typing, give easy!
-        print("That was not a valid response, so we put you on easy.")
-
-    # Register game in SSE3
-    if sse_python.sse_status():
-        print("SSE3 Running")
-        sse_python.game_name = "CLOWN-GAME"
-        sse_python.game_friendly_name = "Nightmare On Clown St."
-        sse_python.register_game(8)
-        sse_python.remove_event("HEALTH") # Remove HEALTH event so that the max value can be updated
-        sse_python.register_event("HEALTH", 0, ((player_stats["health"] / player_stats["max_health"]) * 100),1)
-        sse_send_stats()
-
-    # Print intial help guide.
-    print('\n' + "GUIDE".center(50, '-'))
-    print("""\nRemember, you can use the 'help' command at any time!!!!\n
-To start combat use 'fight', then to pick up an object\nuse 'take', and 'drop' to remove that object!
-Also, check your items use 'inventory'/'inv', 
-be smart when taking any old item!""")
-
-    while game_running == True:
-        sse_python.heartbeat() # Keep SSE running, although it'll die if player takes longer than 15 seconds
-        sse_send_stats()
-        # Display game status (room description, inventory etc.), main game loop.
-        print("")
-        print_room(current_room)
-        print_room_items(current_room)
-
-        # If went into death room, lose game.
-        if current_room["dead"] == True:
-            player_stats["health"] = 0
-            sse_send_stats()
-            lose_game()
-        elif current_room == places["Taly South"]:
-            # If reached end of map, win game.
-            win_game()
+        # User health and energy different for difficulty rating.
+        if normalised_user_input == "easy":
+            player_stats["health"] = 100
+            player_stats["max_health"] = 100
+            player_stats["energy"] = 100
+            player_stats["level"] = "easy"
+        elif normalised_user_input == "normal":
+            player_stats["health"] = 75
+            player_stats["max_health"] = 75
+            player_stats["energy"] = 75
+            player_stats["level"] = "normal"
+        elif normalised_user_input == "hard":
+            player_stats["health"] = 50
+            player_stats["max_health"] = 50
+            player_stats["energy"] = 50
+            player_stats["level"] = "hard"
         else:
-            # Show the menu with possible actions and ask the player.
-            command = menu(current_room["exits"])
+            # If user isn't good at typing, give easy!
+            print("That was not a valid response, so we put you on easy.")
 
-            # Execute the player's command.
-            execute_command(command)
+        # Register game in SSE3
+        if sse_python.sse_status():
+            print("SSE3 Running")
+            sse_python.game_name = "CLOWN-GAME"
+            sse_python.game_friendly_name = "Nightmare On Clown St."
+            sse_python.register_game(8)
+            sse_python.remove_event("HEALTH") # Remove HEALTH event so that the max value can be updated
+            sse_python.register_event("HEALTH", 0, ((player_stats["health"] / player_stats["max_health"]) * 100),1)
+            sse_send_stats()
+
+        # Print intial help guide.
+        print('\n' + "GUIDE".center(50, '-'))
+        print("""\nRemember, you can use the 'help' command at any time!!!!\n
+    To start combat use 'fight', then to pick up an object\nuse 'take', and 'drop' to remove that object!
+    Also, check your items use 'inventory'/'inv', 
+    be smart when taking any old item!""")
+
+        while game_running == True:
+            sse_python.heartbeat() # Keep SSE running, although it'll die if player takes longer than 15 seconds
+            sse_send_stats()
+            # Display game status (room description, inventory etc.), main game loop.
+            print("")
+            print_room(current_room)
+            print_room_items(current_room)
+
+            # If went into death room, lose game.
+            if current_room["dead"] == True:
+                player_stats["health"] = 0
+                sse_send_stats()
+                lose_game()
+            elif current_room == places["Taly South"]:
+                # If reached end of map, win game.
+                win_game()
+            else:
+                # Show the menu with possible actions and ask the player.
+                command = menu(current_room["exits"])
+
+                # Execute the player's command.
+                execute_command(command)
+    except KeyboardInterrupt:
+        print("Exited.")
+        exit()
 
 if __name__ == "__main__":
     import ctypes
