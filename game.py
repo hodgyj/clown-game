@@ -562,6 +562,8 @@ be smart when taking any old item!""")
 
         # If went into death room, lose game.
         if current_room["dead"] == True:
+            player_stats["health"] = 0
+            sse_send_stats()
             lose_game()
         elif current_room == places["Taly South"]:
             # If reached end of map, win game.
