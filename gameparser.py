@@ -51,7 +51,7 @@ def remove_numbers(text):
 
 	# Remove numbers not needed, possible typo.
 	for char in text:
-		if not (char in "1234567890"):
+		if not char.isdigit():
 			no_numb += char
 
 	return no_numb
