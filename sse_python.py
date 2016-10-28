@@ -9,9 +9,12 @@ game_friendly_name = ""
 
 def json_post(url, data):
     r = requests.post(url, json=data)
+    if r.status_code != 200:
+        sse_running = False
+        sse_status()
 
 def register_game(icon_id):
-    if sse_status():
+    if sse_running:
         game_metadata = {
             "game": game_name,
             "game_display_name": game_friendly_name,
@@ -20,14 +23,14 @@ def register_game(icon_id):
         json_post(sse_address + "/game_metadata", game_metadata)
 
 def remove_game():
-    if sse_status():
+    if sse_running:
         game_metadata = {
             "game": game_name
         }
         json_post(sse_address + "/remove_game", game_metadata)
 
 def register_event(event, minimum, maximum, icon_id=0):
-    if sse_status():
+    if sse_running:
         event_data = {
             "game": game_name,
             "event": event,
@@ -38,7 +41,7 @@ def register_event(event, minimum, maximum, icon_id=0):
         json_post(sse_address + "/register_game_event", event_data)
 
 def remove_event(event):
-    if sse_status():
+    if sse_running:
         event_data = {
             "game": game_name,
             "event": event
@@ -47,7 +50,7 @@ def remove_event(event):
 
 def heartbeat():
     # Sends a heartbeat event to SSE3 so that colours stay there!
-    if sse_status():
+    if sse_running:
         sse_data = {
             "game": game_name
         }
@@ -56,7 +59,7 @@ def heartbeat():
 def send_event(event, value):
             # This function sends a game event and value to SteelSeries
             # Engine 3 so that pretty colours are a thing
-    if sse_status():
+    if sse_running:
         sse_data = {
             "game": game_name,
             "event": event,
