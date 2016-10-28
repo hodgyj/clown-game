@@ -12,7 +12,7 @@ def sse_send_stats():
     if player_stats["health"] < 0:
         sse_python.send_event("HEALTH", 0)
     else:
-        sse_python.send_event("HEALTH", player_stats["health"])
+        sse_python.send_event("HEALTH", ((player_stats["health"] / player_stats["max_health"]) * 100))
 
 def list_of_items(items):
     """This function takes a list of items and returns a comma sep, list.
@@ -291,16 +291,7 @@ def fight_sequence():
 
     # print a random picture of a clown from ascii.py.
     clown_func = random.randint(1,6)
-    if clown_func == 1:
-        clown1()
-    if clown_func == 2:
-        clown2()
-    if clown_func == 3:
-        clown3()
-    if clown_func == 4:
-        clown4()
-    if clown_func == 5:
-        clown5()
+    print_ascii(clowns[clown_func])
 
     # Print player stats.
     print_stats()
@@ -374,7 +365,7 @@ his hand forward into your chest. You have died...""")
 
 def execute_command(command):
     # Gets user commands, then targets the specific functions required to run commands.
-
+    directions = ["north", "south", "east", "west"]
     if 0 == len(command):
         return
     if command[0] == "go":
@@ -382,16 +373,7 @@ def execute_command(command):
             execute_go(command[1])
         else:
             print("Go where?")
-    elif command[0] == "east":
-        if len(command) == 1:
-            execute_go(command[0])
-    elif command[0] == "west":
-        if len(command) == 1:
-            execute_go(command[0])
-    elif command[0] == "north":
-        if len(command) == 1:
-            execute_go(command[0])
-    elif command[0] == "south":
+    elif command[0] in directions:
         if len(command) == 1:
             execute_go(command[0])
     elif command[0] == "take":
@@ -428,6 +410,20 @@ def execute_command(command):
     else:
         print("You murmur words that are incomprehensible... Try using 'help' for commands!")
 
+def print_end_dialog(end_dialog_1,end_dialog_2,end_dialog_3):
+    for i in end_dialog_1:
+        sys.stdout.write(i)
+        sys.stdout.flush()
+        time.sleep(0.1)
+    for i in end_dialog_2:
+        sys.stdout.write(i)
+        sys.stdout.flush()
+        time.sleep(0.1)
+    for i in end_dialog_3:
+        sys.stdout.write(i)
+        sys.stdout.flush()
+        time.sleep(0.1)
+
 def win_game():
     # Account for different win conditions for multiple endings.
 
@@ -443,18 +439,7 @@ He then soars back into the heavens, leaving a trail of 0's and 1's behind.\n"""
         enddialogue1 = "needles and pills cover the floor, a belt is wrapped around your arm tightly, "
         enddialogue2 = "you fall to the ground in shock, crying, as you realise you are a drug addict.\n"
         enddialogue3 = "END OF GAME"
-        for i in enddialogue1:
-            sys.stdout.write(i)
-            sys.stdout.flush()
-            time.sleep(0.1)
-        for i in enddialogue2:
-            sys.stdout.write(i)
-            sys.stdout.flush()
-            time.sleep(0.1)
-        for i in enddialogue3:
-            sys.stdout.write(i)
-            sys.stdout.flush()
-            time.sleep(0.1)
+        print_end_dialog(enddialogue1, enddialogue2, enddialogue3)
         print("""\nYou decided not to kill anyone, this makes you a drug addict but not
 a serial killer, well done - but you have a small score.\n""")
         print("Your score is:", score())
@@ -470,18 +455,7 @@ you hastily, an officer shouts:""")
         enddialogue1 = "YOU ARE UNDER ARREST FOR THE MASS-MURDER OF MANY INNOCENT PEOPLE ON THE NIGHT OF OCTOBER 31ST AND FOR DISTRIBUTION AND USE OF CLASS A DRUGS. "
         enddialogue2 = "You fall to the ground in shock as you realise that you are the real monster...\n"
         enddialogue3 = "END OF GAME"
-        for i in enddialogue1:
-            sys.stdout.write(i)
-            sys.stdout.flush()
-            time.sleep(0.1)
-        for i in enddialogue2:
-            sys.stdout.write(i)
-            sys.stdout.flush()
-            time.sleep(0.1)
-        for i in enddialogue3:
-            sys.stdout.write(i)
-            sys.stdout.flush()
-            time.sleep(0.1)
+        print_end_dialog(enddialogue1, enddialogue2, enddialogue3)
         print("\nCongratulations, you won, your final score was", score())
 
     # Game has ended user can quit.
@@ -490,7 +464,7 @@ you hastily, an officer shouts:""")
 
 def lose_game():
     # If the user dies use this function to trigger options available and print score.
-    endgame()
+    print_ascii(endgame)
     print("\nYou lost, your final score was", score())
     input()
     sys.exit()
@@ -529,10 +503,10 @@ def main():
 
 
 
-    title()
+    print_ascii(title)
     # Sleep to show title briefly.
     time.sleep(2)
-    clown6()
+    print_ascii(clown6)
 
     # Give user option to play at different levels.
     print("Do you want to play on Easy, Normal, or Hard?")
@@ -542,16 +516,19 @@ def main():
 
     # User health and energy different for difficulty rating.
     if normalised_user_input == "easy":
-        stats["stats"]["health"] = 100
-        stats["stats"]["energy"] = 100
+        player_stats["health"] = 100
+        player_stats["max_health"] = 100
+        player_stats["energy"] = 100
         player_stats["level"] = "easy"
     elif normalised_user_input == "normal":
-        stats["stats"]["health"] = 75
-        stats["stats"]["energy"] = 75
+        player_stats["health"] = 75
+        player_stats["max_health"] = 75
+        player_stats["energy"] = 75
         player_stats["level"] = "normal"
     elif normalised_user_input == "hard":
-        stats["stats"]["health"] = 50
-        stats["stats"]["energy"] = 50
+        player_stats["health"] = 50
+        player_stats["max_health"] = 50
+        player_stats["energy"] = 50
         player_stats["level"] = "hard"
     else:
         # If user isn't good at typing, give easy!
@@ -563,8 +540,9 @@ def main():
         sse_python.game_name = "CLOWN-GAME"
         sse_python.game_friendly_name = "Nightmare On Clown St."
         sse_python.register_game(8)
-        sse_python.register_event("HEALTH", 0, player_stats["health"],1)
-    sse_send_stats()
+        sse_python.remove_event("HEALTH") # Remove HEALTH event so that the max value can be updated
+        sse_python.register_event("HEALTH", 0, ((player_stats["health"] / player_stats["max_health"]) * 100),1)
+        sse_send_stats()
 
     # Print intial help guide.
     print('\n' + "GUIDE".center(50, '-'))

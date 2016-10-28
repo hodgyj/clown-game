@@ -8,6 +8,8 @@ player_stats = {
 
 	"health": 100,
 
+	"max_health": 100,
+
 	"energy": 100,
 
 	"kills": 0,

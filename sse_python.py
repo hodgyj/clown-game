@@ -1,6 +1,6 @@
 import os
 import json
-import requests # Install using 'pip install requests'
+import requests
 
 sse_running = False
 sse_address = ""
