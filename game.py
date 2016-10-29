@@ -301,6 +301,7 @@ def fight_clowns():
 
 
     # Count number of weapons
+    # If they have no weapons, kill them (maybe ask first?)
     if count_weapons() == 0:
         print("Unfortunately, you don't have anything to fight with and promptly die.")
         time.sleep(2)
@@ -308,83 +309,102 @@ def fight_clowns():
 
     while len(current_room["enemies"]) > 0:
 
-        sse_send_stats()
+        sse_send_stats() # Send current health to SSE3 for pretty colours
 
         print("You can: ")
+        # For each of the clowns, print their name, current health and strength
         for enemy in current_room["enemies"]:
             print("\tFIGHT " + enemy["name"] + " The Clown (Health: " + str(enemy["health"]) + ", Strength: " + str(enemy["strength"]) + ")")
         print("\tRUN to run from the clowns\n")
         time.sleep(1)
         
+        # Player can either RUN to leave the fight or FIGHT the clowns
+        # If fight, they must supply the name of the clown (maybe make this clearer?)
         player_input = input("Choose a clown to fight:\t(or you can RUN if you are too scared)\n>\t")
         player_input = normalise_input(player_input) 
         if player_input[0] == "run":
             print("\nYou sprint away as fast as possible, hearing the laughter of clowns as you run.")
             time.sleep(1.2)
-            break
+            break # Exit while loop, ending the fight
         elif player_input[0] == "fight":
             for enemy in current_room["enemies"]:
+                # Check if the name of the enemy matches what the player entered
+                # If name does not match, it simply loops round and asks for the name again (could do with notifying the players)
                 if enemy["name"].lower() == player_input[1]:
                     continue_fight = True
                     while continue_fight == True:
 
-                        sse_send_stats()
+                        sse_send_stats() # More pretty colours
                         
                         if count_weapons() == 0:
+                            # Kill player if they no longer have weapons
                             print("\nYou no longer have any weapons. " + enemy["name"] + " is a very observant clown, so")
                             print("takes this opportunity to kill you.\n")
                             time.sleep(2)
                             lose_game()
-
+                        
+                        # Prints all the weapons the player is able to use and asks which weapon to use
                         print("\nChoose a weapon to fight " + enemy["name"] + " with:")
                         for item in inventory:
                             if item["weapon"]:
                                 print("\tUSE " + item["name"] + " to use a " + item["name"])
                         print("Or, you can type BACK to fight a different clown.")
                         player_input = normalise_input(input(">\t"))
-                        if player_input[0] == "back":
+                        if player_input[0] == "back": # Return player to clown selection
                             continue_fight = False
                         elif player_input[0] == "use":
                             for item in inventory:
                                 if (item["name"] == player_input[1]):
                                     if item["weapon"]:
+                                        # If the item is a weapon, calculate and inflict damage on clown 
+                                        # Damage currently calculated by generating a random number between half the 
+                                        # item strength and double the item strength
                                         damage = (random.randrange(int(item["strength"] / 2), int(item["strength"] * 2)))
                                         enemy["health"] -= damage
                                         if enemy["health"] < 0:
-                                            enemy["health"] = 0
+                                            enemy["health"] = 0 # Set to 0 so it looks better :) 
                                         print("\nYou use the " + item["name"] + ", dealing " + str(damage) + " damage.")
                                         time.sleep(0.5)
 
+                                        # Remove health from item and check if it is broken
                                         item["health"] -= 1
-                                        if item["health"] == 0:
+                                        if item["health"] <= 0:
                                             print("Your " + item["name"] + " is now broken!")
                                             time.sleep(0.5)
-                                            inventory.remove(item)
+                                            inventory.remove(item) # Remove item from inventory if it is broken
 
+                                        # Print remaining health for the clown
                                         print(enemy["name"] + " has " + str(enemy["health"]) + " HP remaining.")
                                         time.sleep(1)
                                         
+                                        # Check if the enemy has been killed
                                         if enemy["health"] <= 0:
                                             print("\nYou killed " + enemy["name"] + " The Clown! You monster.\n")
                                             time.sleep(1)
-                                            current_room["enemies"].remove(enemy)
+                                            current_room["enemies"].remove(enemy) # Remove the enemy from the room
                                             player_stats["kills"] += 1
-                                            continue_fight = False
+                                            continue_fight = False # Flag to go back to clown selection
                                         else:
+                                            # If enemy is alive, calculate and inflict damage on the player 
+                                            # Damage calculated by generating a random number between the enemys strength
+                                            # and double the enemys strength
                                             damage = random.randrange(enemy["strength"], enemy["strength"] * 2)
                                             player_stats["health"] -= damage
                                             if player_stats["health"] < 0:
-                                                player_stats["health"] = 0
+                                                player_stats["health"] = 0 # Set to 0 for prettiness and so that SSE doesnt break
+                                            # Print the damage inflicted and remaining HP of the player
                                             print("\n" + enemy["name"] + " retaliated, dealing " + str(damage) + " damage.")
                                             print("You lost " + str(damage) + " HP, leaving you with " + str(player_stats["health"]) + " HP.")
-                                            sse_send_stats()
+                                            sse_send_stats() # Update SSE so we have pretty colours (before the time delay)
                                             time.sleep(1)
-                                            break # Stops it looping through items if they have the same name e.g. multiple bottles
                                             if player_stats["health"] == 0:
+                                                # If player is dead, update SSE with health and exit game
                                                 sse_send_stats()
                                                 print("\n\t\tBlood pours out of you as you fall to the ground, you have died...")
                                                 time.sleep(2)
                                                 lose_game()
+                                            else:
+                                                break # Don't loop through multiple items with the same name
 
                         else:
                             print("That made no sense!")
