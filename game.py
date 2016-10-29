@@ -461,14 +461,14 @@ you hastily, an officer shouts:""")
 
     # Game has ended user can quit.
     input("\nPress any key to exit and return to reality!")
-    sys.exit()
+    exit()
 
 def lose_game():
     # If the user dies use this function to trigger options available and print score.
     print_ascii(endgame)
     print("\nYou lost, your final score was", score())
     input()
-    sys.exit()
+    exit()
 
 def menu(exits):
     # Get user input, normalise that input to ensure user typos still run.
@@ -512,7 +512,7 @@ def main():
 
         # Give user option to play at different levels.
         print("Do you want to play on Easy, Normal, or Hard?")
-        user_input = input()
+        user_input = input(">\t")
         normalised_user_input = normalise_input(user_input)
         normalised_user_input = (", ".join(normalised_user_input))
 
@@ -542,8 +542,7 @@ def main():
             sse_python.game_name = "CLOWN-GAME"
             sse_python.game_friendly_name = "Nightmare On Clown St."
             sse_python.register_game(8)
-            sse_python.remove_event("HEALTH") # Remove HEALTH event so that the max value can be updated
-            sse_python.register_event("HEALTH", 0, ((player_stats["health"] / player_stats["max_health"]) * 100),1)
+            sse_python.register_event("HEALTH", 0, 100, 1)
             sse_send_stats()
 
         # Print intial help guide.
