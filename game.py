@@ -313,7 +313,7 @@ def fight_clowns():
         print("\tRUN to run from the clowns\n")
         time.sleep(1)
         
-        player_input = input("Choose a clown to fight:\t(or you can RUN if you are scared)\n>\t")
+        player_input = input("Choose a clown to fight:\t(or you can RUN if you are too scared)\n>\t")
         player_input = normalise_input(player_input) 
         if player_input[0] == "run":
             print("\nYou sprint away as fast as possible, hearing the laughter of clowns as you run.")
