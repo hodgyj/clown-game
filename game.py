@@ -9,6 +9,7 @@ import sse_python
 
 def sse_send_stats():
 #Tell SSE that stats have changed
+    sse_python.heartbeat()
     if player_stats["health"] < 0:
         sse_python.send_event("HEALTH", 0)
     else:
@@ -96,7 +97,7 @@ def print_room(room):
     print('\n' + room["description"])
 
     # If enemies populate room then print clown description for that room.
-    if room["enemies"] > 0:
+    if len(room["enemies"]) > 0:
         print('\n' + room["descclown"] + '\n')
 
 def print_menu(exits):
@@ -275,10 +276,41 @@ def execute_fight():
     # Start fight sequence but check room has clown first.
 
     # Check room has enemies then run fight sequence, else warning.
-    if current_room["enemies"] > 0:
-        fight_sequence()
+    if len(current_room["enemies"]) > 0:
+        fight_clowns()
     else:
         print("\nYou can't fight anything here!\n")
+
+def fight_clowns():
+    # Print intro to the fight (change wording!)
+    if len(current_room["enemies"]) > 1:
+        print("You square yourself up and prepare to fight \nthe " + str(len(current_room["enemies"])) + " clowns standing in front of you.")
+    else:
+        print("You square yourself up and prepare to fight the clown.")
+
+    # Count number of weapons
+    weapon_num = 0
+    for item in inventory:
+        if item["weapon"] == True:
+            weapon_num += 1
+    if weapon_num == 0:
+        print("Unfortunately, you don't have anything to fight with and promptly die.")
+        lose_game()
+
+    while len(current_room["enemies"]) > 0:
+        sse_send_stats()
+        print("You can fight: ")
+        for enemy in current_room["enemies"]:
+            print("\t" + enemy["name"] + " The Clown")
+        player_input = input("Choose a clown to fight\n>\t")
+        player_input = normalise_input(player_input)
+        clown_valid = False
+        for enemy in current_room["enemies"]:
+            if enemy["name"].lower() == player_input[0]:
+               print("Enemy found")
+               clown_valid = True 
+               # Put actual fighting here
+    
 
 def fight_sequence():
     # Start fight code that triggers fighting mechanics.
@@ -466,6 +498,8 @@ you hastily, an officer shouts:""")
 def lose_game():
     # If the user dies use this function to trigger options available and print score.
     print_ascii(endgame)
+    player_stats["health"] = 0
+    sse_send_stats()
     print("\nYou lost, your final score was", score())
     input()
     exit()

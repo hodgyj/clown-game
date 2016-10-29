@@ -1,6 +1,6 @@
 from items import *
 import time
-import sys
+import enemies
 
 map_pryzm = {
 	"name": "Pryzm",
@@ -16,7 +16,7 @@ the club had stayed open just a little bit longer.
 
 	"items": [item_bottle],
 
-	"enemies": 0,
+	"enemies": [],
 
 	"dead": False,
 }
@@ -38,7 +38,7 @@ red-wigged clown sinisterly breathing heavily.""",
 
 	"items": [item_needle],
 
-	"enemies": 1,
+	"enemies": [enemies.clown_park],
 
 	"dead": False,
 }
@@ -56,7 +56,7 @@ as you beg for your life.""",
 
 	"items": [],
 
-	"enemies": 0,
+	"enemies": [],
 
 	"dead": True,
 }
@@ -74,7 +74,7 @@ and the sound of rubber balloons squeeling in the dark alley nearby.
 
 	"items": [item_shotgun],
 
-	"enemies": 0,
+	"enemies": [],
 
 	"dead": False,
 }
@@ -92,7 +92,7 @@ that murdered you.""",
 
 	"items": [],
 
-	"enemies": 0,
+	"enemies": [],
 
 	"dead": True,
 }
@@ -113,7 +113,7 @@ laughs and laughs spitting blood everywhere.""",
 
 	"items": [item_cricket_bat],
 
-	"enemies": 1,
+	"enemies": [enemies.clown_su],
 
 	"dead": False,
 }
@@ -133,7 +133,7 @@ perpetually staring at your face and run towards you smiling.""",
 
 	"items": [item_bottle, item_bottle],
 
-	"enemies": 2,
+	"enemies": [enemies.clown_crossroads_1, enemies.clown_crossroads_2],
 
 	"dead": False,
 }
@@ -151,7 +151,7 @@ there switched on with a cup sitting below on the stand.
 
 	"items": [item_coffee, item_cricket_bat],
 
-	"enemies":0,
+	"enemies":[],
 
 	"dead": False,
 }
@@ -172,7 +172,7 @@ may prove difficult...""",
 
 	"items": [item_chocolate],
 
-	"enemies": 15,
+	"enemies": [enemies.clown_traffic_1, enemies.clown_traffic_2, enemies.clown_traffic_3],
 
 	"dead": False,
 }
@@ -195,7 +195,7 @@ directions.
 
 	"items":[item_bottle],
 
-	"enemies": 3,
+	"enemies": [enemies.clown_emptyrd_1, enemies.clown_emptyrd_2],
 
 	"dead": False,
 }
@@ -210,7 +210,7 @@ collapse on the once white bed. As you are about to doze off you notice""",
 
 	"items": [],
 
-	"enemies": 0,
+	"enemies": [],
 
 	"dead": False,
 }
