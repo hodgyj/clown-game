@@ -548,7 +548,8 @@ def main():
         # Print intial help guide.
         print('\n' + "GUIDE".center(50, '-'))
         print("""\nRemember, you can use the 'help' command at any time!!!!\n
-    To start combat use 'fight', then to pick up an object\nuse 'take', and 'drop' to remove that object!
+    To start combat use 'fight', then to pick up an object
+    use 'take', and 'drop' to remove that object!
     Also, check your items use 'inventory'/'inv', 
     be smart when taking any old item!""")
 
