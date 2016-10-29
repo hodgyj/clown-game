@@ -6,6 +6,7 @@ from ascii import *
 import random
 import sys
 import sse_python
+import time
 
 def sse_send_stats():
 #Tell SSE that stats have changed
@@ -168,11 +169,11 @@ def execute_take(item_id):
             # If item is special, do special energy/health gains!
             if room_item["name"] == "coffee":
                 inventory.remove(room_item)
-                stats["stats"]["energy"] += 50
+                player_stats["energy"] += 50
                 print("You drink the coffee, and gain 50 energy!")
             if room_item["name"] == "chocolate":
                 inventory.remove(room_item)
-                stats["stats"]["health"] += 30
+                player_stats["health"] += 30
                 print("You unwillingly eat the bounty and gain 30 health!")
         else:
             # Tried to pick up item that doesn't exist potentially.
@@ -216,8 +217,8 @@ def print_stats():
 
     # Print user stats.
     print("Your Stats Are:\n" )
-    print("Health : " + str(stats["stats"]["health"]))
-    print("Energy : " + str(stats["stats"]["energy"]))
+    print("Health : " + str(player_stats["health"]))
+    print("Energy : " + str(player_stats["energy"]))
     print_inventory_items(inventory)
 
 def score():
@@ -281,36 +282,108 @@ def execute_fight():
     else:
         print("\nYou can't fight anything here!\n")
 
+def count_weapons():
+    weapon_num = 0
+    for item in inventory:
+        if item["weapon"]:
+            weapon_num += 1
+    return weapon_num
+
 def fight_clowns():
     # Print intro to the fight (change wording!)
     if len(current_room["enemies"]) > 1:
-        print("You square yourself up and prepare to fight \nthe " + str(len(current_room["enemies"])) + " clowns standing in front of you.")
+        print("\nYou square yourself up and prepare to fight \nthe " + str(len(current_room["enemies"])) + " clowns standing in front of you.\n")
     else:
-        print("You square yourself up and prepare to fight the clown.")
+        print("\nYou square yourself up and prepare to fight the clown.\n")
+    time.sleep(1)
 
     # Count number of weapons
-    weapon_num = 0
-    for item in inventory:
-        if item["weapon"] == True:
-            weapon_num += 1
-    if weapon_num == 0:
+    if count_weapons() == 0:
         print("Unfortunately, you don't have anything to fight with and promptly die.")
+        time.sleep(2)
         lose_game()
 
     while len(current_room["enemies"]) > 0:
+
         sse_send_stats()
-        print("You can fight: ")
+
+        print("You can: ")
         for enemy in current_room["enemies"]:
-            print("\t" + enemy["name"] + " The Clown")
-        player_input = input("Choose a clown to fight\n>\t")
-        player_input = normalise_input(player_input)
-        clown_valid = False
-        for enemy in current_room["enemies"]:
-            if enemy["name"].lower() == player_input[0]:
-               print("Enemy found")
-               clown_valid = True 
-               # Put actual fighting here
-    
+            print("\tFIGHT " + enemy["name"] + " The Clown (Health: " + str(enemy["health"]) + ", Strength: " + str(enemy["strength"]) + ")")
+        print("\tRUN to run from the clowns\n")
+        time.sleep(1)
+        
+        player_input = input("Choose a clown to fight:\t(or you can RUN if you are scared)\n>\t")
+        player_input = normalise_input(player_input) 
+        if player_input[0] == "run":
+            print("\nYou sprint away as fast as possible, hearing the laughter of clowns as you run.")
+            time.sleep(1.2)
+            break
+        elif player_input[0] == "fight":
+            for enemy in current_room["enemies"]:
+                if enemy["name"].lower() == player_input[1]:
+                    continue_fight = True
+                    while continue_fight == True:
+
+                        sse_send_stats()
+
+                        if count_weapons() == 0:
+                            print("You no longer have any weapons. " + enemy["name"] + " is a very observant clown, so")
+                            print("takes this opportunity to kill you.\n")
+                            time.sleep(2)
+                            lose_game()
+
+                        print("\nChoose a weapon to fight " + enemy["name"] + " with:")
+                        for item in inventory:
+                            if item["weapon"]:
+                                print("\tUSE " + item["name"] + " to use a " + item["name"])
+                        print("Or, you can type BACK to fight a different clown.")
+                        player_input = normalise_input(input(">\t"))
+                        if player_input[0] == "back":
+                            continue_fight = False
+                        elif player_input[0] == "use":
+                            for item in inventory:
+                                if (item["name"] == player_input[1]):
+                                    if item["weapon"]:
+
+                                        damage = (random.randrange(int(item["strength"] / 2), int(item["strength"] * 2)))
+                                        enemy["health"] -= damage
+                                        if enemy["health"] < 0:
+                                            enemy["health"] = 0
+                                        print("\nYou use the " + item["name"] + ", dealing " + str(damage) + " damage.")
+                                        time.sleep(0.5)
+
+                                        item["health"] -= 1
+                                        if item["health"] == 0:
+                                            print("Your " + item["name"] + " is now broken!")
+                                            time.sleep(0.5)
+                                            inventory.remove(item)
+
+                                        print(enemy["name"] + " has " + str(enemy["health"]) + " HP remaining.")
+                                        time.sleep(1)
+                                        
+                                        if enemy["health"] <= 0:
+                                            print("\nYou killed " + enemy["name"] + " The Clown! You monster.\n")
+                                            time.sleep(1)
+                                            current_room["enemies"].remove(enemy)
+                                            player_stats["kills"] += 1
+                                            continue_fight = False
+                                        else:
+                                            damage = random.randrange(enemy["strength"], enemy["strength"] * 2)
+                                            player_stats["health"] -= damage
+                                            if player_stats["health"] < 0:
+                                                player_stats["health"] = 0
+                                            print("\n" + enemy["name"] + " retaliated, dealing " + str(damage) + " damage.")
+                                            print("You lost " + str(damage) + " HP, leaving you with " + str(player_stats["health"]) + " HP.")
+                                            time.sleep(1)
+                                            if player_stats["health"] == 0:
+                                                sse_send_stats()
+                                                print("\n\t\tBlood pours out of you as you fall to the ground, you have died...")
+                                                time.sleep(2)
+                                                lose_game()
+
+                        else:
+                            print("That made no sense!")
 
 def fight_sequence():
     # Start fight code that triggers fighting mechanics.
@@ -468,7 +541,7 @@ cheated, so you will get no points at all."
 He then soars back into the heavens, leaving a trail of 0's and 1's behind.\n""")
         print("Your score is:", score())
     # No kill easter egg ending.
-    elif stats["stats"]["kills"] == 0:
+    elif player_stats["kills"] == 0:
         enddialogue1 = "needles and pills cover the floor, a belt is wrapped around your arm tightly, "
         enddialogue2 = "you fall to the ground in shock, crying, as you realise you are a drug addict.\n"
         enddialogue3 = "END OF GAME"

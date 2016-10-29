@@ -17,10 +17,6 @@ player_stats = {
 	"level": ""
 }
 
-stats = {
-	"stats": player_stats
-}
-
 # Start game at Pryzm
 current_room = places["Pryzm"]
 	
