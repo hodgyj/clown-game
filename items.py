@@ -10,7 +10,7 @@ not quite sure which one it is though.""",
 item_cricket_bat = {
 "name": "bat",
 "description": """A rugged, wooden cricket bat laying face down with a strange stain beside it.""",
-"health": 4,
+"health": 10,
 "strength": 5,
 "weapon": True
 }

@@ -174,6 +174,8 @@ def execute_take(item_id):
             if room_item["name"] == "chocolate":
                 inventory.remove(room_item)
                 player_stats["health"] += 30
+                if player_stats["health"] > player_stats["max_health"]:
+                    player_stats["health"] = player_stats["max_health"]
                 print("You unwillingly eat the bounty and gain 30 health!")
         else:
             # Tried to pick up item that doesn't exist potentially.
@@ -282,9 +284,9 @@ def execute_fight():
     else:
         print("\nYou can't fight anything here!\n")
 
-def count_weapons():
+def count_weapons(weapon_container = inventory):
     weapon_num = 0
-    for item in inventory:
+    for item in weapon_container:
         if item["weapon"]:
             weapon_num += 1
     return weapon_num
@@ -296,6 +298,7 @@ def fight_clowns():
     else:
         print("\nYou square yourself up and prepare to fight the clown.\n")
     time.sleep(1)
+
 
     # Count number of weapons
     if count_weapons() == 0:
@@ -326,9 +329,9 @@ def fight_clowns():
                     while continue_fight == True:
 
                         sse_send_stats()
-
+                        
                         if count_weapons() == 0:
-                            print("You no longer have any weapons. " + enemy["name"] + " is a very observant clown, so")
+                            print("\nYou no longer have any weapons. " + enemy["name"] + " is a very observant clown, so")
                             print("takes this opportunity to kill you.\n")
                             time.sleep(2)
                             lose_game()
@@ -345,7 +348,6 @@ def fight_clowns():
                             for item in inventory:
                                 if (item["name"] == player_input[1]):
                                     if item["weapon"]:
-
                                         damage = (random.randrange(int(item["strength"] / 2), int(item["strength"] * 2)))
                                         enemy["health"] -= damage
                                         if enemy["health"] < 0:
@@ -375,7 +377,9 @@ def fight_clowns():
                                                 player_stats["health"] = 0
                                             print("\n" + enemy["name"] + " retaliated, dealing " + str(damage) + " damage.")
                                             print("You lost " + str(damage) + " HP, leaving you with " + str(player_stats["health"]) + " HP.")
+                                            sse_send_stats()
                                             time.sleep(1)
+                                            break # Stops it looping through items if they have the same name e.g. multiple bottles
                                             if player_stats["health"] == 0:
                                                 sse_send_stats()
                                                 print("\n\t\tBlood pours out of you as you fall to the ground, you have died...")
@@ -384,6 +388,9 @@ def fight_clowns():
 
                         else:
                             print("That made no sense!")
+                    break # Exit for loop
+        else:
+            print("You can't do that!\n")
 
 def fight_sequence():
     # Start fight code that triggers fighting mechanics.
