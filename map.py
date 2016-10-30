@@ -149,7 +149,7 @@ there switched on with a cup sitting below on the stand.
 
 	"exits": {"south": "Cross Roads"},
 
-	"items": [item_coffee, item_cricket_bat],
+	"items": [item_coffee, item_stick],
 
 	"enemies":[],
 

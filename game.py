@@ -156,22 +156,22 @@ def execute_take(item_id):
     if len(inventory) < 5:
         # For every item check if user input matches item.
         for item in current_room["items"]:
-            if(item["name"] == item_id):
+            if(item["id"] == item_id):
                 room_item = item
         # If item is in current room and there is room in inventory for item.
         if room_item: 
             # Remove item from current room and add to inventory.
             current_room["items"].remove(room_item)
             inventory.append(room_item)
-            print("You take the " + str(room_item["name"]) + "\n")
+            print("You take " + str(room_item["name"]) + "\n")
             print(room_item["description"])
 
             # If item is special, do special energy/health gains!
-            if room_item["name"] == "coffee":
+            if room_item["id"] == "coffee":
                 inventory.remove(room_item)
                 player_stats["energy"] += 50
                 print("You drink the coffee, and gain 50 energy!")
-            if room_item["name"] == "chocolate":
+            if room_item["id"] == "chocolate":
                 inventory.remove(room_item)
                 player_stats["health"] += 30
                 if player_stats["health"] > player_stats["max_health"]:
@@ -347,14 +347,14 @@ def fight_clowns():
                         print("\nChoose a weapon to fight " + enemy["name"] + " with:")
                         for item in inventory:
                             if item["weapon"]:
-                                print("\tUSE " + item["name"] + " to use a " + item["name"])
+                                print("\tUSE " + item["id"].upper() + " to use " + item["name"])
                         print("Or, you can type BACK to fight a different clown.")
                         player_input = normalise_input(input(">\t"))
                         if player_input[0] == "back": # Return player to clown selection
                             continue_fight = False
                         elif player_input[0] == "use":
                             for item in inventory:
-                                if (item["name"] == player_input[1]):
+                                if (item["id"] == player_input[1]):
                                     if item["weapon"]:
                                         # If the item is a weapon, calculate and inflict damage on clown 
                                         # Damage currently calculated by generating a random number between half the 
@@ -363,7 +363,7 @@ def fight_clowns():
                                         enemy["health"] -= damage
                                         if enemy["health"] < 0:
                                             enemy["health"] = 0 # Set to 0 so it looks better :) 
-                                        print("\nYou use the " + item["name"] + ", dealing " + str(damage) + " damage.")
+                                        print("\nYou use " + item["name"] + ", dealing " + str(damage) + " damage.")
                                         time.sleep(0.5)
 
                                         # Remove health from item and check if it is broken
@@ -651,17 +651,17 @@ def main():
         normalised_user_input = (", ".join(normalised_user_input))
 
         # User health and energy different for difficulty rating.
-        if normalised_user_input == "easy":
+        if normalised_user_input == "easy" or normalised_user_input == "e":
             player_stats["health"] = 100
             player_stats["max_health"] = 100
             player_stats["energy"] = 100
             player_stats["level"] = "easy"
-        elif normalised_user_input == "normal":
+        elif normalised_user_input == "normal" or normalised_user_input == "n":
             player_stats["health"] = 75
             player_stats["max_health"] = 75
             player_stats["energy"] = 75
             player_stats["level"] = "normal"
-        elif normalised_user_input == "hard":
+        elif normalised_user_input == "hard" or normalised_user_input == "h":
             player_stats["health"] = 50
             player_stats["max_health"] = 50
             player_stats["energy"] = 50
