@@ -387,8 +387,8 @@ def fight_clowns():
                                         else:
                                             # If enemy is alive, calculate and inflict damage on the player 
                                             # Damage calculated by generating a random number between the enemys strength
-                                            # and double the enemys strength
-                                            damage = random.randrange(enemy["strength"], enemy["strength"] * 2)
+                                            # and triple the enemys strength
+                                            damage = random.randrange(enemy["strength"], enemy["strength"] * 3)
                                             player_stats["health"] -= damage
                                             if player_stats["health"] < 0:
                                                 player_stats["health"] = 0 # Set to 0 for prettiness and so that SSE doesnt break
