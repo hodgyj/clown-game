@@ -14,6 +14,7 @@ def json_post(url, data):
         r = requests.post(url, json=data)
         if r.status_code != 200:
             print("Error sending data to SteelSeries Engine. Error Code: " + r.status_code)
+            sse_status()
 
 def register_game(icon_id):
     if sse_running:
