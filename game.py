@@ -195,7 +195,7 @@ def execute_drop(item_id):
 
     # Loop inventory.
     for item in inventory:
-        if(item["name"] == item_id):
+        if(item["id"] == item_id):
             room_item = item
     if room_item:
         # Remove from inventory, add to room.
@@ -364,7 +364,11 @@ def fight_clowns():
                                         
                                         # Check if the enemy has been killed
                                         if enemy["health"] <= 0:
-                                            print("\nYou killed " + enemy["name"] + " The Clown! You monster.\n")
+                                            print("\nYou killed " + enemy["name"] + " The Clown! You monster.")
+                                            time.sleep(0.5)
+                                            health_gain = enemy["strength"] * 2
+                                            player_stats["health"] += health_gain
+                                            print("You gained " + str(health_gain) + " HP. You now have " + str(player_stats["health"]) + " HP.")
                                             time.sleep(1)
                                             current_room["enemies"].remove(enemy) # Remove the enemy from the room
                                             player_stats["kills"] += 1
