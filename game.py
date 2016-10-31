@@ -92,7 +92,7 @@ def print_room(room):
 def print_menu(exits):
     # Prints available actions to user, apart from fighting (this is optional).
 
-    print("\nYou turn your head hastily, you can")
+    print("\nYou turn your head hastily, you can:")
 
     # Iterate over available exits
     for direction in exits:
@@ -324,7 +324,7 @@ def fight_clowns():
                             lose_game()
                         
                         # Prints all the weapons the player is able to use and asks which weapon to use
-                        print("\nChoose a weapon to fight " + enemy["name"] + " with:")
+                        print("\nWhat would you like to do?\nYou can:")
                         for item in inventory:
                             if item["weapon"]:
                                 print("\tUSE " + item["id"].upper() + " to use " + item["name"])

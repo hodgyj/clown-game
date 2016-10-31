@@ -1,3 +1,8 @@
+def no_use():
+    import time
+    print("You can't use that!")
+    time.sleep(0.5)
+
 item_phone = {
     "id": "phone",
     "name": "your phone",
@@ -5,7 +10,8 @@ item_phone = {
     not quite sure which one it is though.""",
     "health": 0,
     "strength": 0,
-    "weapon": False
+    "weapon": False,
+    "use_func": no_use
 }
 
 item_cricket_bat = {
@@ -14,7 +20,8 @@ item_cricket_bat = {
     "description": """A rugged, wooden cricket bat laying face down with a strange stain beside it.""",
     "health": 10,
     "strength": 5,
-    "weapon": True
+    "weapon": True,
+    "use_func": no_use
 }
 
 item_stick = {
@@ -23,7 +30,8 @@ item_stick = {
     "description": """A wooden stick with some concerning stains on it.""",
     "health": 10,
     "strength": 4,
-    "weapon": True
+    "weapon": True,
+    "use_func": no_use
 }
 
 item_shotgun = {
@@ -34,7 +42,8 @@ item_shotgun = {
     the gun has been filed down and thoroughly cleaned.""",
     "health": 5, # Why on earth was this 60
     "strength": 10,
-    "weapon": True
+    "weapon": True,
+    "use_func": no_use
 }
 
 item_bottle = {
@@ -44,7 +53,8 @@ item_bottle = {
     These bottles are everywhere, I should keep an eye out, although they do break very easily.""",
     "health": 1,
     "strength": 3,
-    "weapon": True
+    "weapon": True,
+    "use_func": no_use
 }
 
 item_needle = {
@@ -53,7 +63,8 @@ item_needle = {
     "description": """A sharp, stained medical needle, laying on the ground beside some bloody bandages.""",
     "health": 1,
     "strength": 1,
-    "weapon": True
+    "weapon": True,
+    "use_func": no_use
 }
 
 item_coffee = {
@@ -63,7 +74,8 @@ item_coffee = {
     the clown-pocolypse!""",
     "health": 0,
     "strength": 0,
-    "weapon": False
+    "weapon": False,
+    "use_func": no_use
 }
 
 item_chocolate = {
@@ -72,7 +84,8 @@ item_chocolate = {
     "description": """A bar of bounty, no one likes bounty...""",
     "health": 0,
     "strength": 0,
-    "weapon": False
+    "weapon": False,
+    "use_func": no_use
 }
 
 item_drainpipe = {
@@ -81,7 +94,8 @@ item_drainpipe = {
     "description": """A section of drainpipe which fell down about 3 months ago.""",
     "health": 3,
     "strength": 1,
-    "weapon": True
+    "weapon": True,
+    "use_func": no_use
 }
 
 item_mouse = {
@@ -90,7 +104,8 @@ item_mouse = {
     "description": """A colourful computer mouse which lights up... preettttyyyy...""",
     "health": 0,
     "strength": 0,
-    "weapon": False
+    "weapon": False,
+    "use_func": no_use
 }
 
 items = {
