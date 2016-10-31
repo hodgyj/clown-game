@@ -281,11 +281,9 @@ def fight_clowns():
 
 
     # Count number of weapons
-    # If they have no weapons, kill them (maybe ask first?)
+    # If they have no weapons, notify player
     if count_weapons() == 0:
-        print("Unfortunately, you don't have anything to fight with and promptly die.")
-        time.sleep(2)
-        lose_game()
+        print("Unfortunately, you don't have any weapons to fight with. Good luck.")
 
     while len(current_room["enemies"]) > 0:
 
@@ -399,6 +397,13 @@ def fight_clowns():
         else:
             print("You can't do that!\n")
 
+def execute_use(item_id):
+    for item in inventory:
+        if item["id"] == item_id:
+            item["use_func"]()
+    if item_id not in item["id"]:
+        print("You don't have a " + item_id + " to use!")
+
 def execute_command(command):
     # Gets user commands, then targets the specific functions required to run commands.
     directions = ["north", "south", "east", "west"]
@@ -422,6 +427,11 @@ def execute_command(command):
             execute_drop(command[1])
         else:
             print("Drop what?")
+    elif command[0] == "use":
+        if len(command) > 1:
+            execute_use(command[1])
+        else:
+            print("Use what?")
     elif command[0] == "fight" or command[0] == "fight clown" or command[0] == "clown":
         execute_fight()
     elif command[0] == "inventory" or command[0] == "inv":

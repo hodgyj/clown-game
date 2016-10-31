@@ -1,7 +1,13 @@
+import time
+
 def no_use():
-    import time
     print("You can't use that!")
     time.sleep(0.5)
+
+def use_phone():
+    print("""\nYou turn on your phone, blinding yourself with the bright screen.
+Nice one.""")
+    time.sleep(1)
 
 item_phone = {
     "id": "phone",
@@ -11,7 +17,7 @@ item_phone = {
     "health": 0,
     "strength": 0,
     "weapon": False,
-    "use_func": no_use
+    "use_func": use_phone
 }
 
 item_cricket_bat = {
