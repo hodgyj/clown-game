@@ -378,7 +378,7 @@ def fight_clowns():
                                             else:
                                                 break # Don't loop through multiple items with the same name
                                     else:
-                                        item["use_func"](True)
+                                        item["use_func"](True) # True tells item function that it is used during a fight
                         else:
                             print("That made no sense!")
                     break # Exit for loop
