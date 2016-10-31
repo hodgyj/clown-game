@@ -7,6 +7,7 @@ import random
 import sys
 import sse_python
 import time
+import chats
 
 def sse_send_stats():
 #Tell SSE that stats have changed
@@ -174,6 +175,7 @@ def execute_take(item_id):
                 if player_stats["health"] > player_stats["max_health"]:
                     player_stats["health"] = player_stats["max_health"]
                 print("You unwillingly eat the bounty and gain 30 health!")
+                print("Your health is now " + player_stats["health"] + ".")
         else:
             # Tried to pick up item that doesn't exist potentially.
             print("You cannot take that.")
@@ -249,30 +251,6 @@ def score():
         score = 0
 
     return int(score)
-
-def use_weapon(weapon):
-    """ Takes user input based on weapons available, takes damage on weapon.
-
-    >>> use_weapon(item_shotgun)
-    <BLANKLINE>
-    You won the fight!
-    """
-
-    # If weapon exists.
-    if weapon["weapon"]:       
-        # Taking one point from the weapon's health.
-        weapon["health"] -= 1
-
-        # Checking if the health of the weapon is zero or less.
-        if weapon["health"] <= 0:
-            # If it is removing the weapon from the inventory and printing apppropriate message.
-            print("\nYou won the fight, but your weapon is now broken!")
-            inventory.remove(weapon)
-        else:
-            print("\nYou won the fight!")
-    else:
-        # Not a weapon so print warning.
-        print("\nThis is not the time or place to use this!")
 
 
 def execute_fight():
@@ -356,7 +334,7 @@ def fight_clowns():
                         if player_input[0] == "back": # Return player to clown selection
                             continue_fight = False
                         elif player_input[0] == "chat":
-                            print("You chat")
+                            chats.print_chat()
                             enemy["chat"] -= random.randrange(1,10)
                             if enemy["chat"] <= 0:
                                 current_room["enemies"].remove(enemy)
