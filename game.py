@@ -1,5 +1,5 @@
 from map import *
-from player import *
+import player
 from items import *
 from gameparser import *
 from ascii import *
@@ -12,10 +12,10 @@ import chats
 def sse_send_stats():
 #Tell SSE that stats have changed
     sse_python.heartbeat()
-    if player_stats["health"] < 0:
+    if player.player_stats["health"] < 0:
         sse_python.send_event("HEALTH", 0)
     else:
-        sse_python.send_event("HEALTH", ((player_stats["health"] / player_stats["max_health"]) * 100))
+        sse_python.send_event("HEALTH", ((player.player_stats["health"] / player.player_stats["max_health"]) * 100))
 
 
 def list_of_items(items):
@@ -99,10 +99,10 @@ def print_menu(exits):
         # Print the exit name and where it leads to
         print_exit(direction, exit_leads_to(exits, direction))
     
-    for item in inventory:
+    for item in player.inventory:
         print("DROP " + item["id"].upper() + " to drop " + item["name"])
 
-    for item in current_room["items"]:
+    for item in player.current_room["items"]:
         print("TAKE " + item["id"].upper() + " to take " + item["name"])
 
     # Ask user for input on what they want to do?
@@ -130,14 +130,11 @@ def print_exit(direction, leads_to):
 def execute_go(direction):
     # Move user if valid direction.
 
-    # Call global variable current_room
-    global current_room
-
     # If user defined value is in list of exits from current room...
-    if str(direction) in current_room["exits"]:
+    if str(direction) in player.current_room["exits"]:
         # Print name of new room and move to new room
-        new_room = current_room["exits"][str(direction)]
-        current_room = places[new_room]
+        new_room = player.current_room["exits"][str(direction)]
+        player.current_room = places[new_room]
     else:
         # Show user that the direction they tried is not valid.
         print("You cannot go there.")
@@ -146,36 +143,26 @@ def execute_go(direction):
 def execute_take(item_id):
     # Take an item if inventory isn't full and item on floor.
 
-    # Get current room
-    global current_room
-
     room_item = ""
 
-    if len(inventory) < 5:
+    if len(player.inventory) <= 5:
         # For every item check if user input matches item.
-        for item in current_room["items"]:
+        for item in player.current_room["items"]:
             if(item["id"] == item_id):
                 room_item = item
         # If item is in current room and there is room in inventory for item.
         if room_item: 
             # Remove item from current room and add to inventory.
-            current_room["items"].remove(room_item)
-            inventory.append(room_item)
+            player.current_room["items"].remove(room_item)
+            player.inventory.append(room_item)
             print("You take " + str(room_item["name"]) + "\n")
             print(room_item["description"])
 
             # If item is special, do special energy/health gains!
             if room_item["id"] == "coffee":
-                inventory.remove(room_item)
-                player_stats["energy"] += 50
+                player.inventory.remove(room_item)
+                player.player_stats["energy"] += 50
                 print("You drink the coffee, and gain 50 energy!")
-            if room_item["id"] == "chocolate":
-                inventory.remove(room_item)
-                player_stats["health"] += 30
-                if player_stats["health"] > player_stats["max_health"]:
-                    player_stats["health"] = player_stats["max_health"]
-                print("You unwillingly eat the bounty and gain 30 health!")
-                print("Your health is now " + player_stats["health"] + ".")
         else:
             # Tried to pick up item that doesn't exist potentially.
             print("You cannot take that.")
@@ -187,20 +174,17 @@ def execute_take(item_id):
 def execute_drop(item_id):
     # Drops item in room user in if input is valid.
 
-    # Get current room.
-    global current_room
-
     # Create blank string to be populated later.
     room_item = ""
 
     # Loop inventory.
-    for item in inventory:
+    for item in player.inventory:
         if(item["id"] == item_id):
             room_item = item
     if room_item:
         # Remove from inventory, add to room.
-        inventory.remove(room_item)
-        current_room["items"].append(room_item)
+        player.inventory.remove(room_item)
+        player.current_room["items"].append(room_item)
     else:
         # Non existent item.
         print("You cannot drop that!")
@@ -220,9 +204,9 @@ def print_stats():
 
     # Print user stats.
     print("Your Stats Are:\n" )
-    print("Health : " + str(player_stats["health"]))
-    print("Energy : " + str(player_stats["energy"]))
-    print_inventory_items(inventory)
+    print("Health : " + str(player.player_stats["health"]))
+    print("Energy : " + str(player.player_stats["energy"]))
+    print_inventory_items(player.inventory)
 
 def score():
     """ To determine the end score. take into account energy and clowns killed
@@ -232,13 +216,13 @@ def score():
     """
 
     # Get user energy and kills.
-    e = player_stats["energy"]
-    k = player_stats["kills"]
+    e = player.player_stats["energy"]
+    k = player.player_stats["kills"]
 
     # determine level game player at and create mutators for score.
-    if player_stats["level"] == "hard":
+    if player.player_stats["level"] == "hard":
         multi = 3
-    elif player_stats["level"] == "normal":
+    elif player.player_stats["level"] == "normal":
         multi = 2
     else:
         multi = 1
@@ -247,7 +231,7 @@ def score():
     score = ((e * 2)  + (k * 10) * multi)
 
     # If user used easter egg then no points for them!
-    if dragon == True:
+    if player.dragon == True:
         score = 0
 
     return int(score)
@@ -257,13 +241,13 @@ def execute_fight():
     # Start fight sequence but check room has clown first.
 
     # Check room has enemies then run fight sequence, else warning.
-    if len(current_room["enemies"]) > 0:
+    if len(player.current_room["enemies"]) > 0:
         fight_clowns()
     else:
         print("\nYou can't fight anything here!\n")
 
 
-def count_weapons(weapon_container = inventory):
+def count_weapons(weapon_container = player.inventory):
     weapon_num = 0
     for item in weapon_container:
         if item["weapon"]:
@@ -273,8 +257,8 @@ def count_weapons(weapon_container = inventory):
 
 def fight_clowns():
     # Print intro to the fight (change wording!)
-    if len(current_room["enemies"]) > 1:
-        print("\nYou square yourself up and prepare to fight \nthe " + str(len(current_room["enemies"])) + " clowns standing in front of you.\n")
+    if len(player.current_room["enemies"]) > 1:
+        print("\nYou square yourself up and prepare to fight \nthe " + str(len(player.current_room["enemies"])) + " clowns standing in front of you.\n")
     else:
         print("\nYou square yourself up and prepare to fight the clown.\n")
     time.sleep(1)
@@ -285,13 +269,13 @@ def fight_clowns():
     if count_weapons() == 0:
         print("Unfortunately, you don't have any weapons to fight with. Good luck.")
 
-    while len(current_room["enemies"]) > 0:
+    while len(player.current_room["enemies"]) > 0:
 
         sse_send_stats() # Send current health to SSE3 for pretty colours
 
         print("You can: ")
         # For each of the clowns, print their name, current health and strength
-        for enemy in current_room["enemies"]:
+        for enemy in player.current_room["enemies"]:
             print("\tFIGHT " + enemy["name"] + " The Clown (Health: " + str(enemy["health"]) + ", Strength: " + str(enemy["strength"]) + ")")
         print("\tRUN to run from the clowns\n")
         time.sleep(1)
@@ -305,7 +289,7 @@ def fight_clowns():
             time.sleep(1.2)
             break # Exit while loop, ending the fight
         elif player_input[0] == "fight":
-            for enemy in current_room["enemies"]:
+            for enemy in player.current_room["enemies"]:
                 # Check if the name of the enemy matches what the player entered
                 # If name does not match, it simply loops round and asks for the name again (could do with notifying the players)
                 if enemy["name"].lower() == player_input[1]:
@@ -323,9 +307,8 @@ def fight_clowns():
                         
                         # Prints all the weapons the player is able to use and asks which weapon to use
                         print("\nWhat would you like to do?\nYou can:")
-                        for item in inventory:
-                            if item["weapon"]:
-                                print("\tUSE " + item["id"].upper() + " to use " + item["name"])
+                        for item in player.inventory:
+                            print("\tUSE " + item["id"].upper() + " to use " + item["name"])
                         print("\tCHAT to " + enemy["name"])
                         print("Or, you can type BACK to fight a different clown.")
                         player_input = normalise_input(input(">\t"))
@@ -335,10 +318,10 @@ def fight_clowns():
                             chats.print_chat()
                             enemy["chat"] -= random.randrange(1,10)
                             if enemy["chat"] <= 0:
-                                current_room["enemies"].remove(enemy)
+                                player.current_room["enemies"].remove(enemy)
                                 continue_fight = False
                         elif player_input[0] == "use":
-                            for item in inventory:
+                            for item in player.inventory:
                                 if (item["id"] == player_input[1]):
                                     if item["weapon"]:
                                         # If the item is a weapon, calculate and inflict damage on clown 
@@ -356,7 +339,7 @@ def fight_clowns():
                                         if item["health"] <= 0:
                                             print("Your " + item["name"] + " is now broken!")
                                             time.sleep(0.5)
-                                            inventory.remove(item) # Remove item from inventory if it is broken
+                                            player.inventory.remove(item) # Remove item from inventory if it is broken
 
                                         # Print remaining health for the clown
                                         print(enemy["name"] + " has " + str(enemy["health"]) + " HP remaining.")
@@ -367,26 +350,26 @@ def fight_clowns():
                                             print("\nYou killed " + enemy["name"] + " The Clown! You monster.")
                                             time.sleep(0.5)
                                             health_gain = enemy["strength"] * 2
-                                            player_stats["health"] += health_gain
-                                            print("You gained " + str(health_gain) + " HP. You now have " + str(player_stats["health"]) + " HP.")
+                                            player.player_stats["health"] += health_gain
+                                            print("You gained " + str(health_gain) + " HP. You now have " + str(player.player_stats["health"]) + " HP.")
                                             time.sleep(1)
-                                            current_room["enemies"].remove(enemy) # Remove the enemy from the room
-                                            player_stats["kills"] += 1
+                                            player.current_room["enemies"].remove(enemy) # Remove the enemy from the room
+                                            player.player_stats["kills"] += 1
                                             continue_fight = False # Flag to go back to clown selection
                                         else:
                                             # If enemy is alive, calculate and inflict damage on the player 
                                             # Damage calculated by generating a random number between the enemys strength
                                             # and triple the enemys strength
                                             damage = random.randrange(enemy["strength"], enemy["strength"] * 3)
-                                            player_stats["health"] -= damage
-                                            if player_stats["health"] < 0:
-                                                player_stats["health"] = 0 # Set to 0 for prettiness and so that SSE doesnt break
+                                            player.player_stats["health"] -= damage
+                                            if player.player_stats["health"] < 0:
+                                                player.player_stats["health"] = 0 # Set to 0 for prettiness and so that SSE doesnt break
                                             # Print the damage inflicted and remaining HP of the player
                                             print("\n" + enemy["name"] + " retaliated, dealing " + str(damage) + " damage.")
-                                            print("You lost " + str(damage) + " HP, leaving you with " + str(player_stats["health"]) + " HP.")
+                                            print("You lost " + str(damage) + " HP, leaving you with " + str(player.player_stats["health"]) + " HP.")
                                             sse_send_stats() # Update SSE so we have pretty colours (before the time delay)
                                             time.sleep(1)
-                                            if player_stats["health"] == 0:
+                                            if player.player_stats["health"] == 0:
                                                 # If player is dead, update SSE with health and exit game
                                                 sse_send_stats()
                                                 print("\n\t\tBlood pours out of you as you fall to the ground, you have died...")
@@ -394,7 +377,8 @@ def fight_clowns():
                                                 lose_game()
                                             else:
                                                 break # Don't loop through multiple items with the same name
-
+                                    else:
+                                        item["use_func"](True)
                         else:
                             print("That made no sense!")
                     break # Exit for loop
@@ -402,7 +386,7 @@ def fight_clowns():
             print("You can't do that!\n")
 
 def execute_use(item_id):
-    for item in inventory:
+    for item in player.inventory:
         if item["id"] == item_id:
             item["use_func"]()
     if item_id not in item["id"]:
@@ -439,7 +423,7 @@ def execute_command(command):
     elif command[0] == "fight" or command[0] == "fight clown" or command[0] == "clown":
         execute_fight()
     elif command[0] == "inventory" or command[0] == "inv":
-        print_inventory_items(inventory)
+        print_inventory_items(player.inventory)
     elif command[0] == "stats" or command[0] == "statistics":
         print_stats()
     elif command[0] == "help":
@@ -452,10 +436,9 @@ def execute_command(command):
         inventory/inv - Check the player inventory
         stats/statistics - Get player statistics like health, exp, and inventory
             """)
-    elif command[0] == "dragon" and current_room["name"] == "Pryzm":
-        # User has cheated/easter egged it.
-        global dragon
-        dragon = True
+    elif command[0] == "dragon" and player.current_room["name"] == "Pryzm":
+        # User has cheated/easter egged it.\
+        player.dragon = True
         win_game()
     else:
         print("You murmur words that are incomprehensible... Try using 'help' for commands!")
@@ -479,14 +462,14 @@ def win_game():
     # Account for different win conditions for multiple endings.
 
     # Dragon easter egg ending.
-    if dragon == True:
+    if player.dragon == True:
         print("""\nAn angelic figure drifts down from the heavens and praises you, 
 "My name is Kirill, you found the easter egg, good job! Although, you have technically 
 cheated, so you will get no points at all."
 He then soars back into the heavens, leaving a trail of 0's and 1's behind.\n""")
         print("Your score is: 0")
     # No kill easter egg ending.
-    elif player_stats["kills"] == 0:
+    elif player.player_stats["kills"] == 0:
         print("Well done pacifist you didn't kill any clowns, you are chatty aren't you?")
         print("Your score is:", score())
     # Main ending when killed clown and got to final stage.
@@ -503,7 +486,7 @@ He then soars back into the heavens, leaving a trail of 0's and 1's behind.\n"""
 def lose_game():
     # If the user dies use this function to trigger options available and print score.
     print_ascii(endgame)
-    player_stats["health"] = 0
+    player.player_stats["health"] = 0
     sse_send_stats()
     print("\nYou lost, your final score was", score())
     input()
@@ -540,9 +523,6 @@ def main():
 
         from map import map_pryzm
         import time
-        global current_room
-
-
 
         print_ascii(title)
         # Sleep to show title briefly.
@@ -557,20 +537,20 @@ def main():
 
         # User health and energy different for difficulty rating.
         if normalised_user_input == "easy" or normalised_user_input == "e":
-            player_stats["health"] = 100
-            player_stats["max_health"] = 100
-            player_stats["energy"] = 100
-            player_stats["level"] = "easy"
+            player.player_stats["health"] = 100
+            player.player_stats["max_health"] = 100
+            player.player_stats["energy"] = 100
+            player.player_stats["level"] = "easy"
         elif normalised_user_input == "normal" or normalised_user_input == "n":
-            player_stats["health"] = 75
-            player_stats["max_health"] = 75
-            player_stats["energy"] = 75
-            player_stats["level"] = "normal"
+            player.player_stats["health"] = 75
+            player.player_stats["max_health"] = 75
+            player.player_stats["energy"] = 75
+            player.player_stats["level"] = "normal"
         elif normalised_user_input == "hard" or normalised_user_input == "h":
-            player_stats["health"] = 50
-            player_stats["max_health"] = 50
-            player_stats["energy"] = 50
-            player_stats["level"] = "hard"
+            player.player_stats["health"] = 50
+            player.player_stats["max_health"] = 50
+            player.player_stats["energy"] = 50
+            player.player_stats["level"] = "hard"
         else:
             # If user isn't good at typing, give easy!
             print("That was not a valid response, so we put you on easy.")
@@ -592,19 +572,19 @@ def main():
     Also, check your items use 'inventory'/'inv', 
     be smart when taking any old item!""")
 
-        while game_running == True:
+        while player.game_running == True:
             sse_python.heartbeat() # Keep SSE running, although it'll die if player takes longer than 15 seconds
             sse_send_stats()
             # Display game status (room description, inventory etc.), main game loop.
             print("")
-            print_room(current_room)
+            print_room(player.current_room)
             
-            if current_room == places["Taly North"]:
+            if player.current_room == places["Taly North"]:
                 # If reached end of map, win game.
                 win_game()
             else:
                 # Show the menu with possible actions and ask the player.
-                command = menu(current_room["exits"])
+                command = menu(player.current_room["exits"])
 
                 # Execute the player's command.
                 execute_command(command)

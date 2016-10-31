@@ -1,13 +1,28 @@
 import time
 
-def no_use():
+def no_use(in_fight = False):
     print("You can't use that!")
     time.sleep(0.5)
 
-def use_phone():
-    print("""\nYou turn on your phone, blinding yourself with the bright screen.
+def use_phone(in_fight = False):
+    if in_fight:
+        print("You take a selfie with the clown. So cute!")
+    else:
+        print("""\nYou turn on your phone, blinding yourself with the bright screen.
 Nice one.""")
     time.sleep(1)
+
+def use_chocolate(in_fight = False):
+   
+    import player
+    print("\nYou eat the bar of chocolate. Tastes like chocolate. What a surprise.")
+    time.sleep(0.5)
+    player.player_stats["health"] += 30
+    if player.player_stats["health"] > player.player_stats["max_health"]:
+        player.player_stats["health"] = player.player_stats["max_health"]
+    print("Your health is now " + str(player.player_stats["health"]) + ".")
+    player.inventory.remove(item_chocolate)
+        
 
 item_phone = {
     "id": "phone",
@@ -91,7 +106,7 @@ item_chocolate = {
     "health": 0,
     "strength": 0,
     "weapon": False,
-    "use_func": no_use
+    "use_func": use_chocolate
 }
 
 item_drainpipe = {
