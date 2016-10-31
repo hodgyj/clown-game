@@ -9,16 +9,13 @@ map_pryzm = {
 and find yourself on a dark street surrounded
 by people near a taxi rank. You prepare
 yourself for the long walk home, wishing
-the club had stayed open just a little bit longer.
-""",
+the club had stayed open just a little bit longer.""",
 
-	"exits": {"east" : "Student Union", "west" : "Park"},
+	"exits": {"east" : "Senghetto", "west" : "Park", "north": "Student Union"},
 
 	"items": [item_bottle],
 
-	"enemies": [],
-
-	"dead": False,
+	"enemies": []
 }
 
 map_park = {
@@ -34,13 +31,11 @@ There are lights on in the Museum.""" ,
 shape on the floor ahead of you, it is a large, 
 red-wigged clown sinisterly breathing heavily.""",
 
-	"exits": {"west": "Museum", "east": "Museum", "south": "Pryzm"},
+	"exits": {"north": "Museum", "east": "Pryzm"},
 
 	"items": [item_needle],
 
-	"enemies": [enemies.clown_park],
-
-	"dead": False,
+	"enemies": [enemies.clown_park]
 }
 
 map_museum = {
@@ -52,49 +47,26 @@ the lobby area and look around... As you turn, a clown appears
 from around the corner holding a rusty shiv, and stabs you multiple times
 as you beg for your life.""",
 
-	"exits": {},
+	"exits": {"south": "Park"},
 
 	"items": [],
 
-	"enemies": [],
-
-	"dead": True,
+	"enemies": []
 }
 
-map_lidl = {
-	"name": "Lidl",
+map_senghetto = {
+	"name": "Senghetto",
 
-	"description": """You walk down the dimly lit road towards Lidl.
-You see a shotgun lying in the car park, beside the gun there is
-smashed glass and a completely empty backpack. You hear laughing
-and the sound of rubber balloons squeeling in the dark alley nearby.
-""",
+	"description": """The lights flicker as you near the Senghetto.
+A strong smell of weed hits you as you get close. There are bottles and cans
+all around the bins, along with the occasional limb. The drainpipe has begun to
+rot away, but it was like that before this apocalypse anyway.""",
 
-	"exits": {"south": "Dark Alley", "west": "Student Union"},
+	"exits": {"west": "Pryzm", "northwest": "Student Union"},
 
-	"items": [item_shotgun],
+	"items": [item_drainpipe],
 
-	"enemies": [],
-
-	"dead": False,
-}
-
-map_alley = {
-	"name": "Dark Alley",
-
-	"description": """Before you step any further, 3 masked figures
-appear from around the corner, dripping in blood. You attempt
-to fight back, but their knives are thrusted into your body.
-The last thing you see is the bright red noses of the clowns
-that murdered you.""",
-
-	"exits": {},
-
-	"items": [],
-
-	"enemies": [],
-
-	"dead": True,
+	"enemies": []
 }
 
 map_su = {
@@ -109,13 +81,43 @@ only the droning sound of the wind whistling is apparent.""",
 shoes as a clown comes towards you, as each foot slams down, the clown
 laughs and laughs spitting blood everywhere.""",
 
-	"exits": {"east": "Lidl", "west": "Cross Roads"},
+	"exits": {"north": "Lidl", "west": "Cross Roads", "south": "Pryzm", "southeast": "Senghetto"},
 
 	"items": [item_cricket_bat],
 
-	"enemies": [enemies.clown_su],
+	"enemies": [enemies.clown_su]
+}
 
-	"dead": False,
+map_lidl = {
+	"name": "Lidl",
+
+	"description": """You walk down the dimly lit road towards Lidl.
+You see a shotgun lying in the car park, beside the gun there is
+smashed glass and a completely empty backpack. You hear laughing
+and the sound of rubber balloons squeeling in the dark alley nearby.
+""",
+
+	"exits": {"north": "Dark Alley", "south": "Student Union", "northwest": "Cross Roads"},
+
+	"items": [item_shotgun],
+
+	"enemies": []
+}
+
+map_alley = {
+	"name": "Dark Alley",
+
+	"description": """Before you step any further, 3 masked figures
+appear from around the corner, dripping in blood. You attempt
+to fight back, but their knives are thrusted into your body.
+The last thing you see is the bright red noses of the clowns
+that murdered you.""",
+
+	"exits": {"south": "Lidl"},
+
+	"items": [],
+
+	"enemies": []
 }
 
 map_crossroads = {
@@ -129,13 +131,11 @@ There is a letting office, a coffee shop, and the Law & Politics Building.""",
 have spotted you, as both stare intently at you, they tilt their heads while
 perpetually staring at your face and run towards you smiling.""",
 
-	"exits": {"east": "Lidl", "west": "Coffee Shop", "north": "Traffic Lights"},
+	"exits": {"southeast": "Lidl", "northeast": "Coffee Shop", "north": "Traffic Lights", "east": "Student Union"},
 
 	"items": [item_bottle, item_bottle],
 
-	"enemies": [enemies.clown_crossroads_1, enemies.clown_crossroads_2],
-
-	"dead": False,
+	"enemies": [enemies.clown_crossroads_1, enemies.clown_crossroads_2]
 }
 
 map_coffee = {
@@ -147,13 +147,11 @@ glass laying viciously on the floor. The coffee machine is sat
 there switched on with a cup sitting below on the stand.
 """,
 
-	"exits": {"south": "Cross Roads"},
+	"exits": {"southwest": "Cross Roads"},
 
 	"items": [item_coffee, item_stick],
 
-	"enemies":[],
-
-	"dead": False,
+	"enemies":[]
 }
 
 map_traffic = {
@@ -172,9 +170,7 @@ may prove difficult...""",
 
 	"items": [item_chocolate],
 
-	"enemies": [enemies.clown_traffic_1, enemies.clown_traffic_2, enemies.clown_traffic_3],
-
-	"dead": False,
+	"enemies": [enemies.clown_traffic_1, enemies.clown_traffic_2, enemies.clown_traffic_3]
 }
 
 map_emptyrd = {
@@ -191,40 +187,54 @@ scream "I WANT TO DEVOUR YOU" as they walk towards you from different
 directions.
 """,
 
-	"exits": {"north": "Taly South"},
+	"exits": {"north": "Taly South", "south": "Traffic Lights"},
 
 	"items":[item_bottle],
 
 	"enemies": [enemies.clown_emptyrd_1, enemies.clown_emptyrd_2],
-
-	"dead": False,
 }
 
 map_talysouth = {
 	"name": "Taly South",
 
-	"description": """You arrive safetly back at your flat and
-collapse on the once white bed. As you are about to doze off you notice""",
+	"description": """You can hear the sounds of distant parties, well
+at least student life hasn't come to a complete end.""",
+
+	"descclown": """OH NO a six ft 2 clown approaches you mumbling about 'visual studio code'
+or at least you think thats what its saying... it seems very happy... worryingly so...""",
+
+	"exits": {"north": "Taly North", "south": "Empty Road"},
+
+	"items": [item_mouse],
+
+	"enemies": [enemies.clown_james]
+}
+
+map_talynorth = {
+	"name": "Taly North",
+
+	"description": """Yayyy bed... so nice.... so warm...too warm... why is 
+	the heating on in summer?!""",
 
 	"exits": {},
 
 	"items": [],
 
-	"enemies": [],
-
-	"dead": False,
+	"enemies": []
 }
 
 places = {
 	"Pryzm": map_pryzm,
-	"Lidl" : map_lidl,
-	"Student Union": map_su,
-	"Cross Roads": map_crossroads,
-	"Empty Road": map_emptyrd,
-	"Coffee Shop": map_coffee,
-	"Traffic Lights": map_traffic,
 	"Park": map_park,
 	"Museum": map_museum,
+	"Senghetto": map_senghetto,
+	"Student Union": map_su,
+	"Lidl" : map_lidl,
 	"Dark Alley": map_alley,
+	"Cross Roads": map_crossroads,
+	"Coffee Shop": map_coffee,
+	"Traffic Lights": map_traffic,
+	"Empty Road": map_emptyrd,
 	"Taly South": map_talysouth,
+	"Taly North": map_talynorth
 }

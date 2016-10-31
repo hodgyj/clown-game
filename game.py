@@ -16,6 +16,7 @@ def sse_send_stats():
     else:
         sse_python.send_event("HEALTH", ((player_stats["health"] / player_stats["max_health"]) * 100))
 
+
 def list_of_items(items):
     """This function takes a list of items and returns a comma sep, list.
 
@@ -40,6 +41,7 @@ def list_of_items(items):
 
     return correct_list
 
+
 def print_inventory_items(items):
     """This function takes a list of inventory items and displays nicely.
 
@@ -59,22 +61,6 @@ def print_inventory_items(items):
 
         print('You have:', ", ".join(items_list) + ".\n")
 
-def print_room_items(room):
-    """This function takes a room as an input and prints items in that room.
-
-    >>> print_room_items(places["Park"])
-    There is something here: needle.
-    <BLANKLINE>
-
-    >>> print_room_items(places["Coffee Shop"])
-    There is something here: coffee, bat.
-    <BLANKLINE>
-    """
-
-    room_list = list_of_items(room["items"])
-
-    if room_list:
-        print('There is something here:', room_list + '.\n')
 
 def print_room(room):
     """This function takes a room as an input displays name and description.
@@ -99,26 +85,35 @@ def print_room(room):
 
     # If enemies populate room then print clown description for that room.
     if len(room["enemies"]) > 0:
-        print('\n' + room["descclown"] + '\n')
+        print('\n' + room["descclown"])
+
 
 def print_menu(exits):
     # Prints available actions to user, apart from fighting (this is optional).
 
-    print("You turn your head hastily, you can")
+    print("\nYou turn your head hastily, you can")
 
     # Iterate over available exits
     for direction in exits:
         # Print the exit name and where it leads to
         print_exit(direction, exit_leads_to(exits, direction))
+    
+    for item in inventory:
+        print("DROP " + item["id"].upper() + " to drop " + item["name"])
+
+    for item in current_room["items"]:
+        print("TAKE " + item["id"].upper() + " to take " + item["name"])
 
     # Ask user for input on what they want to do?
     print("\t\nWhat do you want to do?")
+
 
 def exit_leads_to(exits, direction):
     # Takes dict of exits and a direction they want to go, shows options.
 
     # Return user options.
     return places[exits[direction]]["name"]
+
 
 def print_exit(direction, leads_to):
     """ Print user exits.
@@ -129,6 +124,7 @@ def print_exit(direction, leads_to):
     """
 
     print("GO " + direction.upper() + " to " + leads_to + ".")
+
 
 def execute_go(direction):
     # Move user if valid direction.
@@ -144,6 +140,7 @@ def execute_go(direction):
     else:
         # Show user that the direction they tried is not valid.
         print("You cannot go there.")
+
 
 def execute_take(item_id):
     # Take an item if inventory isn't full and item on floor.
@@ -184,6 +181,7 @@ def execute_take(item_id):
         # User inv is full, show this.
         print("Your inventory is full!")
 
+
 def execute_drop(item_id):
     # Drops item in room user in if input is valid.
 
@@ -204,6 +202,7 @@ def execute_drop(item_id):
     else:
         # Non existent item.
         print("You cannot drop that!")
+
 
 def print_stats():
     """Take stats from player.py and print them neatly.
@@ -275,6 +274,7 @@ def use_weapon(weapon):
         # Not a weapon so print warning.
         print("\nThis is not the time or place to use this!")
 
+
 def execute_fight():
     # Start fight sequence but check room has clown first.
 
@@ -284,12 +284,14 @@ def execute_fight():
     else:
         print("\nYou can't fight anything here!\n")
 
+
 def count_weapons(weapon_container = inventory):
     weapon_num = 0
     for item in weapon_container:
         if item["weapon"]:
             weapon_num += 1
     return weapon_num
+
 
 def fight_clowns():
     # Print intro to the fight (change wording!)
@@ -348,10 +350,17 @@ def fight_clowns():
                         for item in inventory:
                             if item["weapon"]:
                                 print("\tUSE " + item["id"].upper() + " to use " + item["name"])
+                        print("\tCHAT to " + enemy["name"])
                         print("Or, you can type BACK to fight a different clown.")
                         player_input = normalise_input(input(">\t"))
                         if player_input[0] == "back": # Return player to clown selection
                             continue_fight = False
+                        elif player_input[0] == "chat":
+                            print("You chat")
+                            enemy["chat"] -= random.randrange(1,10)
+                            if enemy["chat"] <= 0:
+                                current_room["enemies"].remove(enemy)
+                                continue_fight = False
                         elif player_input[0] == "use":
                             for item in inventory:
                                 if (item["id"] == player_input[1]):
@@ -359,7 +368,7 @@ def fight_clowns():
                                         # If the item is a weapon, calculate and inflict damage on clown 
                                         # Damage currently calculated by generating a random number between half the 
                                         # item strength and double the item strength
-                                        damage = (random.randrange(int(item["strength"] / 2), int(item["strength"] * 2)))
+                                        damage = (random.randrange(int(item["strength"]), int(item["strength"] * 2)))
                                         enemy["health"] -= damage
                                         if enemy["health"] < 0:
                                             enemy["health"] = 0 # Set to 0 so it looks better :) 
@@ -411,89 +420,6 @@ def fight_clowns():
                     break # Exit for loop
         else:
             print("You can't do that!\n")
-
-def fight_sequence():
-    # Start fight code that triggers fighting mechanics.
-
-    global current_room
-    global max_items
-    
-    # Clowns
-    k = 0
-
-    # print a random picture of a clown from ascii.py.
-    clown_func = random.randint(1,6)
-    print_ascii(clowns[clown_func])
-
-    # Print player stats.
-    print_stats()
-
-    # print the number of enemies to be defeated.
-    print("You must defeat " + str(current_room["enemies"]) + " clowns. Good Luck.")
-
-    # while there are still enemies to be defeated.
-    while current_room["enemies"] > 0:
-        k += 1
-        print("\n\t\tFIGHT " + str(k) + "\n")
-        list_i = []
-        weapons = 0
-        # Take off a small amount of energy and health.
-        player_stats["energy"] -= 5
-        player_stats["health"] -= random.randrange(1,31)
-
-
-        # for each item in inventory.
-        for i in inventory:
-            # if it's a weapon add it to the list.
-            if i["weapon"]:
-                list_i.append(i)
-                # keep track of how many weapons are in inventory.
-                weapons = weapons + 1
-
-        # if there is only one weapon in inventory.
-        if weapons == 1:
-            # call use weapon with only weapon.
-            use_weapon(list_i[0])
-
-        elif weapons >= 1:
-            while True:
-                sse_python.heartbeat()
-                # take user input of which weapon they will use.
-                for i in range(1, len(inventory)):
-                    # list index i - 1 as count starts 0 not 1.
-                    list_index = i - 1
-                    print(str(i) + ":", str(list_i[list_index]["name"]))
-
-                user_input = input("Which weapon would you like to use?>\t")
-                # Use try/catch to try convert to int, if not then they need int.
-                try: 
-                    user_input = int(user_input)
-                    if user_input <= (len(inventory) - 1) and user_input > 0:
-                        use_weapon(list_i[(int(user_input)-1)])
-                        break
-                    else:
-                        print("enter a number from the list!")
-                except ValueError:
-                    print("Please enter a valid number...")
-        else:
-            # if they do not have a weapon in their inventory they die.
-            print("""You pat your pockets vigorously but cannot find a weapon, 
-The clown smiles slowly as he draws out a blunt knife and thrusts
-his hand forward into your chest. You have died...""")
-            sse_python.send_event("HEALTH", 0)
-            lose_game()
-
-        # Player lost health!
-        print("Lost Health! Health now: " + str(player_stats["health"]))
-        sse_send_stats()
-        player_stats["kills"] += 1
-
-        if player_stats["health"] <= 0 or player_stats["energy"] <= 0:
-            print("\n\t\tBlood pours out of you as you fall to the ground, you have died...")
-            lose_game()
-        else:
-            # Player has removed enemy.
-            current_room["enemies"] -= 1    
 
 def execute_command(command):
     # Gets user commands, then targets the specific functions required to run commands.
@@ -566,30 +492,17 @@ def win_game():
 "My name is Kirill, you found the easter egg, good job! Although, you have technically 
 cheated, so you will get no points at all."
 He then soars back into the heavens, leaving a trail of 0's and 1's behind.\n""")
-        print("Your score is:", score())
+        print("Your score is: 0")
     # No kill easter egg ending.
     elif player_stats["kills"] == 0:
-        enddialogue1 = "needles and pills cover the floor, a belt is wrapped around your arm tightly, "
-        enddialogue2 = "you fall to the ground in shock, crying, as you realise you are a drug addict.\n"
-        enddialogue3 = "END OF GAME"
-        print_end_dialog(enddialogue1, enddialogue2, enddialogue3)
-        print("""\nYou decided not to kill anyone, this makes you a drug addict but not
-a serial killer, well done - but you have a small score.\n""")
+        print("Well done pacifist you didn't kill any clowns, you are chatty aren't you?")
         print("Your score is:", score())
     # Main ending when killed clown and got to final stage.
     else:
         # Standard game win, user killed clowns and didn't get taxi.
-        print("""the sound of the doorbell and knocking pierces your ears, 
-as you walk out of your door, the hallway is full to the brim
-of fully-armoured police labelled "SWAT", they make their way
-to you, standing on the once attached front door.
-The red dots of the guns stain your body, as they handcuff
-you hastily, an officer shouts:""")
-        enddialogue1 = "YOU ARE UNDER ARREST FOR THE MASS-MURDER OF MANY INNOCENT PEOPLE ON THE NIGHT OF OCTOBER 31ST AND FOR DISTRIBUTION AND USE OF CLASS A DRUGS. "
-        enddialogue2 = "You fall to the ground in shock as you realise that you are the real monster...\n"
-        enddialogue3 = "END OF GAME"
-        print_end_dialog(enddialogue1, enddialogue2, enddialogue3)
-        print("\nCongratulations, you won, your final score was", score())
+        print("""Well look who's a bit aggressive, you really need to kill all those clowns?
+        hmmmm surree, well you won anyway I guess...""")
+        print("Your score is:", score())
 
     # Game has ended user can quit.
     input("\nPress any key to exit and return to reality!")
@@ -693,14 +606,8 @@ def main():
             # Display game status (room description, inventory etc.), main game loop.
             print("")
             print_room(current_room)
-            print_room_items(current_room)
-
-            # If went into death room, lose game.
-            if current_room["dead"] == True:
-                player_stats["health"] = 0
-                sse_send_stats()
-                lose_game()
-            elif current_room == places["Taly South"]:
+            
+            if current_room == places["Taly North"]:
                 # If reached end of map, win game.
                 win_game()
             else:

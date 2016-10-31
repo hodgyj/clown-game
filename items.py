@@ -75,6 +75,24 @@ item_chocolate = {
     "weapon": False
 }
 
+item_drainpipe = {
+    "id": "drainpipe",
+    "name": "a drainpipe",
+    "description": """A section of drainpipe which fell down about 3 months ago.""",
+    "health": 3,
+    "strength": 1,
+    "weapon": True
+}
+
+item_mouse = {
+    "id": "mouse",
+    "name": "a colourful computer mouse",
+    "description": """A colourful computer mouse which lights up... preettttyyyy...""",
+    "health": 0,
+    "strength": 0,
+    "weapon": False
+}
+
 items = {
 "coffee": item_coffee,
 "needle": item_needle,
