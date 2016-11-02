@@ -13,6 +13,8 @@ the club had stayed open just a little bit longer.""",
 
 	"exits": {"east" : "Senghetto", "west" : "Park", "north": "Student Union"},
 
+	"exits_defeat": [],
+
 	"items": [item_bottle],
 
 	"enemies": []
@@ -33,6 +35,9 @@ red-wigged clown sinisterly breathing heavily.""",
 
 	"exits": {"north": "Museum", "east": "Pryzm"},
 
+	"exits_defeat": ["Museum"],
+
+
 	"items": [item_needle],
 
 	"enemies": [enemies.clown_park]
@@ -48,6 +53,8 @@ from around the corner holding a rusty shiv, and stabs you multiple times
 as you beg for your life.""",
 
 	"exits": {"south": "Park"},
+
+	"exits_defeat": [],
 
 	"items": [],
 
@@ -83,6 +90,8 @@ laughs and laughs spitting blood everywhere.""",
 
 	"exits": {"north": "Lidl", "west": "Cross Roads", "south": "Pryzm", "southeast": "Senghetto"},
 
+	"exits_defeat": ["Lidl", "Cross Roads"],
+
 	"items": [item_cricket_bat],
 
 	"enemies": [enemies.clown_su]
@@ -99,6 +108,8 @@ and the sound of rubber balloons squeeling in the dark alley nearby.
 
 	"exits": {"north": "Dark Alley", "south": "Student Union", "northwest": "Cross Roads"},
 
+	"exits_defeat": [],
+
 	"items": [item_shotgun],
 
 	"enemies": []
@@ -114,6 +125,8 @@ The last thing you see is the bright red noses of the clowns
 that murdered you.""",
 
 	"exits": {"south": "Lidl"},
+
+	"exits_defeat": [],
 
 	"items": [],
 
@@ -133,6 +146,8 @@ perpetually staring at your face and run towards you smiling.""",
 
 	"exits": {"southeast": "Lidl", "northeast": "Coffee Shop", "north": "Traffic Lights", "east": "Student Union"},
 
+	"exits_defeat": ["Traffic Lights"],
+
 	"items": [item_bottle, item_bottle],
 
 	"enemies": [enemies.clown_crossroads_1, enemies.clown_crossroads_2]
@@ -148,6 +163,8 @@ there switched on with a cup sitting below on the stand.
 """,
 
 	"exits": {"southwest": "Cross Roads"},
+
+	"exits_defeat": [],
 
 	"items": [item_coffee, item_stick],
 
@@ -167,6 +184,8 @@ Finally, the final 15th clown emerges, fighting these
 may prove difficult...""",
 
 	"exits": {"south": "Cross Roads", "north": "Empty Road"},
+
+	"exits_defeat": ["Empty Road"],
 
 	"items": [item_chocolate],
 
@@ -189,6 +208,8 @@ directions.
 
 	"exits": {"north": "Taly South", "south": "Traffic Lights"},
 
+	"exits_defeat": ["Taly South"],
+
 	"items":[item_bottle],
 
 	"enemies": [enemies.clown_emptyrd_1, enemies.clown_emptyrd_2],
@@ -205,6 +226,8 @@ or at least you think thats what its saying... it seems very happy... worryingly
 
 	"exits": {"north": "Taly North", "south": "Empty Road"},
 
+	"exits_defeat": ["Taly North"],
+
 	"items": [item_mouse],
 
 	"enemies": [enemies.clown_james]
@@ -217,6 +240,8 @@ map_talynorth = {
 	the heating on in summer?!""",
 
 	"exits": {},
+
+	"exits_defeat": [],
 
 	"items": [],
 
