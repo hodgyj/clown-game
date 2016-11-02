@@ -89,15 +89,16 @@ def print_room(room):
         print('\n' + room["descclown"])
 
 
-def print_menu(exits):
+def print_menu(room):
     # Prints available actions to user, apart from fighting (this is optional).
 
     print("\nYou turn your head hastily, you can:")
 
     # Iterate over available exits
-    for direction in exits:
-        # Print the exit name and where it leads to
-        print_exit(direction, exit_leads_to(exits, direction))
+    for direction in room["exits"]:
+        if not (room["exits"][direction] in room["exits_defeat"] and len(room["enemies"]) > 0):
+            # Print the exit name and where it leads to
+            print_exit(direction, exit_leads_to(room["exits"], direction))
     
     for item in player.inventory:
         print("DROP " + item["id"].upper() + " to drop " + item["name"])
@@ -131,7 +132,7 @@ def execute_go(direction):
     # Move user if valid direction.
 
     # If user defined value is in list of exits from current room...
-    if str(direction) in player.current_room["exits"]:
+    if str(direction) in player.current_room["exits"] and not (player.current_room["exits"][direction] in player.current_room["exits_defeat"] and len(player.current_room["enemies"]) > 0):
         # Print name of new room and move to new room
         new_room = player.current_room["exits"][str(direction)]
         player.current_room = places[new_room]
@@ -492,10 +493,10 @@ def lose_game():
     input()
     exit()
 
-def menu(exits):
+def menu(room):
     # Get user input, normalise that input to ensure user typos still run.
 
-    print_menu(exits)
+    print_menu(room)
 
     # Read player's input
     user_input = input(">\t")
@@ -584,7 +585,7 @@ def main():
                 win_game()
             else:
                 # Show the menu with possible actions and ask the player.
-                command = menu(player.current_room["exits"])
+                command = menu(player.current_room)
 
                 # Execute the player's command.
                 execute_command(command)
