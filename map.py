@@ -71,6 +71,8 @@ rot away, but it was like that before this apocalypse anyway.""",
 
 	"exits": {"west": "Pryzm", "northwest": "Student Union"},
 
+	"exits_defeat": [],
+
 	"items": [item_drainpipe],
 
 	"enemies": []

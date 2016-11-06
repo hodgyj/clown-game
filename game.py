@@ -299,13 +299,6 @@ def fight_clowns():
 
                         sse_send_stats() # More pretty colours
                         
-                        if count_weapons() == 0:
-                            # Kill player if they no longer have weapons
-                            print("\nYou no longer have any weapons. " + enemy["name"] + " is a very observant clown, so")
-                            print("takes this opportunity to kill you.\n")
-                            time.sleep(2)
-                            lose_game()
-                        
                         # Prints all the weapons the player is able to use and asks which weapon to use
                         print("\nWhat would you like to do?\nYou can:")
                         for item in player.inventory:
@@ -385,7 +378,17 @@ def fight_clowns():
                     break # Exit for loop
         else:
             print("You can't do that!\n")
-
+    if (len(player.current_room["enemies"]) == 0) and (len(player.current_room["exits_defeat"]) > 0):
+        print("\nYou have defeated all the clowns in " + player.current_room["name"] + ". You can now go to ", end="")
+        i = 0
+        for new_exit in player.current_room["exits_defeat"]:
+            print(new_exit, end="")
+            if i == len(player.current_room["exits_defeat"]) - 1:
+                print(".")
+            else:
+                print(", ", end="")
+            i += 1
+        time.sleep(1.3)
 def execute_use(item_id):
     for item in player.inventory:
         if item["id"] == item_id:
