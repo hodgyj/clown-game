@@ -180,10 +180,8 @@ map_traffic = {
 for them turn red and the green man to show, an ironically small
 spotty car with a red nose on the bonnet stops.""",
 	
-	"descclown" : """You start to cross as a seemingly 
-endless amount of clowns pour out of the car shouting. 
-Finally, the final 15th clown emerges, fighting these
-may prove difficult...""",
+	"descclown" : """You start to cross as three rather serious looking
+	clowns start walking towards you. They don't look as nice as the others.""",
 
 	"exits": {"south": "Cross Roads", "north": "Empty Road"},
 
@@ -202,7 +200,7 @@ street, you can hear the music coming from the student houses.
 You try to get in one but its locked and no one is replying to
 your pleading.""",
 	
-	"descclown" : """There is a trio of clowns slowly emerging from
+	"descclown" : """There is a duo of clowns slowly emerging from
 certain houses with goliath, size 20 blood-stained shoes. The clowns
 scream "I WANT TO DEVOUR YOU" as they walk towards you from different
 directions.
